@@ -1,0 +1,139 @@
+{
+  "id": null,
+  "issuer": "jest:test",
+  "issued": "2018-07-17T23:39:34.044Z",
+  "identifier": "credential-civ:Credential:Address-3",
+  "expiry": null,
+  "version": 1,
+  "type": [
+    "Credential",
+    "civ:Credential:Address"
+  ],
+  "claims": {
+    "type": {
+      "address": {
+        "city": "j7e2uJWSvw",
+        "country": "4l63DP8E4l",
+        "county": "PKve4XPrkn",
+        "state": "f1hdWTntvk",
+        "street": "vDOqAOSz69",
+        "unit": "ZvosZqh3Nd",
+        "zipCode": "TVouidgvJb"
+      }
+    }
+  },
+  "signature": {
+    "type": "CivicMerkleProof2018",
+    "merkleRoot": "40a6fcb309cbd12ada6d3f5c279c1832e24124f953273c2edf2c9255d85297bb",
+    "anchor": {
+      "subject": {
+        "pub": "xpub661MyMwAqRbcFNXRK7kdsoidhiyfqiwhVhbphdKZjqnik83L1w1mWsPwVrsvbRrPa7sysiJRRBxr6jyrCbPScdXkhSjyYtQtFfwxGBwrBzn",
+        "label": "civ:Credential:Address",
+        "data": "40a6fcb309cbd12ada6d3f5c279c1832e24124f953273c2edf2c9255d85297bb",
+        "signature": "30440220299ae8618768380f39c665dcb87a2bb0b1a056653d20227f78b2593f4cbfc8860220354e6f71dfcd5c6c0b7e55087afea92d4633bde875b06c2bb2ef8253d2ce17c7"
+      },
+      "walletId": "5b4e7e6110c5ec9603b750febf35c6f0",
+      "cosigners": [
+        {
+          "pub": "xpub661MyMwAqRbcEfzApfteg41FwgWtoayN3MXWNvZ8JcCYMp4N5rPbHAo454dFyUwuMFowKKB1Zu3d7gpRGxVd453eh8DS7LK9ZhqCXQraNCp"
+        },
+        {
+          "pub": "xpub661MyMwAqRbcEcZ5KNb6gs5JtpF6s3oX9FjHJhUpqxobfYeJx1gHJNhAby7LABaBFjFG4Cm3cddSr4dXM6FpFRvwk3AALgt7tKDeshrp8F5"
+        }
+      ],
+      "authority": {
+        "pub": "xpub661MyMwAqRbcGvSnxEsF3ozUA1kqjNE9fdBpDjKG6YvMuBCjiwf5w9DxDPubPpgpueWkczH21gJ1a7t7J7xw6fTiQmFiWd57opAgTRCCq1H",
+        "path": "/0/0/1/495"
+      },
+      "coin": "tbch",
+      "tx": "02000000015634678eb3d6c0f8594d66d2345a079e87a42242757cdedc4e34fcb6705c537000000000fdfd00004830450221009953e7bb7c0cb8b5ff97ef5f5e83679b7a3f08ca0091e021f9f228f86e795f12022054d1c0415fa10c32d190d052e8e18c9e50827a1f9fb37c182d30c476725f5d4741473044022023a4feadfc3e58f3a5d8fe8dea267f555c7a9cf09913fb43c19c691811a773a202205dabf0bd3b0f86edc11e9db7e77c7b162aff3823a69e23f1ee15d76e474fce05414c69522102628e97ae5b976bbfc5424984bf7bd721e4d23731a1ecc2cc5cc4e06f301c9e732102eacd7e0d7c1925b5b4963d805ec765e0e8e0cdd7dbe07c151998297f29d6730721020964f6ff565ab7e7486f4e057b0dfa0859e3c2f65b3576fc3d11ef95bd63250c53aeffffffff02607666010000000017a9147d770a1f74a28e8164c6235a58335e163179de0887fb1700000000000017a9144bbe906b608aa4fc91400ebd5f3f829799f9ef358700000000",
+      "network": "testnet",
+      "value": 23499079,
+      "type": "permanent",
+      "civicAsPrimary": false,
+      "schema": "tbch-20180201"
+    },
+    "leaves": [
+      {
+        "identifier": "civ:Type:address",
+        "value": "urn:city:3a55592cd0772c00fa75664ec20dcf3ce2ada1f07c2cdd8c7c0addb62ae3ccee:j7e2uJWSvw|urn:country:00c7c2067f969850552e6ddf00bd4a236a8002cb79a1fa8c15413422c0228bd6:4l63DP8E4l|urn:county:84bac93eed1b4461b0377f4a725c296f48b5e4289101c2484ab9a0c2589bf10b:PKve4XPrkn|urn:state:79d7181b505e9e5f25cf072fb47a4e88ce28d166991c8df20e259f7bf565545f:f1hdWTntvk|urn:street:4e241d2c00da02784b45c586191c74e99caedd76e7e0e89392889fa3dafd3baa:vDOqAOSz69|urn:unit:9c93a84aefc20b8f8f394508fdc1faf3461ec6962dce95d685fe19ea34b4bfeb:ZvosZqh3Nd|urn:zipCode:64593a06a5facc1ae804ecee90fe06ef14d4f7263caee24d9706f2caed106dac:TVouidgvJb|",
+        "claimPath": "type.address",
+        "targetHash": "03c1e7fcf466b3c3e9641742833c5a5079dfaa8d9fe77cfd66430256d564748a",
+        "proof": [
+          {
+            "right": "06448a9474ca42bf6c36c36a889d41a347dc079d9c398767ea4f4a44f0730c47"
+          },
+          {
+            "right": "3c5294e8854e7f233ab932125eb086bf462ad91f1720bc7a75654218cd94204c"
+          },
+          {
+            "right": "3209e0235076e64e88c34e218963415d9eba79050e28a859463c65e76f1f6a26"
+          },
+          {
+            "right": "dc51efee30d6a0582e3edc7655ca1816253c48f7d6ab7f9ea9e7f23a5cfcc7cb"
+          }
+        ]
+      },
+      {
+        "identifier": "cvc:Meta:issuer",
+        "value": "urn:issuer:6d8301b0ff0d5aa6d3a57be6283193c7bf755840b0d0094aa670fb73a330ada1:jest:test",
+        "claimPath": "meta.issuer",
+        "targetHash": "06448a9474ca42bf6c36c36a889d41a347dc079d9c398767ea4f4a44f0730c47",
+        "proof": [
+          {
+            "left": "03c1e7fcf466b3c3e9641742833c5a5079dfaa8d9fe77cfd66430256d564748a"
+          },
+          {
+            "right": "3c5294e8854e7f233ab932125eb086bf462ad91f1720bc7a75654218cd94204c"
+          },
+          {
+            "right": "3209e0235076e64e88c34e218963415d9eba79050e28a859463c65e76f1f6a26"
+          },
+          {
+            "right": "dc51efee30d6a0582e3edc7655ca1816253c48f7d6ab7f9ea9e7f23a5cfcc7cb"
+          }
+        ]
+      },
+      {
+        "identifier": "cvc:Meta:issued",
+        "value": "urn:issued:1af89ea37c0c2ef491b50763a64b97689eb290ce24754feb059409c8cef170d1:2018-07-17T23:39:34.044Z",
+        "claimPath": "meta.issued",
+        "targetHash": "c0db8b72aa20a1b42cbd2e796dac3153b4417c4c2de3e7cc1247647d2a0536b6",
+        "proof": [
+          {
+            "right": "d006eb3be9871e04fbb46dfc2e7ac90dd7fd5b6b69e50d764b9048630c562291"
+          },
+          {
+            "left": "d58945fd1170a9be348fcfb83b0ba42f5adb43eb8ec1323d1ee581f1e7e53b1f"
+          },
+          {
+            "right": "3209e0235076e64e88c34e218963415d9eba79050e28a859463c65e76f1f6a26"
+          },
+          {
+            "right": "dc51efee30d6a0582e3edc7655ca1816253c48f7d6ab7f9ea9e7f23a5cfcc7cb"
+          }
+        ]
+      },
+      {
+        "identifier": "cvc:Meta:expiry",
+        "value": "urn:expiry:50a8709f87be25a960573102b6b95957a2232d0f255c401cc0832de1749852d6:null",
+        "claimPath": "meta.expiry",
+        "targetHash": "d006eb3be9871e04fbb46dfc2e7ac90dd7fd5b6b69e50d764b9048630c562291",
+        "proof": [
+          {
+            "left": "c0db8b72aa20a1b42cbd2e796dac3153b4417c4c2de3e7cc1247647d2a0536b6"
+          },
+          {
+            "left": "d58945fd1170a9be348fcfb83b0ba42f5adb43eb8ec1323d1ee581f1e7e53b1f"
+          },
+          {
+            "right": "3209e0235076e64e88c34e218963415d9eba79050e28a859463c65e76f1f6a26"
+          },
+          {
+            "right": "dc51efee30d6a0582e3edc7655ca1816253c48f7d6ab7f9ea9e7f23a5cfcc7cb"
+          }
+        ]
+      }
+    ]
+  }
+}

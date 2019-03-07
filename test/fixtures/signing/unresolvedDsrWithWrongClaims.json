@@ -1,0 +1,39 @@
+{
+  "payload": {
+    "version": "1",
+    "requesterInfo": {
+      "app": {
+        "description": "Case 1: Asking one full credential by its identifier. i.e. Get a Credential:email",
+        "id": "7107a5b4-8a1f-11e8-9a94-37352f73",
+        "name": "My Awesome Identity.com Integration",
+        "logo": "https://upload.wikimedia.org/wikipedia/commons/5/5f/Atletico_mineiro_galo.png",
+        "primaryColor": "ffffff",
+        "secondaryColor": "000000"
+      },
+      "requesterId": "3735a5b4-8a1f-11e8-9a94-a6cf71072f73"
+    },
+    "timestamp": "2018-10-29T18:21:01.545Z",
+    "credentialItems": [
+      {
+        "identifier": "credential-cvc:Credential:User-1",
+        "constraints": {
+          "meta": {
+            "credential": "credential-cvc:Credential:User-1",
+            "issuer": {
+              "is": {
+                "$eq": "did:ethr:0xaf9482c84De4e2a961B98176C9f295F9b6008BfD"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "channels": {
+      "eventsURL": "https://awesome-idr.com/response/events",
+      "payloadURL": "https://awesome-idr.com/response/payload"
+    }
+  },
+  "signature": "ff87efe2941c7b4f7ef255eba4d1297459cabe87bc9d9606f5291ee5d539ad9d9e56c4173e35672fa303a0b3deda17bbe09258d3ff885053f0c809d59ab9cad1",
+  "algorithm": "ES256",
+  "xpub": "04378df3e480e626541daec66c4bbad532430d28e1ecb6b70a03313fc07fbad5c0d8b26410eac8f0b1a448898cbed9d714fd9cab2a8d1a7885bfbb48bd673da03c"
+}

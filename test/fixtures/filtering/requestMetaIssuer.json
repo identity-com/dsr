@@ -1,0 +1,34 @@
+{
+  "version": "1",
+  "requesterInfo": {
+    "app": {
+      "id": "TestPartnerApp",
+      "name": "TestPartnerApp",
+      "logo": "https://s-media-cache-ak0.pinimg.com/originals.png",
+      "description": "TestPartnerApp",
+      "primaryColor": "A80B00",
+      "secondaryColor": "FFFFFF"
+    },
+    "requesterId": "TestPartnerId"
+  },
+  "timestamp": "2018-07-22T14:06:35.879Z",
+  "credentialItems": [
+    {
+      "identifier": "credential-cvc:Identity-v1",
+      "constraints": {
+        "meta": {
+          "issuer": {
+            "is": {
+              "$eq": "jest:test:2d516330-d2cc-11e8-b214-99085237d65e"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "channels": {
+    "eventsURL": "https://localhost/sr/events/abcd",
+    "payloadURL": "https://localhost/sr/payload/abcd"
+  },
+  "authorization": {}
+}

@@ -1,0 +1,36 @@
+{
+  "version": "1",
+  "timestamp": "2018-07-04T00:11:55.698Z",
+  "requesterInfo": {
+    "requesterId": "3735a5b4-8a1f-11e8-9a94-a6cf71072f73",
+    "app": {
+      "id": "3cc295aa-8a1f-11e8-9a94-a6cf71072f73",
+      "name": "App Name",
+      "logo": "https://server/path/logo.png",
+      "description": "App Description",
+      "primaryColor": "2345EE",
+      "secondaryColor": "2345FF"
+    }
+  },
+  "channels": {
+    "eventsURL": "https://server/events/UUID",
+    "payloadURL": "https://server/payload/UUID"
+  },
+  "credentialItems": [
+    {
+      "identifier": "claim-cvc:Identity:address-1",
+      "constraints": {
+        "meta": {
+          "credential": "credential-cvc:Address-v1"
+        },
+        "claims": [
+          { "path": "address.city", "is": { "$eq": "zODi1ARCK1"} },
+          { "path": "address.country", "is": {"$eq": "zQ7kz4CU9g"} }
+        ]
+      }
+    }
+  ],
+  "authorization": {
+    "jwt": "<EXPIRABLE-TOKEN-SIGNING-EXACT_REQUEST>"
+  }
+}

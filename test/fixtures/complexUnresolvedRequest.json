@@ -1,0 +1,34 @@
+{
+  "version": "1",
+  "requesterInfo": {
+    "app": {
+      "description": "Case 13: To test resolveMissingCredentials()",
+      "id": "7107a5b4-8a1f-11e8-9a94-37352f73",
+      "name": "My Awesome Identity.com Integration",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/5/5f/Atletico_mineiro_galo.png",
+      "primaryColor": "ffffff",
+      "secondaryColor": "000000"
+    },
+    "requesterId": "3735a5b4-8a1f-11e8-9a94-a6cf71072f73"
+  },
+  "timestamp": "2018-11-20T11:51:59.188Z",
+  "credentialItems": [
+    {
+      "identifier": "credential-cvc:Identity-v1",
+      "constraints": {
+        "meta": {
+          "credential": "credential-cvc:Identity-v1",
+          "issuer": {
+            "is": {
+              "$eq": "did:ethr:0xaf9482c84De4e2a961B98176C9f295F9b6008BfD"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "channels": {
+    "eventsURL": "https://awesome-idr.com/response/events",
+    "payloadURL": "https://awesome-idr.com/response/payload"
+  }
+}

@@ -1,0 +1,172 @@
+{
+	"id": "95e83831-0166-481b-bc5d-4b55fbdc6920",
+	"issuer": "jest:test:5ae29ed0-d2cd-11e8-8dfd-f5dd2d0a4d6b",
+	"issuanceDate": "2018-10-18T12:00:06.973Z",
+	"identifier": "credential-cvc:Address-v1",
+	"expirationDate": null,
+	"version": "1",
+	"type": ["Credential", "credential-cvc:Address-v1"],
+	"claim": {
+		"identity": {
+			"address": {
+				"city": "iSMZasQfmj",
+				"country": "Vv0uQJLZpm",
+				"county": "cT478KrdQj",
+				"postalCode": "3d8TVhDa5B",
+				"state": "4cBbZG41mK",
+				"street": "CQVVxM6AgO",
+				"unit": "zKxnXD1hNi"
+			}
+		}
+	},
+	"proof": {
+		"type": "CivicMerkleProof2018",
+		"merkleRoot": "8926d9b58810302ee4cbf8b5739a8b6fbb254a67b7585ffa9e4f2840e1ac739c",
+		"anchor": "TBD (Civic Blockchain Attestation)",
+		"leaves": [{
+			"identifier": "cvc:Identity:address",
+			"value": "urn:city:02e037bcbd3ccced2c713f5fc8a893db77693d491d161677ff6c3b58d07a255d:iSMZasQfmj|urn:country:acb1f420b7620f405d72e134a1d56d93dac9db36180a2d8e581697ae572913d4:Vv0uQJLZpm|urn:county:3e2b6b3f8ab8ba31c134dc79b75b3db45263dbe05ded714f2ae1100075d72d43:cT478KrdQj|urn:postalCode:e623c40a557173d161bf132c3f8d7af26ca618e043bcfb4a43483d1163c2b061:3d8TVhDa5B|urn:state:e590b97d5684a08d2d397d4f7f5e0fc6aa10e3bba3a0c14f4985514af0ff0ad5:4cBbZG41mK|urn:street:37fab445bf6273098bfd7eb93175a84992779e7026b5bda7f08d6febacd53580:CQVVxM6AgO|urn:unit:9d3925ba85d86462380aff5383e689ec68649a2c1fbe3b8bb261f0baab7cb315:zKxnXD1hNi|",
+			"claimPath": "identity.address",
+			"targetHash": "af1f0fd0a81614c4b6e9d8ce3bd4188d635ffe55a2e2f7e33c81b14d11381f55",
+			"node": [{
+				"right": "cc2cecf290cb1e0cbc8d09ad0f47ad012a74d38bdd69c105ba252665c69e881f"
+			}, {
+				"right": "0ade98d5684109df83a90fa6a3daf09c57b645fd16b4139f3e92e7b413c379a9"
+			}, {
+				"right": "c36049e5ef857841aa476c5194d037f3915e679fa7d0bee5d59218b318402327"
+			}, {
+				"right": "a0e560ec93f5f22547a3e8bcb79847c548b097a4a5445881a0ada2d07a1c21d8"
+			}, {
+				"right": "fe39de5a329c0e62deac005f2291d6504bfa15d986ae520ed3c1a150ecb115f0"
+			}]
+		}, {
+			"identifier": "cvc:Address:country",
+			"value": "urn:country:acb1f420b7620f405d72e134a1d56d93dac9db36180a2d8e581697ae572913d4:Vv0uQJLZpm",
+			"claimPath": "identity.address.country",
+			"targetHash": "cc2cecf290cb1e0cbc8d09ad0f47ad012a74d38bdd69c105ba252665c69e881f",
+			"node": [{
+				"left": "af1f0fd0a81614c4b6e9d8ce3bd4188d635ffe55a2e2f7e33c81b14d11381f55"
+			}, {
+				"right": "0ade98d5684109df83a90fa6a3daf09c57b645fd16b4139f3e92e7b413c379a9"
+			}, {
+				"right": "c36049e5ef857841aa476c5194d037f3915e679fa7d0bee5d59218b318402327"
+			}, {
+				"right": "a0e560ec93f5f22547a3e8bcb79847c548b097a4a5445881a0ada2d07a1c21d8"
+			}, {
+				"right": "fe39de5a329c0e62deac005f2291d6504bfa15d986ae520ed3c1a150ecb115f0"
+			}]
+		}, {
+			"identifier": "cvc:Address:county",
+			"value": "urn:county:3e2b6b3f8ab8ba31c134dc79b75b3db45263dbe05ded714f2ae1100075d72d43:cT478KrdQj",
+			"claimPath": "identity.address.county",
+			"targetHash": "8745e583dc0feb5b80bc41c26d5b431d6fc3cb018b35fa0ad52daa0b3b0be1f3",
+			"node": [{
+				"right": "38903d4ccfcf19ac877d47ddad262cea742413c95341d8f87ecd980f5eea0da1"
+			}, {
+				"left": "35be87dd029d2ce1c59f2f2ab986bba4634d42e3ee6344c3911de5cd95988203"
+			}, {
+				"right": "c36049e5ef857841aa476c5194d037f3915e679fa7d0bee5d59218b318402327"
+			}, {
+				"right": "a0e560ec93f5f22547a3e8bcb79847c548b097a4a5445881a0ada2d07a1c21d8"
+			}, {
+				"right": "fe39de5a329c0e62deac005f2291d6504bfa15d986ae520ed3c1a150ecb115f0"
+			}]
+		}, {
+			"identifier": "cvc:Address:state",
+			"value": "urn:state:e590b97d5684a08d2d397d4f7f5e0fc6aa10e3bba3a0c14f4985514af0ff0ad5:4cBbZG41mK",
+			"claimPath": "identity.address.state",
+			"targetHash": "38903d4ccfcf19ac877d47ddad262cea742413c95341d8f87ecd980f5eea0da1",
+			"node": [{
+				"left": "8745e583dc0feb5b80bc41c26d5b431d6fc3cb018b35fa0ad52daa0b3b0be1f3"
+			}, {
+				"left": "35be87dd029d2ce1c59f2f2ab986bba4634d42e3ee6344c3911de5cd95988203"
+			}, {
+				"right": "c36049e5ef857841aa476c5194d037f3915e679fa7d0bee5d59218b318402327"
+			}, {
+				"right": "a0e560ec93f5f22547a3e8bcb79847c548b097a4a5445881a0ada2d07a1c21d8"
+			}, {
+				"right": "fe39de5a329c0e62deac005f2291d6504bfa15d986ae520ed3c1a150ecb115f0"
+			}]
+		}, {
+			"identifier": "cvc:Address:city",
+			"value": "urn:city:02e037bcbd3ccced2c713f5fc8a893db77693d491d161677ff6c3b58d07a255d:iSMZasQfmj",
+			"claimPath": "identity.address.city",
+			"targetHash": "b627fd08ab2406c5885160cb1f0b287caf71f896c76a882d3f91280bb2851201",
+			"node": [{
+				"right": "b313849e605299cedb58e047dcbc7c3120fe2fa28c15cd3e679c9c17b58cc330"
+			}, {
+				"right": "654e2c6f734a4552ee8f8f8e6e1c24245cc87f8abfe35c828551f333893b41fe"
+			}, {
+				"left": "444eb3ff3cf4b91c5af36c7c22004d5cff9c4abeb65d40070e6d0719ce504c3b"
+			}, {
+				"right": "a0e560ec93f5f22547a3e8bcb79847c548b097a4a5445881a0ada2d07a1c21d8"
+			}, {
+				"right": "fe39de5a329c0e62deac005f2291d6504bfa15d986ae520ed3c1a150ecb115f0"
+			}]
+		}, {
+			"identifier": "cvc:Address:postalCode",
+			"value": "urn:postalCode:e623c40a557173d161bf132c3f8d7af26ca618e043bcfb4a43483d1163c2b061:3d8TVhDa5B",
+			"claimPath": "identity.address.postalCode",
+			"targetHash": "b313849e605299cedb58e047dcbc7c3120fe2fa28c15cd3e679c9c17b58cc330",
+			"node": [{
+				"left": "b627fd08ab2406c5885160cb1f0b287caf71f896c76a882d3f91280bb2851201"
+			}, {
+				"right": "654e2c6f734a4552ee8f8f8e6e1c24245cc87f8abfe35c828551f333893b41fe"
+			}, {
+				"left": "444eb3ff3cf4b91c5af36c7c22004d5cff9c4abeb65d40070e6d0719ce504c3b"
+			}, {
+				"right": "a0e560ec93f5f22547a3e8bcb79847c548b097a4a5445881a0ada2d07a1c21d8"
+			}, {
+				"right": "fe39de5a329c0e62deac005f2291d6504bfa15d986ae520ed3c1a150ecb115f0"
+			}]
+		}, {
+			"identifier": "cvc:Meta:issuer",
+			"value": "urn:issuer:b5e9643bf3245d63aa75035ccd1ecf8379a4b688259a3654a4e22979a354ed01:jest:test:5ae29ed0-d2cd-11e8-8dfd-f5dd2d0a4d6b",
+			"claimPath": "meta.issuer",
+			"targetHash": "3f2324807faa5c09c7f32f901fd6a61eebf4e4b048b5b53c42bcc4460a7ec44c",
+			"node": [{
+				"right": "c99a1d5aa9ed6236ff237bbf0bf4003d08f907b47cdbc697ec784de9a68f6d61"
+			}, {
+				"left": "b051f5cde89d446907fa840a054c26b7c2026ac87aae20a7bd68cac0adbd0dca"
+			}, {
+				"left": "444eb3ff3cf4b91c5af36c7c22004d5cff9c4abeb65d40070e6d0719ce504c3b"
+			}, {
+				"right": "a0e560ec93f5f22547a3e8bcb79847c548b097a4a5445881a0ada2d07a1c21d8"
+			}, {
+				"right": "fe39de5a329c0e62deac005f2291d6504bfa15d986ae520ed3c1a150ecb115f0"
+			}]
+		}, {
+			"identifier": "cvc:Meta:issuanceDate",
+			"value": "urn:issuanceDate:ebc89adaaa51aab17be1c919553d5d837a1241a3fadb39ba2fafc4c1c7ec2db0:2018-10-18T12:00:06.973Z",
+			"claimPath": "meta.issuanceDate",
+			"targetHash": "c99a1d5aa9ed6236ff237bbf0bf4003d08f907b47cdbc697ec784de9a68f6d61",
+			"node": [{
+				"left": "3f2324807faa5c09c7f32f901fd6a61eebf4e4b048b5b53c42bcc4460a7ec44c"
+			}, {
+				"left": "b051f5cde89d446907fa840a054c26b7c2026ac87aae20a7bd68cac0adbd0dca"
+			}, {
+				"left": "444eb3ff3cf4b91c5af36c7c22004d5cff9c4abeb65d40070e6d0719ce504c3b"
+			}, {
+				"right": "a0e560ec93f5f22547a3e8bcb79847c548b097a4a5445881a0ada2d07a1c21d8"
+			}, {
+				"right": "fe39de5a329c0e62deac005f2291d6504bfa15d986ae520ed3c1a150ecb115f0"
+			}]
+		}, {
+			"identifier": "cvc:Meta:expirationDate",
+			"value": "urn:expirationDate:85a13fe45452c5eb184c02d3854b298d292b48e34368e11c2c2ec841a7754466:null",
+			"claimPath": "meta.expirationDate",
+			"targetHash": "b5aacd088abc42fd6503e27f74ac65cdfe1f60a41480abc24d0b47cfcbee947a",
+			"node": [{
+				"right": "2b2ccc705df835e214ed12d981dfc74b1a4d4800a3a3d310e9588bbde810417e"
+			}, {
+				"right": "9ba4ed90004bd9308f9199fead4947985f3c1b4b08b833199c1ab6d20e1c951b"
+			}, {
+				"right": "e57e7636fff29397415e53e2e3c84ba4f045ae6d31ea504dab46b1badb87df00"
+			}, {
+				"left": "1431f1a6b95b7c68f40d51019f78b2e3a201eee3227a54a5daee7b996dca206c"
+			}, {
+				"right": "fe39de5a329c0e62deac005f2291d6504bfa15d986ae520ed3c1a150ecb115f0"
+			}]
+		}]
+	}
+}
