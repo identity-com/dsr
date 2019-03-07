@@ -1,0 +1,24 @@
+{
+  "version": "1",
+  "timestamp": "2018-07-04T00:11:55.698Z",
+  "requesterInfo": {
+    "requesterId": "uuid",
+    "app": {
+      "id": "uuid",
+      "name": "App Name",
+      "logo": "https://server/path/logo.png",
+      "description": "App Description",
+      "primaryColor": "2345EE",
+      "secondaryColor": "2345FF"
+    }
+  },
+  "channels": {
+    "eventsURL": "https://server/events/UUID",
+    "payloadURL": "https://server/payload/UUID"
+  },
+  "credentialItems": [
+    {"identifier": "GlobalIdentifier1"},
+    {"identifier": "GlobalIdentifier2"},
+    {"identifier": "GlobalIdentifier3"}
+  ]
+}

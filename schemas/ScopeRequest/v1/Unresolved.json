@@ -1,0 +1,259 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "civ:ScopeRequest:Unresolved",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "requesterInfo",
+    "timestamp",
+    "credentialItems",
+    "channels"
+  ],
+  "properties": {
+    "version": {
+      "$id": "#/properties/version",
+      "type": "string",
+      "title": "The Version Schema",
+      "default": "",
+      "examples": [
+        "1"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "requesterInfo": {
+      "$id": "#/properties/requesterInfo",
+      "type": "object",
+      "title": "The Requesterinfo Schema",
+      "required": [
+        "app",
+        "requesterId"
+      ],
+      "properties": {
+        "app": {
+          "$id": "#/properties/requesterInfo/properties/app",
+          "type": "object",
+          "title": "The App Schema",
+          "required": [
+            "description",
+            "id",
+            "name",
+            "logo",
+            "primaryColor",
+            "secondaryColor"
+          ],
+          "properties": {
+            "description": {
+              "$id": "#/properties/requesterInfo/properties/app/properties/description",
+              "type": "string",
+              "title": "The Description Schema",
+              "default": "",
+              "examples": [
+                "Case 13: To test resolveMissingCredentials()"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "id": {
+              "$id": "#/properties/requesterInfo/properties/app/properties/id",
+              "type": "string",
+              "title": "The Id Schema",
+              "default": "",
+              "examples": [
+                "7107a5b4-8a1f-11e8-9a94-37352f73"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "name": {
+              "$id": "#/properties/requesterInfo/properties/app/properties/name",
+              "type": "string",
+              "title": "The Name Schema",
+              "default": "",
+              "examples": [
+                "My Awesome Identity.com Integration"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "logo": {
+              "$id": "#/properties/requesterInfo/properties/app/properties/logo",
+              "type": "string",
+              "title": "The Logo Schema",
+              "default": "",
+              "examples": [
+                "https://upload.wikimedia.org/wikipedia/commons/5/5f/Atletico_mineiro_galo.png"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "primaryColor": {
+              "$id": "#/properties/requesterInfo/properties/app/properties/primaryColor",
+              "type": "string",
+              "title": "The Primarycolor Schema",
+              "default": "",
+              "examples": [
+                "ffffff"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "secondaryColor": {
+              "$id": "#/properties/requesterInfo/properties/app/properties/secondaryColor",
+              "type": "string",
+              "title": "The Secondarycolor Schema",
+              "default": "",
+              "examples": [
+                "000000"
+              ],
+              "pattern": "^(.*)$"
+            }
+          }
+        },
+        "requesterId": {
+          "$id": "#/properties/requesterInfo/properties/requesterId",
+          "type": "string",
+          "title": "The Requesterid Schema",
+          "default": "",
+          "examples": [
+            "3735a5b4-8a1f-11e8-9a94-a6cf71072f73"
+          ],
+          "pattern": "^(.*)$"
+        }
+      }
+    },
+    "timestamp": {
+      "$id": "#/properties/timestamp",
+      "type": "string",
+      "title": "The Timestamp Schema",
+      "default": "",
+      "examples": [
+        "2018-11-20T11:51:59.188Z"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "credentialItems": {
+      "$id": "#/properties/credentialItems",
+      "type": "array",
+      "title": "The Credentialitems Schema",
+      "items": {
+        "$id": "#/properties/credentialItems/items",
+        "type": "object",
+        "title": "The Items Schema",
+        "required": [
+          "identifier"
+        ],
+        "properties": {
+          "identifier": {
+            "$id": "#/properties/credentialItems/items/properties/identifier",
+            "type": "string",
+            "title": "The Identifier Schema",
+            "default": "",
+            "examples": [
+              "credential-cvc:Identity-v1"
+            ],
+            "pattern": "^(.*)$"
+          },
+          "constraints": {
+            "$id": "#/properties/credentialItems/items/properties/constraints",
+            "type": "object",
+            "title": "The Constraints Schema",
+            "required": [
+              "meta"
+            ],
+            "properties": {
+              "meta": {
+                "$id": "#/properties/credentialItems/items/properties/constraints/properties/meta",
+                "type": "object",
+                "title": "The Meta Schema",
+                "required": [
+                  "credential",
+                  "issuer"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "noClaims": {
+                    "$id": "#/properties/credentialItems/items/properties/constraints/properties/meta/properties/emptyClaim",
+                    "type": "boolean",
+                    "title": "The flag that allows to ask for no claims in the DSR only validating if the claim exists",
+                    "examples": [
+                      "true or false"
+                    ]
+                  },
+                  "credential": {
+                    "$id": "#/properties/credentialItems/items/properties/constraints/properties/meta/properties/credential",
+                    "type": "string",
+                    "title": "The Credential Version defined on Credential Commons project and in the Marketplace",
+                    "default": "",
+                    "examples": [
+                      "credential-cvc:Identity-v1"
+                    ],
+                    "pattern": "^(.*)$"
+                  },
+                  "issuer": {
+                    "$id": "#/properties/credentialItems/items/properties/constraints/properties/meta/properties/issuer",
+                    "type": "object",
+                    "title": "The Issuer Schema",
+                    "required": [
+                      "is"
+                    ],
+                    "properties": {
+                      "is": {
+                        "$id": "#/properties/credentialItems/items/properties/constraints/properties/meta/properties/issuer/properties/is",
+                        "type": "object",
+                        "title": "The Is Schema",
+                        "required": [
+                          "$eq"
+                        ],
+                        "properties": {
+                          "$eq": {
+                            "$id": "#/properties/credentialItems/items/properties/constraints/properties/meta/properties/issuer/properties/is/properties/$eq",
+                            "type": "string",
+                            "title": "The $eq Schema",
+                            "default": "",
+                            "examples": [
+                              "did:ethr:0xaf9482c84De4e2a961B98176C9f295F9b6008BfD"
+                            ],
+                            "pattern": "^(.*)$"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "channels": {
+      "$id": "#/properties/channels",
+      "type": "object",
+      "title": "The Channels Schema",
+      "required": [
+        "eventsURL",
+        "payloadURL"
+      ],
+      "properties": {
+        "eventsURL": {
+          "$id": "#/properties/channels/properties/eventsURL",
+          "type": "string",
+          "title": "The Eventsurl Schema",
+          "default": "",
+          "examples": [
+            "https://awesome-idr.com/response/events"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "payloadURL": {
+          "$id": "#/properties/channels/properties/payloadURL",
+          "type": "string",
+          "title": "The Payloadurl Schema",
+          "default": "",
+          "examples": [
+            "https://awesome-idr.com/response/payload"
+          ],
+          "pattern": "^(.*)$"
+        }
+      }
+    }
+  }
+}
