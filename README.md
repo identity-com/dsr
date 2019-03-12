@@ -19,11 +19,13 @@ DSR are part of the ecossystem of identity.com providing an standardized way for
   * [Build a signed ScopeRequest request body](#build-a-signed-scoperequest-request-body)
   * [Build a signed ScopeRequest request body](#build-a-signed-scoperequest-request-body-1)
 - [Install](#install)
+  * [Prerequisites](#prerequisites)
+  * [Installation instructions](#installation-instructions)
 - [Test](#test)
+- [Publishing schemas](#publishing-schemas)
 - [Examples](#examples)
   * [Simple Unresolved SDR Request with Global Identifiers](#simple-unresolved-sdr-request-with-global-identifiers)
   * [Complex Unresolved SDR Request](#complex-unresolved-sdr-request)
-- [Integration with CCS Libraries](#integration-with-ccs-libraries)
 - [ES5 and ES6 definitions](#es5-and-es6-definitions)
 - [Node vs React usage of this library](#node-vs-react-usage-of-this-library)
 - [Releases](#releases)
@@ -190,8 +192,16 @@ npm run test:watch
 
 The *dsr-js* library has a script, avaiable in the *package.json*, to publish the generate schemas to a bucket in AWS. The following command will publish the schemas:
 ```bash
-S3_BUCKET_SCHEMA_URL=<s3://your-bucket-url> S3_PUBLIC_SCHEMA_URL=<http://your-schem-url> npm run publish-schemas
+S3_BUCKET_SCHEMA_URL=<s3://your-bucket-url> npm run publish-schemas
 ```
+
+There is also a script to check the published schemas:
+```bash
+S3_PUBLIC_SCHEMA_URL=<http://your-schem-url> npm run check-schemas
+```
+
+To publish and check the schemas it is required to have the environment variables for AWS credentials defined (AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY).
+
 
 ## Examples
 

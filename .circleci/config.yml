@@ -11,6 +11,22 @@ workflows:
   build-and-test:
     jobs:
       - build
+      - publish-schemas:
+          context: Development
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - master
+      - check-schemas:
+          context: Development
+          requires:
+            - publish-schemas
+          filters:
+            branches:
+              only:
+                - master
 
   build-tag:
     jobs:
@@ -29,6 +45,7 @@ workflows:
               only: /^release\..*$/
             branches:
               ignore: /.*/
+
   deploy-npm:
     jobs:
       - build:
@@ -56,6 +73,7 @@ workflows:
             branches:
               ignore: /.*/
       - check-schemas:
+          context: Production
           requires:
             - publish-schemas
           filters:
@@ -148,7 +166,6 @@ jobs:
       - image: civicteam/circle-aws-node
       # environment:
           #S3_BUCKET_SCHEMA_URL: put your bucket URL here
-          #S3_PUBLIC_SCHEMA_URL: put your public schema URL here
           #AWS_ACCESS_KEY_ID: put your token here
           #AWS_SECRET_ACCESS_KEY: put your token here
     working_directory: ~/repo
