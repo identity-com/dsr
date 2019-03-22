@@ -24,8 +24,8 @@ DSR are part of the ecossystem of identity.com providing an standardized way for
 - [Test](#test)
 - [Publishing schemas](#publishing-schemas)
 - [Examples](#examples)
-  * [Simple Unresolved SDR Request with Global Identifiers](#simple-unresolved-sdr-request-with-global-identifiers)
-  * [Complex Unresolved SDR Request](#complex-unresolved-sdr-request)
+  * [Simple Unresolved DSR Request with Global Identifiers](#simple-unresolved-dsr-request-with-global-identifiers)
+  * [Complex Unresolved DSR Request](#complex-unresolved-dsr-request)
 - [ES5 and ES6 definitions](#es5-and-es6-definitions)
 - [Node vs React usage of this library](#node-vs-react-usage-of-this-library)
 - [Releases](#releases)
@@ -205,7 +205,7 @@ To publish and check the schemas it is required to have the environment variable
 
 ## Examples
 
-### Simple Unresolved SDR Request with Global Identifiers
+### Simple Unresolved DSR Request with Global Identifiers
 
 Running this DSR:
 
@@ -260,7 +260,7 @@ Against an VC (this is a partial VC json) that has:
 
 Should return that VC, since it's identifier is of the type of the global Identifier.
 
-### Complex Unresolved SDR Request
+### Complex Unresolved DSR Request
 
 Running this DSR:
 
