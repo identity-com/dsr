@@ -28,6 +28,9 @@ const VALID_OPERATORS = [
   '$exists',
 ];
 
+const isLocal = url => (url.match('(http://|https://)?(localhost|127.0.0.*)') !== null);
+
+
 /**
  * Class for generating Scope Requests
  */
@@ -143,11 +146,14 @@ class ScopeRequest {
       throw new Error('eventsURL is required');
     }
 
-    if (!_.startsWith(channelsConfig.eventsURL, 'https')) {
+    if (!isLocal(channelsConfig.eventsURL)
+        && !_.startsWith(channelsConfig.eventsURL, 'https')) {
       throw new Error('only HTTPS is supported for eventsURL');
     }
 
-    if (channelsConfig.payloadURL && !_.startsWith(channelsConfig.payloadURL, 'https')) {
+    if (channelsConfig.payloadURL
+        && !isLocal(channelsConfig.payloadURL)
+        && !_.startsWith(channelsConfig.payloadURL, 'https')) {
       throw new Error('only HTTPS is supported for payloadURL');
     }
 
