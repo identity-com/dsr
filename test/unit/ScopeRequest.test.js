@@ -114,18 +114,6 @@ describe('DSR Factory Tests', () => {
     expect(isValid).toBeTruthy();
   });
 
-  it('Should skip https test for local url in ', () => {
-    let dsr;
-    expect(() => {
-      dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], {
-        eventsURL: 'https://localhost/',
-        payloadURL: 'http://127.0.0.1/'
-      });
-    }).not.toThrow('only HTTPS is supported for payloadURL');
-    const isValid = ScopeRequest.validateCredentialItems(dsr.credentialItems);
-    expect(isValid).toBeTruthy();
-  });
-
   it('Should fail validation of an string identifier for credential items on a DSR', () => {
     expect(() => {
       const dsr = new ScopeRequest('abcd', [{}]);
