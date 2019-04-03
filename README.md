@@ -157,9 +157,7 @@ return `true` is the body is valid
 
 - [npm](https://www.npmjs.com/)
 - [Node.js](https://nodejs.org/en/)
-- *Java RE* *
 
-\* The *sjcl* library with ECC support will be built after the dependencies installation (see *postinstall* script in *package.json*). The build process of *sjcl* library requires the *Java RE* to be installed (for more details, please, refer to https://github.com/bitwiseshiftleft/sjcl/wiki/Getting-Started).
 
 ### Installation instructions
 
