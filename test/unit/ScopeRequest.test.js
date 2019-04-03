@@ -17,8 +17,8 @@ const config = {
     secondaryColor: 'FFFFFF',
   },
   channels: {
-    baseEventsURL: 'https://localhost/sr/events',
-    basePayloadURL: 'https://localhost/sr/payload',
+    baseEventsURL: 'https://example.com/sr/events',
+    basePayloadURL: 'https://example.com/sr/payload',
   },
 };
 
@@ -98,6 +98,18 @@ describe('DSR Factory Tests', () => {
 
   it('Should succeed validation of an string identifier for credential items on a DSR', () => {
     const dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1']);
+    const isValid = ScopeRequest.validateCredentialItems(dsr.credentialItems);
+    expect(isValid).toBeTruthy();
+  });
+
+  it('Should skip https test for local url in payloadUrl or eventsUrl and succeed validation', () => {
+    let dsr;
+    expect(() => {
+      dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], {
+        eventsURL: 'http://localhost/',
+        payloadURL: 'http://127.0.0.1/'
+      });
+    }).not.toThrow('only HTTPS is supported for payloadURL');
     const isValid = ScopeRequest.validateCredentialItems(dsr.credentialItems);
     expect(isValid).toBeTruthy();
   });
@@ -238,21 +250,21 @@ describe('DSR Factory Tests', () => {
   it('Should fail validation while mocking the config file with eventsURL without https', () => {
     expect(() => {
       // eslint-disable-next-line no-unused-vars
-      const dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], { eventsURL: 'http://localhost/' });
+      const dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], { eventsURL: 'http://example.com/' });
     }).toThrow('only HTTPS is supported for eventsURL');
   });
 
   it('Should fail validation while mocking the config file with payloadURL without https', () => {
     expect(() => {
       // eslint-disable-next-line no-unused-vars
-      const dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], { eventsURL: 'https://localhost/', payloadURL: 'http://localhost/' });
+      const dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], { eventsURL: 'https://example.com/', payloadURL: 'http://example.com/' });
     }).toThrow('only HTTPS is supported for payloadURL');
   });
 
   it('Should fail validation while mocking the appConfig without id', () => {
     expect(() => {
       // eslint-disable-next-line no-unused-vars
-      const dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], { eventsURL: 'https://localhost/', payloadURL: 'https://localhost/' }, {});
+      const dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], { eventsURL: 'https://example.com/', payloadURL: 'https://example.com/' }, {});
     }).toThrow('app.id is required');
   });
 
@@ -261,7 +273,7 @@ describe('DSR Factory Tests', () => {
       const appConfig = { id: 'test' };
       // eslint-disable-next-line no-unused-vars
       const dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], {
-        eventsURL: 'https://localhost/', payloadURL: 'https://localhost/',
+        eventsURL: 'https://example.com/', payloadURL: 'https://example.com/',
       }, appConfig);
     }).toThrow('app.name is required');
   });
@@ -270,16 +282,16 @@ describe('DSR Factory Tests', () => {
     expect(() => {
       const appConfig = { id: 'test', name: 'test' };
       // eslint-disable-next-line no-unused-vars
-      const dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], { eventsURL: 'https://localhost/', payloadURL: 'https://localhost/' }, appConfig);
+      const dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], { eventsURL: 'https://example.com/', payloadURL: 'https://example.com/' }, appConfig);
     }).toThrow('app.logo is required');
   });
 
   it('Should fail validation while mocking the appConfig without logo https', () => {
     expect(() => {
-      const appConfig = { id: 'test', name: 'test', logo: 'http://localhost/' };
+      const appConfig = { id: 'test', name: 'test', logo: 'http://example.com/' };
       // eslint-disable-next-line no-unused-vars
       const dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], {
-        eventsURL: 'https://localhost/', payloadURL: 'https://localhost/',
+        eventsURL: 'https://example.com/', payloadURL: 'https://example.com/',
       }, appConfig);
     }).toThrow('only HTTPS is supported for app.logo');
   });
@@ -287,11 +299,11 @@ describe('DSR Factory Tests', () => {
   it('Should fail validation while mocking the appConfig without description', () => {
     expect(() => {
       const appConfig = {
-        id: 'test', name: 'test', logo: 'https://localhost/', primaryColor: 'FFF',
+        id: 'test', name: 'test', logo: 'https://example.com/', primaryColor: 'FFF',
       };
       // eslint-disable-next-line no-unused-vars
       const dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], {
-        eventsURL: 'https://localhost/', payloadURL: 'https://localhost/',
+        eventsURL: 'https://example.com/', payloadURL: 'https://example.com/',
       }, appConfig);
     }).toThrow('app.description is required');
   });
@@ -299,11 +311,11 @@ describe('DSR Factory Tests', () => {
   it('Should fail validation while mocking the appConfig without primaryColor', () => {
     expect(() => {
       const appConfig = {
-        id: 'test', name: 'test', logo: 'https://localhost/', description: 'test',
+        id: 'test', name: 'test', logo: 'https://example.com/', description: 'test',
       };
       // eslint-disable-next-line no-unused-vars
       const dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], {
-        eventsURL: 'https://localhost/', payloadURL: 'https://localhost/',
+        eventsURL: 'https://example.com/', payloadURL: 'https://example.com/',
       }, appConfig);
     }).toThrow('app.primaryColor is required');
   });
@@ -311,11 +323,11 @@ describe('DSR Factory Tests', () => {
   it('Should fail validation while mocking the appConfig without secondaryColor', () => {
     expect(() => {
       const appConfig = {
-        id: 'test', name: 'test', logo: 'https://localhost/', primaryColor: 'FFF', description: 'test',
+        id: 'test', name: 'test', logo: 'https://example.com/', primaryColor: 'FFF', description: 'test',
       };
       // eslint-disable-next-line no-unused-vars
       const dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], {
-        eventsURL: 'https://localhost/', payloadURL: 'https://localhost/',
+        eventsURL: 'https://example.com/', payloadURL: 'https://example.com/',
       }, appConfig);
     }).toThrow('app.secondaryColor is required');
   });
@@ -323,12 +335,12 @@ describe('DSR Factory Tests', () => {
   it('Should fail validation while mocking the appConfig without partnerConfig id', () => {
     expect(() => {
       const appConfig = {
-        id: 'test', name: 'test', logo: 'https://localhost/', primaryColor: 'FFF', secondaryColor: 'FFF', description: 'test',
+        id: 'test', name: 'test', logo: 'https://example.com/', primaryColor: 'FFF', secondaryColor: 'FFF', description: 'test',
       };
       const partnerConfig = {};
       // eslint-disable-next-line no-unused-vars
       const dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], {
-        eventsURL: 'https://localhost/', payloadURL: 'https://localhost/',
+        eventsURL: 'https://example.com/', payloadURL: 'https://example.com/',
       }, appConfig, partnerConfig);
     }).toThrow('partner.id is required');
   });
@@ -336,14 +348,14 @@ describe('DSR Factory Tests', () => {
   it('Should fail validation while mocking the appConfig without partnerConfig signingKeys', () => {
     expect(() => {
       const appConfig = {
-        id: 'test', name: 'test', logo: 'https://localhost/', primaryColor: 'FFF', secondaryColor: 'FFF', description: 'test',
+        id: 'test', name: 'test', logo: 'https://example.com/', primaryColor: 'FFF', secondaryColor: 'FFF', description: 'test',
       };
       const partnerConfig = {
         id: 'test',
       };
       // eslint-disable-next-line no-unused-vars
       const dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], {
-        eventsURL: 'https://localhost/', payloadURL: 'https://localhost/',
+        eventsURL: 'https://example.com/', payloadURL: 'https://example.com/',
       }, appConfig, partnerConfig);
     }).toThrow('Partner public and private signing keys are required');
   });
@@ -359,7 +371,7 @@ describe('DSR Factory Tests', () => {
     const appConfig = {
       id: 'test',
       name: 'test',
-      logo: 'https://localhost/',
+      logo: 'https://example.com/',
       primaryColor: 'FFF',
       secondaryColor: 'FFF',
       description: 'test',
@@ -373,7 +385,7 @@ describe('DSR Factory Tests', () => {
     };
     // eslint-disable-next-line no-unused-vars
     const dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], {
-      eventsURL: 'https://localhost/', payloadURL: 'https://localhost/',
+      eventsURL: 'https://example.com/', payloadURL: 'https://example.com/',
     }, appConfig, partnerConfig);
     expect(dsr.requesterInfo.requesterId).toBe(partnerConfig.id);
   });
@@ -612,8 +624,8 @@ describe('DSR Request Utils', () => {
     const dsr = new ScopeRequest(
       requestId, 'credential-cvc:IDVaaS-v1',
       {
-        eventsURL: `https://localhost/event/${requestId}`,
-        payloadURL: `https://localhost/payload/${requestId}`,
+        eventsURL: `https://example.com/event/${requestId}`,
+        payloadURL: `https://example.com/payload/${requestId}`,
       },
       {
         id: 'TestPartnerApp',
