@@ -48,8 +48,8 @@
     "rimraf": "^2.6.2"
   },
   "dependencies": {
-    "@identity.com/credential-commons": "^1.0.0-rc.7",
-    "@identity.com/uca": "^1.0.0-rc.1",
+    "@identity.com/credential-commons": "^1.0.4",
+    "@identity.com/uca": "^1.0.2",
     "bottlejs": "^1.7.1",
     "dotenv": "^6.0.0",
     "json-stable-stringify": "^1.0.1",
