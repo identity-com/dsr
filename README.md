@@ -151,6 +151,26 @@ pinnedXpub parameters is optional, but recomended to avoid man in the middle att
 
 return `true` is the body is valid
 
+## Utils
+
+Some helper functions to easy the DSR and verifiable credentials usage
+
+### Check if a scopeRequest RESPONSE fulfill the credentials constrains on the request 
+
+```javascript
+/**
+   *
+   * @param credentialItems - A list of credentialItems to check
+   * @param request - Original ScopeRequest
+   * @return {boolean}
+   */
+  static credentialsMatchesRequest(credentialItems, request)
+  
+  //Example
+  ScopeRequest.credentialsMatchesRequest(credentialItems, dsr);  
+```
+
+
 ## Install
 
 ### Prerequisites

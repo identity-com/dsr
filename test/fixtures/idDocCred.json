@@ -1,0 +1,390 @@
+{
+  "id": "381527ec-f53a-4bf7-ba75-a352d9d29a6a",
+  "issuer": "",
+  "issuanceDate": "2019-04-04T14:50:53.055Z",
+  "identifier": "credential-cvc:IdDocument-v1",
+  "expirationDate": null,
+  "version": "1",
+  "type": [
+    "Credential",
+    "credential-cvc:IdDocument-v1"
+  ],
+  "claim": {
+    "document": {
+      "type": "Passport",
+      "number": "FP12345",
+      "name": {
+        "familyNames": "e8qak1",
+        "givenNames": "e8qhs4Iak1",
+        "otherNames": "qhs4I"
+      },
+      "gender": "M",
+      "issueCountry": "Brazil",
+      "placeOfBirth": "Belo Horizonte",
+      "dateOfBirth": {
+        "day": 20,
+        "month": 3,
+        "year": 1978
+      },
+      "dateOfExpiry": {
+        "day": 12,
+        "month": 2,
+        "year": 2025
+      },
+      "nationality": "Brazilian"
+    }
+  },
+  "proof": {
+    "type": "CvcMerkleProof2018",
+    "merkleRoot": "aae31cc2fff9123fef7d1b828489d1d33f0d9eee445bc5ab37139c0d99977583",
+    "anchor": "TBD (Civic Blockchain Attestation)",
+    "leaves": [
+      {
+        "identifier": "claim-cvc:Document.type-v1",
+        "value": "urn:type:c3a7445397f25d0c768e0ae5b28f7f4a2612dee3d98ab79dd11bcc1fb26e35c6:Passport|",
+        "claimPath": "document.type",
+        "targetHash": "12ab709bca98be2d2820d14aeaf52fada02602f7babc9740c4280c6bb4b02df1",
+        "node": [
+          {
+            "right": "de89c37c55b3723e267beea0fa88b99bb17fb045c4b4cba291ac7f398704a09e"
+          },
+          {
+            "right": "f0afe52dc6449099ac2655d38aede5d0e91f7162cae97e5ea4a069e963623689"
+          },
+          {
+            "right": "4c090cd151b525bbdc3969fb4bf293afc0c61dfbecbf570734b2af91762e4f04"
+          },
+          {
+            "right": "c1c1282fe52d485d0007e22e20bd9653bba6da98d00f91ed94f989670f77ea03"
+          },
+          {
+            "right": "97d3ddf5e420e538e2906f8d82cc1dd1f9fde1413c5237aff28909b5bd1acb32"
+          }
+        ]
+      },
+      {
+        "identifier": "claim-cvc:Document.number-v1",
+        "value": "urn:number:76dbcaea2aaa88b206a4b6bdade3e6d04aed70f32e6716f810e96d9faa87a887:FP12345|",
+        "claimPath": "document.number",
+        "targetHash": "de89c37c55b3723e267beea0fa88b99bb17fb045c4b4cba291ac7f398704a09e",
+        "node": [
+          {
+            "left": "12ab709bca98be2d2820d14aeaf52fada02602f7babc9740c4280c6bb4b02df1"
+          },
+          {
+            "right": "f0afe52dc6449099ac2655d38aede5d0e91f7162cae97e5ea4a069e963623689"
+          },
+          {
+            "right": "4c090cd151b525bbdc3969fb4bf293afc0c61dfbecbf570734b2af91762e4f04"
+          },
+          {
+            "right": "c1c1282fe52d485d0007e22e20bd9653bba6da98d00f91ed94f989670f77ea03"
+          },
+          {
+            "right": "97d3ddf5e420e538e2906f8d82cc1dd1f9fde1413c5237aff28909b5bd1acb32"
+          }
+        ]
+      },
+      {
+        "identifier": "claim-cvc:Document.name-v1",
+        "value": "urn:name.familyNames:b05c9b80e50bca9b612c5efddd7b65aee8119ed6e672a7f3da3a0d3ee8e53229:e8qak1|urn:name.givenNames:f29448bd5b07ab9115307a6a609813eb3e4a7f183e36be27d7cecf5ae9a1ef84:e8qhs4Iak1|urn:name.otherNames:367cd67a4d9421e84fb2d2f2fdd936d2189c04cb869c1f85e84b6832c3004beb:qhs4I|",
+        "claimPath": "document.name",
+        "targetHash": "de4d717a57eb7c08317f13880125f81b4fbc4ec2a57fe7fc241cf2622d906e72",
+        "node": [
+          {
+            "right": "8b3e138a9b7d43bc3f997f9ab3bdca5564853ce6e5e0891d5d74cb6dd34bc28d"
+          },
+          {
+            "left": "142e02790e661883ae65ae82cd165aace57d7269f8be0de24cfa9b0f81d2ccc7"
+          },
+          {
+            "right": "4c090cd151b525bbdc3969fb4bf293afc0c61dfbecbf570734b2af91762e4f04"
+          },
+          {
+            "right": "c1c1282fe52d485d0007e22e20bd9653bba6da98d00f91ed94f989670f77ea03"
+          },
+          {
+            "right": "97d3ddf5e420e538e2906f8d82cc1dd1f9fde1413c5237aff28909b5bd1acb32"
+          }
+        ]
+      },
+      {
+        "identifier": "claim-cvc:Name.givenNames-v1",
+        "value": "urn:givenNames:f29448bd5b07ab9115307a6a609813eb3e4a7f183e36be27d7cecf5ae9a1ef84:e8qhs4Iak1|",
+        "claimPath": "document.name.givenNames",
+        "targetHash": "8b3e138a9b7d43bc3f997f9ab3bdca5564853ce6e5e0891d5d74cb6dd34bc28d",
+        "node": [
+          {
+            "left": "de4d717a57eb7c08317f13880125f81b4fbc4ec2a57fe7fc241cf2622d906e72"
+          },
+          {
+            "left": "142e02790e661883ae65ae82cd165aace57d7269f8be0de24cfa9b0f81d2ccc7"
+          },
+          {
+            "right": "4c090cd151b525bbdc3969fb4bf293afc0c61dfbecbf570734b2af91762e4f04"
+          },
+          {
+            "right": "c1c1282fe52d485d0007e22e20bd9653bba6da98d00f91ed94f989670f77ea03"
+          },
+          {
+            "right": "97d3ddf5e420e538e2906f8d82cc1dd1f9fde1413c5237aff28909b5bd1acb32"
+          }
+        ]
+      },
+      {
+        "identifier": "claim-cvc:Name.familyNames-v1",
+        "value": "urn:familyNames:b05c9b80e50bca9b612c5efddd7b65aee8119ed6e672a7f3da3a0d3ee8e53229:e8qak1|",
+        "claimPath": "document.name.familyNames",
+        "targetHash": "3624f923ef6593539ed06ebe7ad6acd33595d85a7192d16b7444302eefdf9081",
+        "node": [
+          {
+            "right": "ebc1b949e45ef0264f10188bdf62dbd0ab14eff28d021fef192dacfa12bb4d38"
+          },
+          {
+            "right": "7c89c1f4beb3b0dc6ec9df773711d3f32b7dbbaa9b5d9ae3d601b567f0c611e6"
+          },
+          {
+            "left": "6c069fe251a08d58057cebc95cfc0de5e51c5c349f9df79cbe151e2a744cb97f"
+          },
+          {
+            "right": "c1c1282fe52d485d0007e22e20bd9653bba6da98d00f91ed94f989670f77ea03"
+          },
+          {
+            "right": "97d3ddf5e420e538e2906f8d82cc1dd1f9fde1413c5237aff28909b5bd1acb32"
+          }
+        ]
+      },
+      {
+        "identifier": "claim-cvc:Name.otherNames-v1",
+        "value": "urn:otherNames:367cd67a4d9421e84fb2d2f2fdd936d2189c04cb869c1f85e84b6832c3004beb:qhs4I|",
+        "claimPath": "document.name.otherNames",
+        "targetHash": "ebc1b949e45ef0264f10188bdf62dbd0ab14eff28d021fef192dacfa12bb4d38",
+        "node": [
+          {
+            "left": "3624f923ef6593539ed06ebe7ad6acd33595d85a7192d16b7444302eefdf9081"
+          },
+          {
+            "right": "7c89c1f4beb3b0dc6ec9df773711d3f32b7dbbaa9b5d9ae3d601b567f0c611e6"
+          },
+          {
+            "left": "6c069fe251a08d58057cebc95cfc0de5e51c5c349f9df79cbe151e2a744cb97f"
+          },
+          {
+            "right": "c1c1282fe52d485d0007e22e20bd9653bba6da98d00f91ed94f989670f77ea03"
+          },
+          {
+            "right": "97d3ddf5e420e538e2906f8d82cc1dd1f9fde1413c5237aff28909b5bd1acb32"
+          }
+        ]
+      },
+      {
+        "identifier": "claim-cvc:Document.gender-v1",
+        "value": "urn:gender:b69b7a6eb41eb37dd3b558226a62aaca80dc1d24312b0da83cb13837a2092f43:M|",
+        "claimPath": "document.gender",
+        "targetHash": "788ac13bbbed3c7e0d554cd944f8aa042860f66e33d496923470b6dc13bd8fd2",
+        "node": [
+          {
+            "right": "5e04e88ac5f3da0ee7eb1a72d907c1fad0ec4fa5504b2aed09f7eed77217eee0"
+          },
+          {
+            "left": "1e5fb01658e9470c175c6ec704621f4367f560b529a5ce6546cf444e76e2c357"
+          },
+          {
+            "left": "6c069fe251a08d58057cebc95cfc0de5e51c5c349f9df79cbe151e2a744cb97f"
+          },
+          {
+            "right": "c1c1282fe52d485d0007e22e20bd9653bba6da98d00f91ed94f989670f77ea03"
+          },
+          {
+            "right": "97d3ddf5e420e538e2906f8d82cc1dd1f9fde1413c5237aff28909b5bd1acb32"
+          }
+        ]
+      },
+      {
+        "identifier": "claim-cvc:Document.issueCountry-v1",
+        "value": "urn:issueCountry:11b4992c20b6beef702a6a47aafbdd1040da5279f0d08a156b42397226fc52f0:Brazil|",
+        "claimPath": "document.issueCountry",
+        "targetHash": "5e04e88ac5f3da0ee7eb1a72d907c1fad0ec4fa5504b2aed09f7eed77217eee0",
+        "node": [
+          {
+            "left": "788ac13bbbed3c7e0d554cd944f8aa042860f66e33d496923470b6dc13bd8fd2"
+          },
+          {
+            "left": "1e5fb01658e9470c175c6ec704621f4367f560b529a5ce6546cf444e76e2c357"
+          },
+          {
+            "left": "6c069fe251a08d58057cebc95cfc0de5e51c5c349f9df79cbe151e2a744cb97f"
+          },
+          {
+            "right": "c1c1282fe52d485d0007e22e20bd9653bba6da98d00f91ed94f989670f77ea03"
+          },
+          {
+            "right": "97d3ddf5e420e538e2906f8d82cc1dd1f9fde1413c5237aff28909b5bd1acb32"
+          }
+        ]
+      },
+      {
+        "identifier": "claim-cvc:Document.placeOfBirth-v1",
+        "value": "urn:placeOfBirth:11b6c4f60c6478143fb3b0cdf5ff45afdb377b0778f5b443923020249872a3c9:Belo Horizonte|",
+        "claimPath": "document.placeOfBirth",
+        "targetHash": "181b52f7de9bb7ef64e9f0d65091ded06556492042d8bffd8e56714d3a99617a",
+        "node": [
+          {
+            "right": "157a2822998bf78620d56e8ce7fd2a19952e0e074825489b843e416e6e691d44"
+          },
+          {
+            "right": "47d12d4f13beda74c577099fa1635eb16515a622839d6f122eb806ce798246ee"
+          },
+          {
+            "right": "52a089859207d894e860b2a276041edac7efd9cc6ffb9fa6224282909b50f805"
+          },
+          {
+            "left": "d9d4ab594a533d5bcd77f07600bb3f782ad54dbfb823edc2e9a4095addce8fc7"
+          },
+          {
+            "right": "97d3ddf5e420e538e2906f8d82cc1dd1f9fde1413c5237aff28909b5bd1acb32"
+          }
+        ]
+      },
+      {
+        "identifier": "claim-cvc:Document.dateOfBirth-v1",
+        "value": "urn:dateOfBirth.day:459d10ab0ac22747442964a5dd401bde34d477f36aac267bde8babcda0ddbbd9:20|urn:dateOfBirth.month:3ec27f68d55c0e318799a803ac6bc51bb7349ed6c49b547274efd6a7137a07e5:3|urn:dateOfBirth.year:81b9bcf99a9f72b8d6dfa68728fbf53c04b023e54f4b7b9a6b742653f89238db:1978|",
+        "claimPath": "document.dateOfBirth",
+        "targetHash": "157a2822998bf78620d56e8ce7fd2a19952e0e074825489b843e416e6e691d44",
+        "node": [
+          {
+            "left": "181b52f7de9bb7ef64e9f0d65091ded06556492042d8bffd8e56714d3a99617a"
+          },
+          {
+            "right": "47d12d4f13beda74c577099fa1635eb16515a622839d6f122eb806ce798246ee"
+          },
+          {
+            "right": "52a089859207d894e860b2a276041edac7efd9cc6ffb9fa6224282909b50f805"
+          },
+          {
+            "left": "d9d4ab594a533d5bcd77f07600bb3f782ad54dbfb823edc2e9a4095addce8fc7"
+          },
+          {
+            "right": "97d3ddf5e420e538e2906f8d82cc1dd1f9fde1413c5237aff28909b5bd1acb32"
+          }
+        ]
+      },
+      {
+        "identifier": "claim-cvc:Document.dateOfExpiry-v1",
+        "value": "urn:dateOfExpiry.day:a5f64d8f96677bd914073746c13536008c2946cbac0b8a09a5a08eca6d871486:12|urn:dateOfExpiry.month:236ee6aae6bcf9a117f47f57beceb4d690eb209024b42092af3ccb0adddd6d30:2|urn:dateOfExpiry.year:e655e874e2a1280cdc29e56169f0c91397cf6f728c11f2f674ffab6a9cca2d68:2025|",
+        "claimPath": "document.dateOfExpiry",
+        "targetHash": "51214d909fe0a33cb26aa7c5f90bf6e4befb2d0de84831e3542e6cdaa5943697",
+        "node": [
+          {
+            "right": "2213629013ed78186ba3fbc044ec0891d267ea417a2aa521e34d90c3adfeb413"
+          },
+          {
+            "left": "d5a0491c20ddee2260d1144ec96a553d59d51f1a24fe538ba5c3972e1e28f5b7"
+          },
+          {
+            "right": "52a089859207d894e860b2a276041edac7efd9cc6ffb9fa6224282909b50f805"
+          },
+          {
+            "left": "d9d4ab594a533d5bcd77f07600bb3f782ad54dbfb823edc2e9a4095addce8fc7"
+          },
+          {
+            "right": "97d3ddf5e420e538e2906f8d82cc1dd1f9fde1413c5237aff28909b5bd1acb32"
+          }
+        ]
+      },
+      {
+        "identifier": "claim-cvc:Document.nationality-v1",
+        "value": "urn:nationality:036af8a3ca50ede3d0c14bb7b1b0d8801a4c7754c712b66f801d757f55a53b50:Brazilian|",
+        "claimPath": "document.nationality",
+        "targetHash": "2213629013ed78186ba3fbc044ec0891d267ea417a2aa521e34d90c3adfeb413",
+        "node": [
+          {
+            "left": "51214d909fe0a33cb26aa7c5f90bf6e4befb2d0de84831e3542e6cdaa5943697"
+          },
+          {
+            "left": "d5a0491c20ddee2260d1144ec96a553d59d51f1a24fe538ba5c3972e1e28f5b7"
+          },
+          {
+            "right": "52a089859207d894e860b2a276041edac7efd9cc6ffb9fa6224282909b50f805"
+          },
+          {
+            "left": "d9d4ab594a533d5bcd77f07600bb3f782ad54dbfb823edc2e9a4095addce8fc7"
+          },
+          {
+            "right": "97d3ddf5e420e538e2906f8d82cc1dd1f9fde1413c5237aff28909b5bd1acb32"
+          }
+        ]
+      },
+      {
+        "identifier": "cvc:Meta:issuer",
+        "value": "urn:issuer:a12daa42b969e873db7c8cec9cc6ef9d6788707691227a9cce9fe444e4ff871b:|",
+        "claimPath": "meta.issuer",
+        "targetHash": "c95ba2a7ee8007f281685b16ef65c2ff4b93c65906437f0f13af14897a6a40ad",
+        "node": [
+          {
+            "right": "872a17da3cba184ba0af4a3d60bd7a553bae6c03618e07664d5af49584a279b0"
+          },
+          {
+            "right": "3987cadfae8583f1ae55b6ff4bb67aafa85a939a22143d8f3c45ec22de2216da"
+          },
+          {
+            "left": "cf1463b545bf482b588b79f1634734b0e6d0380710d26b833a0ce8a22657b4d0"
+          },
+          {
+            "left": "d9d4ab594a533d5bcd77f07600bb3f782ad54dbfb823edc2e9a4095addce8fc7"
+          },
+          {
+            "right": "97d3ddf5e420e538e2906f8d82cc1dd1f9fde1413c5237aff28909b5bd1acb32"
+          }
+        ]
+      },
+      {
+        "identifier": "cvc:Meta:issuanceDate",
+        "value": "urn:issuanceDate:2a11d41e05bc215d66718e177624f7c6edddb29ec7a0837f3443875cecc3fa1b:2019-04-04T14:50:53.055Z|",
+        "claimPath": "meta.issuanceDate",
+        "targetHash": "872a17da3cba184ba0af4a3d60bd7a553bae6c03618e07664d5af49584a279b0",
+        "node": [
+          {
+            "left": "c95ba2a7ee8007f281685b16ef65c2ff4b93c65906437f0f13af14897a6a40ad"
+          },
+          {
+            "right": "3987cadfae8583f1ae55b6ff4bb67aafa85a939a22143d8f3c45ec22de2216da"
+          },
+          {
+            "left": "cf1463b545bf482b588b79f1634734b0e6d0380710d26b833a0ce8a22657b4d0"
+          },
+          {
+            "left": "d9d4ab594a533d5bcd77f07600bb3f782ad54dbfb823edc2e9a4095addce8fc7"
+          },
+          {
+            "right": "97d3ddf5e420e538e2906f8d82cc1dd1f9fde1413c5237aff28909b5bd1acb32"
+          }
+        ]
+      },
+      {
+        "identifier": "cvc:Meta:expirationDate",
+        "value": "urn:expirationDate:cb944b128a81e2b11fbf7aa3f9223260c8e409e599228b0a3c6848619491acd6:null|",
+        "claimPath": "meta.expirationDate",
+        "targetHash": "0c59cf7816616d588c8591281308dfb0de432ce7f042d424d239bc16534b86de",
+        "node": [
+          {
+            "right": "ff61b4e477d3d2c7320a4da0fa387a319121709bd06a0fef28ddd565ca2f9376"
+          },
+          {
+            "left": "cd8d2fc9c2e2d9072d72672241d69471f658cf10c00357a61d878ac76530d494"
+          },
+          {
+            "left": "cf1463b545bf482b588b79f1634734b0e6d0380710d26b833a0ce8a22657b4d0"
+          },
+          {
+            "left": "d9d4ab594a533d5bcd77f07600bb3f782ad54dbfb823edc2e9a4095addce8fc7"
+          },
+          {
+            "right": "97d3ddf5e420e538e2906f8d82cc1dd1f9fde1413c5237aff28909b5bd1acb32"
+          }
+        ]
+      }
+    ]
+  },
+  "granted": null
+}
