@@ -26,6 +26,9 @@ initServices(config);
 
 const { ScopeRequest, buildSignedRequestBody, verifySignedRequestBody } = require('../../src/ScopeRequest');
 
+// -----Fixtures
+const idDoc = require('../fixtures/idDocCred');
+
 describe('DSR Factory Tests', () => {
   beforeEach(() => {
     initServices(config);
@@ -107,7 +110,7 @@ describe('DSR Factory Tests', () => {
     expect(() => {
       dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], {
         eventsURL: 'http://localhost/',
-        payloadURL: 'http://127.0.0.1/'
+        payloadURL: 'http://127.0.0.1/',
       });
     }).not.toThrow('only HTTPS is supported for payloadURL');
     const isValid = ScopeRequest.validateCredentialItems(dsr.credentialItems);
@@ -645,6 +648,44 @@ describe('DSR Request Utils', () => {
     );
     expect(dsr).toBeDefined();
     done();
+  });
+
+  it('Should ckeck is credentials matches the request constraints', () => {
+    const credentialItems = [idDoc]; // This is should be the CI on the scopeRequest response
+    const dsr = new ScopeRequest('abcd',
+      [{
+        identifier: 'credential-cvc:IdDocument-v1',
+        constraints: {
+          meta: {
+            issuer: { is: { $eq: 'did:ethr:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74' } },
+          },
+          claims: [
+            { path: 'document.dateOfBirth', is: { $lte: '-21y' } },
+          ],
+        },
+      }]);
+    expect(dsr).toBeDefined();
+    const match = ScopeRequest.credentialsMatchesRequest(credentialItems, dsr);
+    expect(match).toBeTruthy();
+  });
+
+  it('Should fail ckeck is credentials matches the request constraints', () => {
+    const credentialItems = [idDoc]; // This is should be the CI on the scopeRequest response
+    const dsr = new ScopeRequest('abcd',
+      [{
+        identifier: 'credential-cvc:IdDocument-v1',
+        constraints: {
+          meta: {
+            issuer: { is: { $eq: 'did:ethr:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74' } },
+          },
+          claims: [
+            { path: 'document.dateOfBirth', is: { $lte: '-45y' } },
+          ],
+        },
+      }]);
+    expect(dsr).toBeDefined();
+    const match = ScopeRequest.credentialsMatchesRequest(credentialItems, dsr);
+    expect(match).toBeFalsy();
   });
 });
 
