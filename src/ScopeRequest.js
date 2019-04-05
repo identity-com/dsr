@@ -1,7 +1,7 @@
 const _ = require('lodash');
-const { isValidGlobalIdentifier } = require('@identity.com/credential-commons');
-const { services, initServices } = require('./services');
+const { isValidGlobalIdentifier, VC } = require('@identity.com/credential-commons');
 
+const { services, initServices } = require('./services');
 const config = services.container.Config;
 const signer = services.container.Signer;
 
@@ -35,6 +35,35 @@ const isLocal = url => (url.match('(http://|https://)?(localhost|127.0.0.*)') !=
  * Class for generating Scope Requests
  */
 class ScopeRequest {
+  /**
+   *
+   * @param credentialItems - A list of credentialItems to check
+   * @param request - Original ScopeRequest
+   * @return {boolean}
+   */
+  static credentialsMatchesRequest(credentialItems, request) {
+    let result = true;
+    const requestedItems = _.get(request, 'credentialItems');
+    _.forEach(requestedItems, (requestedItem) => {
+      const credentialItem = _.find(credentialItems, { identifier: requestedItem.identifier });
+      if (!credentialItem) {
+        // no need to continue breaking and returning false
+        result = false;
+        return false;
+      }
+      const verifiableCredential = VC.fromJSON(credentialItem);
+
+      const constraints = _.get(requestedItem, 'constraints');
+      const match = verifiableCredential.isMatch(constraints);
+      if (!match) {
+        // no need to continue breaking and returning false
+        result = false;
+        return false;
+      }
+    });
+    return result;
+  }
+
   /**
    * Validate the constraints of an Scope Request
    * @param constraint of an Scope Request
