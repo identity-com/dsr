@@ -205,11 +205,12 @@ class ScopeRequest {
 
   constructor(uniqueId, requestedItems, channelsConfig, appConfig, partnerConfig) {
     this.version = SCHEMA_VERSION;
-    this.requesterInfo = {};
-    this.timestamp = (new Date()).toISOString();
     if (!uniqueId) {
       throw Error('uniqueId is required');
     }
+    this.id = uniqueId;
+    this.requesterInfo = {};
+    this.timestamp = (new Date()).toISOString();
 
     const credentialItems = [].concat(requestedItems);
 
