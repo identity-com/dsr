@@ -2,6 +2,7 @@ const _ = require('lodash');
 const { isValidGlobalIdentifier, VC } = require('@identity.com/credential-commons');
 
 const { services, initServices } = require('./services');
+
 const config = services.container.Config;
 const signer = services.container.Signer;
 
@@ -44,6 +45,7 @@ class ScopeRequest {
   static credentialsMatchesRequest(credentialItems, request) {
     let result = true;
     const requestedItems = _.get(request, 'credentialItems');
+    // eslint-disable-next-line consistent-return
     _.forEach(requestedItems, (requestedItem) => {
       const credentialItem = _.find(credentialItems, { identifier: requestedItem.identifier });
       if (!credentialItem) {
