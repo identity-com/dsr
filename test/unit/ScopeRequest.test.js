@@ -687,6 +687,41 @@ describe('DSR Request Utils', () => {
     const match = ScopeRequest.credentialsMatchesRequest(credentialItems, dsr);
     expect(match).toBeFalsy();
   });
+
+  it('Should throw with empty credentialItems', () => {
+    const credentialItems = []; // This is should be the CI on the scopeRequest response
+    const dsr = new ScopeRequest('abcd',
+      [{
+        identifier: 'credential-cvc:IdDocument-v1',
+        constraints: {
+          meta: {
+            issuer: { is: { $eq: 'did:ethr:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74' } },
+          },
+          claims: [
+            { path: 'document.dateOfBirth', is: { $lte: '-45y' } },
+          ],
+        },
+      }]);
+    expect(dsr).toBeDefined();
+    expect(() => ScopeRequest.credentialsMatchesRequest(credentialItems, dsr)).toThrow('empty credentialItems param');
+  });
+
+  it('Should throw with invaid scopeRequest', () => {
+    const credentialItems = [idDoc]; // This is should be the CI on the scopeRequest response
+    const dsr = [{
+      identifier: 'credential-cvc:IdDocument-v1',
+      constraints: {
+        meta: {
+          issuer: { is: { $eq: 'did:ethr:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74' } },
+        },
+        claims: [
+          { path: 'document.dateOfBirth', is: { $lte: '-45y' } },
+        ],
+      },
+    }];
+    expect(dsr).toBeDefined();
+    expect(() => ScopeRequest.credentialsMatchesRequest(credentialItems, dsr)).toThrow('invalid scopeRequest object');
+  });
 });
 
 module.exports = ScopeRequest;

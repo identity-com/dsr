@@ -45,6 +45,13 @@ class ScopeRequest {
   static credentialsMatchesRequest(credentialItems, request) {
     let result = true;
     const requestedItems = _.get(request, 'credentialItems');
+
+    if (_.isEmpty(requestedItems)) {
+      throw new Error('invalid scopeRequest object');
+    }
+    if (_.isEmpty(credentialItems)) {
+      throw new Error('empty credentialItems param');
+    }
     // eslint-disable-next-line consistent-return
     _.forEach(requestedItems, (requestedItem) => {
       const credentialItem = _.find(credentialItems, { identifier: requestedItem.identifier });
