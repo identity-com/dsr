@@ -209,7 +209,7 @@
                             "title": "The $eq Schema",
                             "default": "",
                             "examples": [
-                              "did:ethr:0xaf9482c84De4e2a961B98176C9f295F9b6008BfD"
+                              "did:ethr:0x1a88a35421a4a0d3e13fe4e8ebcf18e9a249dc5a"
                             ],
                             "pattern": "^(.*)$"
                           }
