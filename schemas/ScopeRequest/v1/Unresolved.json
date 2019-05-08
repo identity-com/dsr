@@ -13,6 +13,16 @@
     "channels"
   ],
   "properties": {
+    "id": {
+      "$id": "#/properties/id",
+      "type": "string",
+      "title": "The Id Schema",
+      "default": "",
+      "examples": [
+        "5121c5b1-1b1f-10c8-4a74-173f2f81"
+      ],
+      "pattern": "^(.*)$"
+    },
     "version": {
       "$id": "#/properties/version",
       "type": "string",
