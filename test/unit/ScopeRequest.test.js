@@ -722,6 +722,97 @@ describe('DSR Request Utils', () => {
     expect(dsr).toBeDefined();
     expect(() => ScopeRequest.credentialsMatchesRequest(credentialItems, dsr)).toThrow('invalid scopeRequest object');
   });
+
+  it('Should Construct DSR with evidence idDocumentFront requested with auth', () => {
+    const dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], {
+      payloadURL: 'http://localhost/abc',
+      eventsURL: 'http://localhost/abc',
+      evidences: {
+        idDocumentFront: {
+          accepts: 'application/json',
+          method: 'put',
+          url: 'http://localhost/idDocumentFront',
+          authorization: 'JWT fjasldfjalsdjfalsjdla',
+        },
+      },
+    });
+    expect(dsr).toBeDefined();
+  });
+
+  it('Should Construct DSR with evidence idDocumentFront requested without auth', () => {
+    const dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], {
+      payloadURL: 'http://localhost/abc',
+      eventsURL: 'http://localhost/abc',
+      evidences: {
+        idDocumentFront: {
+          accepts: 'application/json',
+          method: 'put',
+          url: 'http://localhost/idDocumentFront',
+        },
+      },
+    });
+    expect(dsr).toBeDefined();
+  });
+
+  it('Should fail Construct DSR with evidence idDocumentFront requested - invalid method', () => {
+    function execute() {
+      // eslint-disable-next-line no-new
+      new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], {
+        payloadURL: 'http://localhost/abc',
+        eventsURL: 'http://localhost/abc',
+        evidences: {
+          idDocumentFront: {
+            accepts: 'application/json',
+            method: 'get',
+            url: 'http://localhost/idDocumentFront',
+          },
+        },
+      });
+    }
+    expect(execute).toThrow();
+  });
+
+  it('Should fail Construct DSR with evidence idDocumentFront requested - missing url', () => {
+    function execute() {
+      // eslint-disable-next-line no-new
+      new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], {
+        payloadURL: 'http://localhost/abc',
+        eventsURL: 'http://localhost/abc',
+        evidences: {
+          idDocumentFront: {
+            accepts: 'application/json',
+            method: 'post',
+          },
+        },
+      });
+    }
+    expect(execute).toThrow();
+  });
+
+  it('Should Construct DSR with all evidence requested', () => {
+    const dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], {
+      payloadURL: 'http://localhost/abc',
+      eventsURL: 'http://localhost/abc',
+      evidences: {
+        idDocumentFront: {
+          accepts: 'application/json',
+          method: 'put',
+          url: 'http://localhost/idDocumentFront',
+        },
+        idDocumentBack: {
+          accepts: 'application/json',
+          method: 'put',
+          url: 'http://localhost/idDocumentFront',
+        },
+        selfie: {
+          accepts: 'application/json',
+          method: 'put',
+          url: 'http://localhost/idDocumentFront',
+        },
+      },
+    });
+    expect(dsr).toBeDefined();
+  });
 });
 
 module.exports = ScopeRequest;
