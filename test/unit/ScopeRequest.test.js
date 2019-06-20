@@ -790,7 +790,38 @@ describe('DSR Request Utils', () => {
   });
 
   it('Should Construct DSR with all evidence requested', () => {
-    const dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], {
+    const dsr = new ScopeRequest('abcd', [
+      {
+        identifier: 'claim-cvc:Document.dateOfBirth-v1',
+        constraints: {
+          meta: {
+            credential: 'credential-cvc:IdDocument-v1',
+            issuer: { is: { $eq: 'did:ethr:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74' } },
+          },
+          claims: [
+            { path: 'document.dateOfBirth', is: { $lte: '-45y' } },
+          ],
+        },
+      },
+      {
+        identifier: 'claim-cvc:Validation:evidences.idDocumentFront-v1',
+        constraints: {
+          meta: {
+            credential: 'credential-cvc:IdDocument-v1',
+            issuer: { is: { $eq: 'did:ethr:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74' } },
+          },
+        },
+      },
+      {
+        identifier: 'claim-cvc:Validation:evidences.idDocumentBack-v1',
+        constraints: {
+          meta: {
+            credential: 'credential-cvc:IdDocument-v1',
+            issuer: { is: { $eq: 'did:ethr:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74' } },
+          },
+        },
+      },
+    ], {
       payloadURL: 'http://localhost/abc',
       eventsURL: 'http://localhost/abc',
       evidences: {
@@ -802,12 +833,7 @@ describe('DSR Request Utils', () => {
         idDocumentBack: {
           accepts: 'application/json',
           method: 'put',
-          url: 'http://localhost/idDocumentFront',
-        },
-        selfie: {
-          accepts: 'application/json',
-          method: 'put',
-          url: 'http://localhost/idDocumentFront',
+          url: 'http://localhost/idDocumentBack',
         },
       },
     });
