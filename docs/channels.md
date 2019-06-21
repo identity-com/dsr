@@ -9,7 +9,7 @@ Type: String
 
 This is a mandatory and default channel.
 If only this is set the result will be a single object posted to this URL.
-If others channels are present than only the status if posted here. 
+If others channels are present then only the status is posted here. 
 *Note: evidence binary content is never sent in this channel*
 
 ### payloadUrl
