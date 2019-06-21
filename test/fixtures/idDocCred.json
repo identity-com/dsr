@@ -1,7 +1,7 @@
 {
-  "id": "381527ec-f53a-4bf7-ba75-a352d9d29a6a",
+  "id": "a7ea1e81-f382-49f1-a3f5-22170795934f",
   "issuer": "",
-  "issuanceDate": "2019-04-04T14:50:53.055Z",
+  "issuanceDate": "2019-06-21T13:09:46.601Z",
   "identifier": "credential-cvc:IdDocument-v1",
   "expirationDate": null,
   "version": "1",
@@ -11,7 +11,7 @@
   ],
   "claim": {
     "document": {
-      "type": "Passport",
+      "type": "passport",
       "number": "FP12345",
       "name": {
         "familyNames": "e8qak1",
@@ -31,356 +31,453 @@
         "month": 2,
         "year": 2025
       },
-      "nationality": "Brazilian"
+      "nationality": "Brazilian",
+      "evidences": {
+        "idDocumentBack": {
+          "algorithm": "sha256",
+          "data": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "idDocumentFront": {
+          "algorithm": "sha256",
+          "data": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "selfie": {
+          "algorithm": "sha256",
+          "data": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
     }
   },
   "proof": {
     "type": "CvcMerkleProof2018",
-    "merkleRoot": "aae31cc2fff9123fef7d1b828489d1d33f0d9eee445bc5ab37139c0d99977583",
+    "merkleRoot": "c7ba4562b0319a13bf92a88b2496f35506a6b951a78c9fd1e290b3a19f870846",
     "anchor": "TBD (Civic Blockchain Attestation)",
     "leaves": [
       {
         "identifier": "claim-cvc:Document.type-v1",
-        "value": "urn:type:c3a7445397f25d0c768e0ae5b28f7f4a2612dee3d98ab79dd11bcc1fb26e35c6:Passport|",
+        "value": "urn:type:e9df035e1c1c5a9c9bf6b6f3d28d76be65720c9208bd1345b386aabaa915c99d:passport|",
         "claimPath": "document.type",
-        "targetHash": "12ab709bca98be2d2820d14aeaf52fada02602f7babc9740c4280c6bb4b02df1",
+        "targetHash": "3db8d1818e0951b69c6fff3aca63a095c4ccb9660591cc1771d0f733cc2f8047",
         "node": [
           {
-            "right": "de89c37c55b3723e267beea0fa88b99bb17fb045c4b4cba291ac7f398704a09e"
+            "right": "8c5776d401f2f26c7a0bd1067872a7e9d77b2f28359157ffb9ad71719ae9b393"
           },
           {
-            "right": "f0afe52dc6449099ac2655d38aede5d0e91f7162cae97e5ea4a069e963623689"
+            "right": "e0d02dcd25b2aba400491af81ccad7f132b0ab17569f390c7a0a28796b75d889"
           },
           {
-            "right": "4c090cd151b525bbdc3969fb4bf293afc0c61dfbecbf570734b2af91762e4f04"
+            "right": "289326dc89ee1602a364ea8a7973bbc8a0cd712f15fc08a72d43f230455d0a55"
           },
           {
-            "right": "c1c1282fe52d485d0007e22e20bd9653bba6da98d00f91ed94f989670f77ea03"
+            "right": "a37f0d3fd90bcbe736a1c986251bcbabd0cd8b0f58f1e90fe30741fde204ebdc"
           },
           {
-            "right": "97d3ddf5e420e538e2906f8d82cc1dd1f9fde1413c5237aff28909b5bd1acb32"
+            "right": "6bde09e2d4be532de3cbc4c2763fa5d447395fc0c4f92e20ee6597c0cac05974"
           }
         ]
       },
       {
         "identifier": "claim-cvc:Document.number-v1",
-        "value": "urn:number:76dbcaea2aaa88b206a4b6bdade3e6d04aed70f32e6716f810e96d9faa87a887:FP12345|",
+        "value": "urn:number:310508311f7ba54bce13eef92abb7b2cc915ebb3b5ef3c1b4138e08ddcdb5cf9:FP12345|",
         "claimPath": "document.number",
-        "targetHash": "de89c37c55b3723e267beea0fa88b99bb17fb045c4b4cba291ac7f398704a09e",
+        "targetHash": "8c5776d401f2f26c7a0bd1067872a7e9d77b2f28359157ffb9ad71719ae9b393",
         "node": [
           {
-            "left": "12ab709bca98be2d2820d14aeaf52fada02602f7babc9740c4280c6bb4b02df1"
+            "left": "3db8d1818e0951b69c6fff3aca63a095c4ccb9660591cc1771d0f733cc2f8047"
           },
           {
-            "right": "f0afe52dc6449099ac2655d38aede5d0e91f7162cae97e5ea4a069e963623689"
+            "right": "e0d02dcd25b2aba400491af81ccad7f132b0ab17569f390c7a0a28796b75d889"
           },
           {
-            "right": "4c090cd151b525bbdc3969fb4bf293afc0c61dfbecbf570734b2af91762e4f04"
+            "right": "289326dc89ee1602a364ea8a7973bbc8a0cd712f15fc08a72d43f230455d0a55"
           },
           {
-            "right": "c1c1282fe52d485d0007e22e20bd9653bba6da98d00f91ed94f989670f77ea03"
+            "right": "a37f0d3fd90bcbe736a1c986251bcbabd0cd8b0f58f1e90fe30741fde204ebdc"
           },
           {
-            "right": "97d3ddf5e420e538e2906f8d82cc1dd1f9fde1413c5237aff28909b5bd1acb32"
+            "right": "6bde09e2d4be532de3cbc4c2763fa5d447395fc0c4f92e20ee6597c0cac05974"
           }
         ]
       },
       {
         "identifier": "claim-cvc:Document.name-v1",
-        "value": "urn:name.familyNames:b05c9b80e50bca9b612c5efddd7b65aee8119ed6e672a7f3da3a0d3ee8e53229:e8qak1|urn:name.givenNames:f29448bd5b07ab9115307a6a609813eb3e4a7f183e36be27d7cecf5ae9a1ef84:e8qhs4Iak1|urn:name.otherNames:367cd67a4d9421e84fb2d2f2fdd936d2189c04cb869c1f85e84b6832c3004beb:qhs4I|",
+        "value": "urn:name.familyNames:4e232a2651b82069f1dda582a0d62ec2f8986f65cd5358152292f8cadf77fec1:e8qak1|urn:name.givenNames:bf92007834aa045dcb075b43db22be29065976a445e1d36ddab669945260b566:e8qhs4Iak1|urn:name.otherNames:a6ec215cb4373b020eaec3c91014b36db94e915e731bb525aa7c15e3c762124b:qhs4I|",
         "claimPath": "document.name",
-        "targetHash": "de4d717a57eb7c08317f13880125f81b4fbc4ec2a57fe7fc241cf2622d906e72",
+        "targetHash": "8c15cf808a770f77d08b32476412fa277de73e46570e411b70e4ace21ae255d1",
         "node": [
           {
-            "right": "8b3e138a9b7d43bc3f997f9ab3bdca5564853ce6e5e0891d5d74cb6dd34bc28d"
+            "right": "eddcad88c0e08459b7122cceca8931c1b1ca23545fa98bb704bfd90d5f1690a0"
           },
           {
-            "left": "142e02790e661883ae65ae82cd165aace57d7269f8be0de24cfa9b0f81d2ccc7"
+            "left": "258c356b983dc1140ca670151372d3e13e03ef70fb466b05c5a08b388390a5d2"
           },
           {
-            "right": "4c090cd151b525bbdc3969fb4bf293afc0c61dfbecbf570734b2af91762e4f04"
+            "right": "289326dc89ee1602a364ea8a7973bbc8a0cd712f15fc08a72d43f230455d0a55"
           },
           {
-            "right": "c1c1282fe52d485d0007e22e20bd9653bba6da98d00f91ed94f989670f77ea03"
+            "right": "a37f0d3fd90bcbe736a1c986251bcbabd0cd8b0f58f1e90fe30741fde204ebdc"
           },
           {
-            "right": "97d3ddf5e420e538e2906f8d82cc1dd1f9fde1413c5237aff28909b5bd1acb32"
+            "right": "6bde09e2d4be532de3cbc4c2763fa5d447395fc0c4f92e20ee6597c0cac05974"
           }
         ]
       },
       {
         "identifier": "claim-cvc:Name.givenNames-v1",
-        "value": "urn:givenNames:f29448bd5b07ab9115307a6a609813eb3e4a7f183e36be27d7cecf5ae9a1ef84:e8qhs4Iak1|",
+        "value": "urn:givenNames:bf92007834aa045dcb075b43db22be29065976a445e1d36ddab669945260b566:e8qhs4Iak1|",
         "claimPath": "document.name.givenNames",
-        "targetHash": "8b3e138a9b7d43bc3f997f9ab3bdca5564853ce6e5e0891d5d74cb6dd34bc28d",
+        "targetHash": "eddcad88c0e08459b7122cceca8931c1b1ca23545fa98bb704bfd90d5f1690a0",
         "node": [
           {
-            "left": "de4d717a57eb7c08317f13880125f81b4fbc4ec2a57fe7fc241cf2622d906e72"
+            "left": "8c15cf808a770f77d08b32476412fa277de73e46570e411b70e4ace21ae255d1"
           },
           {
-            "left": "142e02790e661883ae65ae82cd165aace57d7269f8be0de24cfa9b0f81d2ccc7"
+            "left": "258c356b983dc1140ca670151372d3e13e03ef70fb466b05c5a08b388390a5d2"
           },
           {
-            "right": "4c090cd151b525bbdc3969fb4bf293afc0c61dfbecbf570734b2af91762e4f04"
+            "right": "289326dc89ee1602a364ea8a7973bbc8a0cd712f15fc08a72d43f230455d0a55"
           },
           {
-            "right": "c1c1282fe52d485d0007e22e20bd9653bba6da98d00f91ed94f989670f77ea03"
+            "right": "a37f0d3fd90bcbe736a1c986251bcbabd0cd8b0f58f1e90fe30741fde204ebdc"
           },
           {
-            "right": "97d3ddf5e420e538e2906f8d82cc1dd1f9fde1413c5237aff28909b5bd1acb32"
+            "right": "6bde09e2d4be532de3cbc4c2763fa5d447395fc0c4f92e20ee6597c0cac05974"
           }
         ]
       },
       {
         "identifier": "claim-cvc:Name.familyNames-v1",
-        "value": "urn:familyNames:b05c9b80e50bca9b612c5efddd7b65aee8119ed6e672a7f3da3a0d3ee8e53229:e8qak1|",
+        "value": "urn:familyNames:4e232a2651b82069f1dda582a0d62ec2f8986f65cd5358152292f8cadf77fec1:e8qak1|",
         "claimPath": "document.name.familyNames",
-        "targetHash": "3624f923ef6593539ed06ebe7ad6acd33595d85a7192d16b7444302eefdf9081",
+        "targetHash": "7d4098215e4ba5e2a734e4389499fb894b83d007c7e12c45a8667f31fb049884",
         "node": [
           {
-            "right": "ebc1b949e45ef0264f10188bdf62dbd0ab14eff28d021fef192dacfa12bb4d38"
+            "right": "92f0dc80885fa0824e5264d47fd6b6b79863b7b1fec70ff109480704baf20057"
           },
           {
-            "right": "7c89c1f4beb3b0dc6ec9df773711d3f32b7dbbaa9b5d9ae3d601b567f0c611e6"
+            "right": "35ef1d1bfc50e5ff5df98f4dd24845925a04d77f2bbd074e089cecc700d7b10b"
           },
           {
-            "left": "6c069fe251a08d58057cebc95cfc0de5e51c5c349f9df79cbe151e2a744cb97f"
+            "left": "1de98d909eafe1b1b90ca205bdedb266c655108c487a66810e0d1ce06f3e17d0"
           },
           {
-            "right": "c1c1282fe52d485d0007e22e20bd9653bba6da98d00f91ed94f989670f77ea03"
+            "right": "a37f0d3fd90bcbe736a1c986251bcbabd0cd8b0f58f1e90fe30741fde204ebdc"
           },
           {
-            "right": "97d3ddf5e420e538e2906f8d82cc1dd1f9fde1413c5237aff28909b5bd1acb32"
+            "right": "6bde09e2d4be532de3cbc4c2763fa5d447395fc0c4f92e20ee6597c0cac05974"
           }
         ]
       },
       {
         "identifier": "claim-cvc:Name.otherNames-v1",
-        "value": "urn:otherNames:367cd67a4d9421e84fb2d2f2fdd936d2189c04cb869c1f85e84b6832c3004beb:qhs4I|",
+        "value": "urn:otherNames:a6ec215cb4373b020eaec3c91014b36db94e915e731bb525aa7c15e3c762124b:qhs4I|",
         "claimPath": "document.name.otherNames",
-        "targetHash": "ebc1b949e45ef0264f10188bdf62dbd0ab14eff28d021fef192dacfa12bb4d38",
+        "targetHash": "92f0dc80885fa0824e5264d47fd6b6b79863b7b1fec70ff109480704baf20057",
         "node": [
           {
-            "left": "3624f923ef6593539ed06ebe7ad6acd33595d85a7192d16b7444302eefdf9081"
+            "left": "7d4098215e4ba5e2a734e4389499fb894b83d007c7e12c45a8667f31fb049884"
           },
           {
-            "right": "7c89c1f4beb3b0dc6ec9df773711d3f32b7dbbaa9b5d9ae3d601b567f0c611e6"
+            "right": "35ef1d1bfc50e5ff5df98f4dd24845925a04d77f2bbd074e089cecc700d7b10b"
           },
           {
-            "left": "6c069fe251a08d58057cebc95cfc0de5e51c5c349f9df79cbe151e2a744cb97f"
+            "left": "1de98d909eafe1b1b90ca205bdedb266c655108c487a66810e0d1ce06f3e17d0"
           },
           {
-            "right": "c1c1282fe52d485d0007e22e20bd9653bba6da98d00f91ed94f989670f77ea03"
+            "right": "a37f0d3fd90bcbe736a1c986251bcbabd0cd8b0f58f1e90fe30741fde204ebdc"
           },
           {
-            "right": "97d3ddf5e420e538e2906f8d82cc1dd1f9fde1413c5237aff28909b5bd1acb32"
+            "right": "6bde09e2d4be532de3cbc4c2763fa5d447395fc0c4f92e20ee6597c0cac05974"
           }
         ]
       },
       {
         "identifier": "claim-cvc:Document.gender-v1",
-        "value": "urn:gender:b69b7a6eb41eb37dd3b558226a62aaca80dc1d24312b0da83cb13837a2092f43:M|",
+        "value": "urn:gender:522186494a9d5868947ed537b061c5b85885bc1cb979624f78f2cff54f9d45cc:M|",
         "claimPath": "document.gender",
-        "targetHash": "788ac13bbbed3c7e0d554cd944f8aa042860f66e33d496923470b6dc13bd8fd2",
+        "targetHash": "afa5e86ebd8ecac995a576934a9d7c93aa834875bfaa22c7a622befeae2ee56e",
         "node": [
           {
-            "right": "5e04e88ac5f3da0ee7eb1a72d907c1fad0ec4fa5504b2aed09f7eed77217eee0"
+            "right": "c42590f79894f349ad1326d6ab0b02e99243972b6bfb95859cf10366dc24ada8"
           },
           {
-            "left": "1e5fb01658e9470c175c6ec704621f4367f560b529a5ce6546cf444e76e2c357"
+            "left": "2d07fa8a9d41319bfa0c3e6b9a7ca21de1f14dd36c6221dcc6d91c3e6fbf75ea"
           },
           {
-            "left": "6c069fe251a08d58057cebc95cfc0de5e51c5c349f9df79cbe151e2a744cb97f"
+            "left": "1de98d909eafe1b1b90ca205bdedb266c655108c487a66810e0d1ce06f3e17d0"
           },
           {
-            "right": "c1c1282fe52d485d0007e22e20bd9653bba6da98d00f91ed94f989670f77ea03"
+            "right": "a37f0d3fd90bcbe736a1c986251bcbabd0cd8b0f58f1e90fe30741fde204ebdc"
           },
           {
-            "right": "97d3ddf5e420e538e2906f8d82cc1dd1f9fde1413c5237aff28909b5bd1acb32"
+            "right": "6bde09e2d4be532de3cbc4c2763fa5d447395fc0c4f92e20ee6597c0cac05974"
           }
         ]
       },
       {
         "identifier": "claim-cvc:Document.issueCountry-v1",
-        "value": "urn:issueCountry:11b4992c20b6beef702a6a47aafbdd1040da5279f0d08a156b42397226fc52f0:Brazil|",
+        "value": "urn:issueCountry:1a776008b59138097a8a141c89fe6e56a699d193604658140a20e39309fa652b:Brazil|",
         "claimPath": "document.issueCountry",
-        "targetHash": "5e04e88ac5f3da0ee7eb1a72d907c1fad0ec4fa5504b2aed09f7eed77217eee0",
+        "targetHash": "c42590f79894f349ad1326d6ab0b02e99243972b6bfb95859cf10366dc24ada8",
         "node": [
           {
-            "left": "788ac13bbbed3c7e0d554cd944f8aa042860f66e33d496923470b6dc13bd8fd2"
+            "left": "afa5e86ebd8ecac995a576934a9d7c93aa834875bfaa22c7a622befeae2ee56e"
           },
           {
-            "left": "1e5fb01658e9470c175c6ec704621f4367f560b529a5ce6546cf444e76e2c357"
+            "left": "2d07fa8a9d41319bfa0c3e6b9a7ca21de1f14dd36c6221dcc6d91c3e6fbf75ea"
           },
           {
-            "left": "6c069fe251a08d58057cebc95cfc0de5e51c5c349f9df79cbe151e2a744cb97f"
+            "left": "1de98d909eafe1b1b90ca205bdedb266c655108c487a66810e0d1ce06f3e17d0"
           },
           {
-            "right": "c1c1282fe52d485d0007e22e20bd9653bba6da98d00f91ed94f989670f77ea03"
+            "right": "a37f0d3fd90bcbe736a1c986251bcbabd0cd8b0f58f1e90fe30741fde204ebdc"
           },
           {
-            "right": "97d3ddf5e420e538e2906f8d82cc1dd1f9fde1413c5237aff28909b5bd1acb32"
+            "right": "6bde09e2d4be532de3cbc4c2763fa5d447395fc0c4f92e20ee6597c0cac05974"
           }
         ]
       },
       {
         "identifier": "claim-cvc:Document.placeOfBirth-v1",
-        "value": "urn:placeOfBirth:11b6c4f60c6478143fb3b0cdf5ff45afdb377b0778f5b443923020249872a3c9:Belo Horizonte|",
+        "value": "urn:placeOfBirth:15829b8479f8d66c7a118be4d0f910e08e1d0fbff7034e9cb9e0fe5ee4b21a54:Belo Horizonte|",
         "claimPath": "document.placeOfBirth",
-        "targetHash": "181b52f7de9bb7ef64e9f0d65091ded06556492042d8bffd8e56714d3a99617a",
+        "targetHash": "23d396edf6cfd4729d81dd890a571d9485697eb9f23055d966870566b674ec57",
         "node": [
           {
-            "right": "157a2822998bf78620d56e8ce7fd2a19952e0e074825489b843e416e6e691d44"
+            "right": "a84b01217bfad8efc8f677544ceb2c2bc602685a1a3f05574324d14abd02be7f"
           },
           {
-            "right": "47d12d4f13beda74c577099fa1635eb16515a622839d6f122eb806ce798246ee"
+            "right": "dfc35214631cfb05d8d96bb1882f33ca18add26b53e25421baf54043295a4fbe"
           },
           {
-            "right": "52a089859207d894e860b2a276041edac7efd9cc6ffb9fa6224282909b50f805"
+            "right": "29bbba2ce90b6eaa3ee33307b72d6a492f71938fd1358dc92db39ac28371f30b"
           },
           {
-            "left": "d9d4ab594a533d5bcd77f07600bb3f782ad54dbfb823edc2e9a4095addce8fc7"
+            "left": "ab3bb79e13e26b3d91764bd03ca1d95b26f8eab9ca1792309215eafbaf1f45fa"
           },
           {
-            "right": "97d3ddf5e420e538e2906f8d82cc1dd1f9fde1413c5237aff28909b5bd1acb32"
+            "right": "6bde09e2d4be532de3cbc4c2763fa5d447395fc0c4f92e20ee6597c0cac05974"
           }
         ]
       },
       {
         "identifier": "claim-cvc:Document.dateOfBirth-v1",
-        "value": "urn:dateOfBirth.day:459d10ab0ac22747442964a5dd401bde34d477f36aac267bde8babcda0ddbbd9:20|urn:dateOfBirth.month:3ec27f68d55c0e318799a803ac6bc51bb7349ed6c49b547274efd6a7137a07e5:3|urn:dateOfBirth.year:81b9bcf99a9f72b8d6dfa68728fbf53c04b023e54f4b7b9a6b742653f89238db:1978|",
+        "value": "urn:dateOfBirth.day:54c4482acc3728a3c21c0cd57c3da475904d817410b11492c904ebb1227ba2bf:20|urn:dateOfBirth.month:2786a0d4b953ba787a81c7f75e0f3bc98fab93fc5233d25d129d1b3036f37af8:3|urn:dateOfBirth.year:74f0717af068a2cb356358bc11554855ad9a2618808762d0cbcaf6f819562175:1978|",
         "claimPath": "document.dateOfBirth",
-        "targetHash": "157a2822998bf78620d56e8ce7fd2a19952e0e074825489b843e416e6e691d44",
+        "targetHash": "a84b01217bfad8efc8f677544ceb2c2bc602685a1a3f05574324d14abd02be7f",
         "node": [
           {
-            "left": "181b52f7de9bb7ef64e9f0d65091ded06556492042d8bffd8e56714d3a99617a"
+            "left": "23d396edf6cfd4729d81dd890a571d9485697eb9f23055d966870566b674ec57"
           },
           {
-            "right": "47d12d4f13beda74c577099fa1635eb16515a622839d6f122eb806ce798246ee"
+            "right": "dfc35214631cfb05d8d96bb1882f33ca18add26b53e25421baf54043295a4fbe"
           },
           {
-            "right": "52a089859207d894e860b2a276041edac7efd9cc6ffb9fa6224282909b50f805"
+            "right": "29bbba2ce90b6eaa3ee33307b72d6a492f71938fd1358dc92db39ac28371f30b"
           },
           {
-            "left": "d9d4ab594a533d5bcd77f07600bb3f782ad54dbfb823edc2e9a4095addce8fc7"
+            "left": "ab3bb79e13e26b3d91764bd03ca1d95b26f8eab9ca1792309215eafbaf1f45fa"
           },
           {
-            "right": "97d3ddf5e420e538e2906f8d82cc1dd1f9fde1413c5237aff28909b5bd1acb32"
+            "right": "6bde09e2d4be532de3cbc4c2763fa5d447395fc0c4f92e20ee6597c0cac05974"
           }
         ]
       },
       {
         "identifier": "claim-cvc:Document.dateOfExpiry-v1",
-        "value": "urn:dateOfExpiry.day:a5f64d8f96677bd914073746c13536008c2946cbac0b8a09a5a08eca6d871486:12|urn:dateOfExpiry.month:236ee6aae6bcf9a117f47f57beceb4d690eb209024b42092af3ccb0adddd6d30:2|urn:dateOfExpiry.year:e655e874e2a1280cdc29e56169f0c91397cf6f728c11f2f674ffab6a9cca2d68:2025|",
+        "value": "urn:dateOfExpiry.day:d805104756f265254ddc2982a9f6716e9022501d4e337f9d54452cb02b83efb7:12|urn:dateOfExpiry.month:6d7aeaaedc9d09da2f6bf90b702b39fc9355870b9cfc1919ba17de8f8f244b05:2|urn:dateOfExpiry.year:266256c01e4ed8515800718e516a1f38de392a53eb9665de9209a91a4d4fcbc2:2025|",
         "claimPath": "document.dateOfExpiry",
-        "targetHash": "51214d909fe0a33cb26aa7c5f90bf6e4befb2d0de84831e3542e6cdaa5943697",
+        "targetHash": "20baa79c5abb1681c06b1420c2a3e2af5ecf62f33bef0b471f6c6305ae5f9de1",
         "node": [
           {
-            "right": "2213629013ed78186ba3fbc044ec0891d267ea417a2aa521e34d90c3adfeb413"
+            "right": "72b12dd6fd588558763fb3e68e0613e95498a2f9050d066d013e6095e60f8b8d"
           },
           {
-            "left": "d5a0491c20ddee2260d1144ec96a553d59d51f1a24fe538ba5c3972e1e28f5b7"
+            "left": "643dcf27b18712706bad20bc91a2de4b1d916ab9378ff83cbfebe08eb184aa78"
           },
           {
-            "right": "52a089859207d894e860b2a276041edac7efd9cc6ffb9fa6224282909b50f805"
+            "right": "29bbba2ce90b6eaa3ee33307b72d6a492f71938fd1358dc92db39ac28371f30b"
           },
           {
-            "left": "d9d4ab594a533d5bcd77f07600bb3f782ad54dbfb823edc2e9a4095addce8fc7"
+            "left": "ab3bb79e13e26b3d91764bd03ca1d95b26f8eab9ca1792309215eafbaf1f45fa"
           },
           {
-            "right": "97d3ddf5e420e538e2906f8d82cc1dd1f9fde1413c5237aff28909b5bd1acb32"
+            "right": "6bde09e2d4be532de3cbc4c2763fa5d447395fc0c4f92e20ee6597c0cac05974"
           }
         ]
       },
       {
         "identifier": "claim-cvc:Document.nationality-v1",
-        "value": "urn:nationality:036af8a3ca50ede3d0c14bb7b1b0d8801a4c7754c712b66f801d757f55a53b50:Brazilian|",
+        "value": "urn:nationality:b43e950aae5d16d32e0106c009137e8d307c2fdaa8362d8b538e8eaefd4a8ca4:Brazilian|",
         "claimPath": "document.nationality",
-        "targetHash": "2213629013ed78186ba3fbc044ec0891d267ea417a2aa521e34d90c3adfeb413",
+        "targetHash": "72b12dd6fd588558763fb3e68e0613e95498a2f9050d066d013e6095e60f8b8d",
         "node": [
           {
-            "left": "51214d909fe0a33cb26aa7c5f90bf6e4befb2d0de84831e3542e6cdaa5943697"
+            "left": "20baa79c5abb1681c06b1420c2a3e2af5ecf62f33bef0b471f6c6305ae5f9de1"
           },
           {
-            "left": "d5a0491c20ddee2260d1144ec96a553d59d51f1a24fe538ba5c3972e1e28f5b7"
+            "left": "643dcf27b18712706bad20bc91a2de4b1d916ab9378ff83cbfebe08eb184aa78"
           },
           {
-            "right": "52a089859207d894e860b2a276041edac7efd9cc6ffb9fa6224282909b50f805"
+            "right": "29bbba2ce90b6eaa3ee33307b72d6a492f71938fd1358dc92db39ac28371f30b"
           },
           {
-            "left": "d9d4ab594a533d5bcd77f07600bb3f782ad54dbfb823edc2e9a4095addce8fc7"
+            "left": "ab3bb79e13e26b3d91764bd03ca1d95b26f8eab9ca1792309215eafbaf1f45fa"
           },
           {
-            "right": "97d3ddf5e420e538e2906f8d82cc1dd1f9fde1413c5237aff28909b5bd1acb32"
+            "right": "6bde09e2d4be532de3cbc4c2763fa5d447395fc0c4f92e20ee6597c0cac05974"
+          }
+        ]
+      },
+      {
+        "identifier": "claim-cvc:Document.evidences-v1",
+        "value": "urn:evidences.idDocumentBack.algorithm:5cc1608b5bdd16f7ebb157b0e661bad75b84b37a3a30ebb3567529c742c54e4e:sha256|urn:evidences.idDocumentBack.data:09203f1f10043c3f2af1f0bacc65a5c534eabc97b67d1a0e6d3489d2b778df72:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855|urn:evidences.idDocumentFront.algorithm:650670a7ecc225f5c92c77266da9ea903b7f1104f6477f702c7efb9fcd815097:sha256|urn:evidences.idDocumentFront.data:3086ff4fb73aba67dcc407721dc12414ce4e2fd2006a1b84aecc637103edb507:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855|urn:evidences.selfie.algorithm:a6302d11b80dde7e4504da2d42a7ca6568b89d1627a91d0aebbcc9e87a4882dc:sha256|urn:evidences.selfie.data:67a5d8646174ae05f2139b55fa6517bb885f94d420926300ff86a82e04d4c861:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855|",
+        "claimPath": "document.evidences",
+        "targetHash": "ed668546e4caea0a97e44b9d8bcf84a82f412740e6907f2b418cf9bffd072069",
+        "node": [
+          {
+            "right": "eb96478d2403a4de9a5b4afaead972245c2bf7aa95509e9d810f9ebff7b384a3"
+          },
+          {
+            "right": "fbc0de46c0eccafc4f53bc8bf35d934040a49bfa45cf2993748ce87c66c44f39"
+          },
+          {
+            "left": "f8e972ac429cbfa96c4a4c98055ea0eb674c944f8b928c2ecf1a13da3baf0716"
+          },
+          {
+            "left": "ab3bb79e13e26b3d91764bd03ca1d95b26f8eab9ca1792309215eafbaf1f45fa"
+          },
+          {
+            "right": "6bde09e2d4be532de3cbc4c2763fa5d447395fc0c4f92e20ee6597c0cac05974"
+          }
+        ]
+      },
+      {
+        "identifier": "claim-cvc:Validation:evidences.idDocumentFront-v1",
+        "value": "urn:idDocumentFront.algorithm:650670a7ecc225f5c92c77266da9ea903b7f1104f6477f702c7efb9fcd815097:sha256|urn:idDocumentFront.data:3086ff4fb73aba67dcc407721dc12414ce4e2fd2006a1b84aecc637103edb507:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855|",
+        "claimPath": "validationEvidences.idDocumentFront",
+        "targetHash": "eb96478d2403a4de9a5b4afaead972245c2bf7aa95509e9d810f9ebff7b384a3",
+        "node": [
+          {
+            "left": "ed668546e4caea0a97e44b9d8bcf84a82f412740e6907f2b418cf9bffd072069"
+          },
+          {
+            "right": "fbc0de46c0eccafc4f53bc8bf35d934040a49bfa45cf2993748ce87c66c44f39"
+          },
+          {
+            "left": "f8e972ac429cbfa96c4a4c98055ea0eb674c944f8b928c2ecf1a13da3baf0716"
+          },
+          {
+            "left": "ab3bb79e13e26b3d91764bd03ca1d95b26f8eab9ca1792309215eafbaf1f45fa"
+          },
+          {
+            "right": "6bde09e2d4be532de3cbc4c2763fa5d447395fc0c4f92e20ee6597c0cac05974"
+          }
+        ]
+      },
+      {
+        "identifier": "claim-cvc:Validation:evidences.idDocumentBack-v1",
+        "value": "urn:idDocumentBack.algorithm:5cc1608b5bdd16f7ebb157b0e661bad75b84b37a3a30ebb3567529c742c54e4e:sha256|urn:idDocumentBack.data:09203f1f10043c3f2af1f0bacc65a5c534eabc97b67d1a0e6d3489d2b778df72:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855|",
+        "claimPath": "validationEvidences.idDocumentBack",
+        "targetHash": "4818e718a77a95613f3d375330208301443b9842db798f05571dfe124a2adf80",
+        "node": [
+          {
+            "right": "9b2284d8e972087e55cf38baa7166bcfffa553ae2a62b2d5450c092ac88b5b2e"
+          },
+          {
+            "left": "d83778912f59b0063e9b3d65261e46b10c3ed604043896ffe1581385fb82d5c6"
+          },
+          {
+            "left": "f8e972ac429cbfa96c4a4c98055ea0eb674c944f8b928c2ecf1a13da3baf0716"
+          },
+          {
+            "left": "ab3bb79e13e26b3d91764bd03ca1d95b26f8eab9ca1792309215eafbaf1f45fa"
+          },
+          {
+            "right": "6bde09e2d4be532de3cbc4c2763fa5d447395fc0c4f92e20ee6597c0cac05974"
+          }
+        ]
+      },
+      {
+        "identifier": "claim-cvc:Validation:evidences.selfie-v1",
+        "value": "urn:selfie.algorithm:a6302d11b80dde7e4504da2d42a7ca6568b89d1627a91d0aebbcc9e87a4882dc:sha256|urn:selfie.data:67a5d8646174ae05f2139b55fa6517bb885f94d420926300ff86a82e04d4c861:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855|",
+        "claimPath": "validationEvidences.selfie",
+        "targetHash": "9b2284d8e972087e55cf38baa7166bcfffa553ae2a62b2d5450c092ac88b5b2e",
+        "node": [
+          {
+            "left": "4818e718a77a95613f3d375330208301443b9842db798f05571dfe124a2adf80"
+          },
+          {
+            "left": "d83778912f59b0063e9b3d65261e46b10c3ed604043896ffe1581385fb82d5c6"
+          },
+          {
+            "left": "f8e972ac429cbfa96c4a4c98055ea0eb674c944f8b928c2ecf1a13da3baf0716"
+          },
+          {
+            "left": "ab3bb79e13e26b3d91764bd03ca1d95b26f8eab9ca1792309215eafbaf1f45fa"
+          },
+          {
+            "right": "6bde09e2d4be532de3cbc4c2763fa5d447395fc0c4f92e20ee6597c0cac05974"
           }
         ]
       },
       {
         "identifier": "cvc:Meta:issuer",
-        "value": "urn:issuer:a12daa42b969e873db7c8cec9cc6ef9d6788707691227a9cce9fe444e4ff871b:|",
+        "value": "urn:issuer:864bac5f5c6cb96d2561ecb9a75f2721ddaaa35664ccfd6037b23788e55cc731:|",
         "claimPath": "meta.issuer",
-        "targetHash": "c95ba2a7ee8007f281685b16ef65c2ff4b93c65906437f0f13af14897a6a40ad",
+        "targetHash": "d55f495f9a85b3c196de8b901cc3cb69fc32499f53c5d588ef2c257a0b6cf56a",
         "node": [
           {
-            "right": "872a17da3cba184ba0af4a3d60bd7a553bae6c03618e07664d5af49584a279b0"
+            "right": "59867c622c38b786f1ff9e279fd3ea678aa6689ee69687379fc3ca44eb90acef"
           },
           {
-            "right": "3987cadfae8583f1ae55b6ff4bb67aafa85a939a22143d8f3c45ec22de2216da"
+            "right": "313d09a568269afa01f78334b79b46e0374f9806e0132f5152f7c70e42cc038a"
           },
           {
-            "left": "cf1463b545bf482b588b79f1634734b0e6d0380710d26b833a0ce8a22657b4d0"
+            "right": "75c3c1c3c55011c532411a55f726875e27645f2e9833b4a394383d87a24d2a24"
           },
           {
-            "left": "d9d4ab594a533d5bcd77f07600bb3f782ad54dbfb823edc2e9a4095addce8fc7"
-          },
-          {
-            "right": "97d3ddf5e420e538e2906f8d82cc1dd1f9fde1413c5237aff28909b5bd1acb32"
+            "left": "d8e529bfb7a0fd29ac526c0831c004346e3d9b25c18f45a4d21c47360f65ae89"
           }
         ]
       },
       {
         "identifier": "cvc:Meta:issuanceDate",
-        "value": "urn:issuanceDate:2a11d41e05bc215d66718e177624f7c6edddb29ec7a0837f3443875cecc3fa1b:2019-04-04T14:50:53.055Z|",
+        "value": "urn:issuanceDate:3c9388617864f0161f9442882b3d1ba13f2c39be70e793cfa98bce4c40f6c77a:2019-06-21T13:09:46.601Z|",
         "claimPath": "meta.issuanceDate",
-        "targetHash": "872a17da3cba184ba0af4a3d60bd7a553bae6c03618e07664d5af49584a279b0",
+        "targetHash": "59867c622c38b786f1ff9e279fd3ea678aa6689ee69687379fc3ca44eb90acef",
         "node": [
           {
-            "left": "c95ba2a7ee8007f281685b16ef65c2ff4b93c65906437f0f13af14897a6a40ad"
+            "left": "d55f495f9a85b3c196de8b901cc3cb69fc32499f53c5d588ef2c257a0b6cf56a"
           },
           {
-            "right": "3987cadfae8583f1ae55b6ff4bb67aafa85a939a22143d8f3c45ec22de2216da"
+            "right": "313d09a568269afa01f78334b79b46e0374f9806e0132f5152f7c70e42cc038a"
           },
           {
-            "left": "cf1463b545bf482b588b79f1634734b0e6d0380710d26b833a0ce8a22657b4d0"
+            "right": "75c3c1c3c55011c532411a55f726875e27645f2e9833b4a394383d87a24d2a24"
           },
           {
-            "left": "d9d4ab594a533d5bcd77f07600bb3f782ad54dbfb823edc2e9a4095addce8fc7"
-          },
-          {
-            "right": "97d3ddf5e420e538e2906f8d82cc1dd1f9fde1413c5237aff28909b5bd1acb32"
+            "left": "d8e529bfb7a0fd29ac526c0831c004346e3d9b25c18f45a4d21c47360f65ae89"
           }
         ]
       },
       {
         "identifier": "cvc:Meta:expirationDate",
-        "value": "urn:expirationDate:cb944b128a81e2b11fbf7aa3f9223260c8e409e599228b0a3c6848619491acd6:null|",
+        "value": "urn:expirationDate:94b534ae0ebcc45d27dabc3fe4a3645864f490e9419ab29fc599ed2e414ea63c:null|",
         "claimPath": "meta.expirationDate",
-        "targetHash": "0c59cf7816616d588c8591281308dfb0de432ce7f042d424d239bc16534b86de",
+        "targetHash": "c87fc0f0d22962ee752ab0228f9be80dce9782880fc9db8c1415d634f882b4f9",
         "node": [
           {
-            "right": "ff61b4e477d3d2c7320a4da0fa387a319121709bd06a0fef28ddd565ca2f9376"
+            "right": "5e0c5df29ff2f1a9681122a0543265f8ae8a6eb0aad279cd6b1560d8e2021545"
           },
           {
-            "left": "cd8d2fc9c2e2d9072d72672241d69471f658cf10c00357a61d878ac76530d494"
+            "left": "0085a16f511db1324f6c7d44381b272e4f6ff0e203fa475050d3c38d6c8ac23f"
           },
           {
-            "left": "cf1463b545bf482b588b79f1634734b0e6d0380710d26b833a0ce8a22657b4d0"
+            "right": "75c3c1c3c55011c532411a55f726875e27645f2e9833b4a394383d87a24d2a24"
           },
           {
-            "left": "d9d4ab594a533d5bcd77f07600bb3f782ad54dbfb823edc2e9a4095addce8fc7"
-          },
-          {
-            "right": "97d3ddf5e420e538e2906f8d82cc1dd1f9fde1413c5237aff28909b5bd1acb32"
+            "left": "d8e529bfb7a0fd29ac526c0831c004346e3d9b25c18f45a4d21c47360f65ae89"
           }
         ]
       }
