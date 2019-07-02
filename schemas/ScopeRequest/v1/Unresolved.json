@@ -239,8 +239,7 @@
       "type": "object",
       "title": "The Channels Schema",
       "required": [
-        "eventsURL",
-        "payloadURL"
+        "eventsURL"
       ],
       "properties": {
         "eventsURL": {
@@ -262,6 +261,81 @@
             "https://awesome-idr.com/response/payload"
           ],
           "pattern": "^(.*)$"
+        },
+        "evidences": {
+          "$id": "#/properties/channels/properties/evidences",
+          "type": "object",
+          "properties": {
+            "idDocumentFront": {
+              "$id": "#/properties/channels/properties/evidences/properties/idDocumentFront",
+              "type": "object",
+              "properties": {
+                "accepts": {
+                  "enum": ["application/json", "image/*", "multipart-form"],
+                  "title": "set the content body"
+                },
+                "method": {
+                  "enum": ["post", "put"],
+                  "title": "set request method"
+                },
+                "url": {
+                  "type": "string",
+                  "title": "set request endpoint"
+                },
+                "authorization": {
+                  "type": "string",
+                  "title": "set authorization header"
+                }
+              },
+              "required": [ "accepts", "method", "url" ]
+            },
+            "idDocumentBack": {
+              "$id": "#/properties/channels/properties/evidences/properties/idDocumentBack",
+              "type": "object",
+              "properties": {
+                "accepts": {
+                  "enum": ["application/json", "image/*", "multipart-form"],
+                  "title": "set the content body"
+                },
+                "method": {
+                  "enum": ["post", "put"],
+                  "title": "set request method"
+                },
+                "url": {
+                  "type": "string",
+                  "title": "set request endpoint"
+                },
+                "authorization": {
+                  "type": "string",
+                  "title": "set authorization header"
+                }
+              },
+              "required": [ "accepts", "method", "url" ]
+            },
+            "selfie": {
+              "$id": "#/properties/channels/properties/evidences/properties/selfie",
+              "type": "object",
+              "properties": {
+                "accepts": {
+                  "enum": ["application/json", "image/*", "multipart-form"],
+                  "title": "set the content body"
+                },
+                "method": {
+                  "enum": ["post", "put"],
+                  "title": "set request method"
+                },
+                "url": {
+                  "type": "string",
+                  "title": "set request endpoint"
+                },
+                "authorization": {
+                  "type": "string",
+                  "title": "set authorization header"
+                }
+              },
+              "required": [ "accepts", "method", "url" ]
+            }
+          }
         }
       }
     }

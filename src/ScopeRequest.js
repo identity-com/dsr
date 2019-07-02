@@ -31,6 +31,13 @@ const VALID_OPERATORS = [
 
 const isLocal = url => (url.match('(http://|https://)?(localhost|127.0.0.*)') !== null);
 
+const isValidEvidenceChannelDetails = (channelDetails) => {
+  let result = true;
+  result = _.includes(['application/json', 'image/*', 'multipart-from'], channelDetails.accepts);
+  result = result && _.includes(['put', 'post'], channelDetails.method);
+  result = result && (!_.isEmpty(channelDetails.url) && (isLocal(channelDetails.url) || _.startsWith(channelDetails.url, 'https')));
+  return result;
+};
 
 /**
  * Class for generating Scope Requests
@@ -193,6 +200,18 @@ class ScopeRequest {
         && !isLocal(channelsConfig.payloadURL)
         && !_.startsWith(channelsConfig.payloadURL, 'https')) {
       throw new Error('only HTTPS is supported for payloadURL');
+    }
+
+    if (channelsConfig.evidences) {
+      if (channelsConfig.evidences.idDocumentFront && !isValidEvidenceChannelDetails(channelsConfig.evidences.idDocumentFront)) {
+        throw new Error('invalid idDocumentFront channel configuration');
+      }
+      if (channelsConfig.evidences.idDocumentBack && !isValidEvidenceChannelDetails(channelsConfig.evidences.idDocumentBack)) {
+        throw new Error('invalid idDocumentBack channel configuration');
+      }
+      if (channelsConfig.evidences.selfie && !isValidEvidenceChannelDetails(channelsConfig.evidences.selfie)) {
+        throw new Error('invalid selfie channel configuration');
+      }
     }
 
     return true;
