@@ -41,7 +41,7 @@
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-no-only-tests": "^2.0.1",
     "eslint-plugin-react": "^7.10.0",
-    "jest": "^23.6.0",
+    "jest": "^24.8.0",
     "jest-stare": "^1.13.0",
     "node-fetch": "^2.1.2",
     "request-debug": "^0.2.0",
