@@ -9,6 +9,7 @@
     "version",
     "requesterInfo",
     "timestamp",
+    "authentication",
     "credentialItems",
     "channels"
   ],
@@ -138,6 +139,15 @@
         "2018-11-20T11:51:59.188Z"
       ],
       "pattern": "^(.*)$"
+    },
+    "authentication": {
+      "$id": "#/properties/authentication",
+      "type": "boolean",
+      "title": "The flag that specifies if authentication is required",
+      "default": "true",
+      "examples": [
+        "true or false"
+      ]
     },
     "credentialItems": {
       "$id": "#/properties/credentialItems",
