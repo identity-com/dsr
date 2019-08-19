@@ -42,7 +42,7 @@
     "eslint-plugin-no-only-tests": "^2.0.1",
     "eslint-plugin-react": "^7.10.0",
     "jest": "^24.8.0",
-    "jest-stare": "^1.13.0",
+    "jest-stare": "^1.18.1",
     "node-fetch": "^2.1.2",
     "request-debug": "^0.2.0",
     "rimraf": "^2.6.2"
@@ -53,7 +53,7 @@
     "bottlejs": "^1.7.1",
     "dotenv": "^6.0.0",
     "json-stable-stringify": "^1.0.1",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.15",
     "mkdirp": "^0.5.1",
     "sift": "^6.0.0",
     "sjcl": "github:civicteam/sjcl#v1.0.8-ecc",
