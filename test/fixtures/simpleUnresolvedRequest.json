@@ -1,7 +1,6 @@
 {
   "id": "AUniqId?",
   "version": "1",
-  "timestamp": "2018-07-04T00:11:55.698Z",
   "requesterInfo": {
     "requesterId": "uuid",
     "app": {
@@ -13,6 +12,8 @@
       "secondaryColor": "2345FF"
     }
   },
+  "timestamp": "2018-07-04T00:11:55.698Z",
+  "authentication": true,
   "channels": {
     "eventsURL": "https://server/events/UUID",
     "payloadURL": "https://server/payload/UUID"
