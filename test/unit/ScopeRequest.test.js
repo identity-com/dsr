@@ -24,6 +24,28 @@ const config = {
 
 initServices(config);
 
+const validConfig = {
+  partner: {
+    id: 'test',
+    signingKeys: {
+      xpub: 'test',
+      xprv: 'test',
+    },
+  },
+  app: {
+    id: 'test',
+    name: 'test',
+    logo: 'https://example.com/',
+    description: 'test',
+    primaryColor: 'FFF',
+    secondaryColor: 'FFF',
+  },
+  channels: {
+    eventsURL: 'https://example.com/',
+    payloadURL: 'https://example.com/',
+  },
+};
+
 const { ScopeRequest, buildSignedRequestBody, verifySignedRequestBody } = require('../../src/ScopeRequest');
 
 // -----Fixtures
@@ -38,7 +60,6 @@ describe('DSR Factory Tests', () => {
       return new ScopeRequest('abcd',
         ['claim-boggus:identifier-1']);
     }
-
     expect(createNewDSR).toThrow('claim-boggus:identifier-1 is not valid');
   });
 
@@ -50,7 +71,6 @@ describe('DSR Factory Tests', () => {
     expect(createNewDSR).toThrow('credential-boggus:identifier-1 is not valid');
   });
 
-
   it('Should Construct DSR with known claims', () => {
     const dsr = new ScopeRequest('abcd', ['claim-cvc:Identity:name-1']);
     expect(dsr).toBeDefined();
@@ -60,7 +80,6 @@ describe('DSR Factory Tests', () => {
     const dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1']);
     expect(dsr).toBeDefined();
   });
-
 
   it('Should Construct DSR with valid constraints', () => {
     const dsr = new ScopeRequest('abcd',
@@ -371,26 +390,61 @@ describe('DSR Factory Tests', () => {
   });
 
   it('Should succeed validation while mocking the appConfig with partnerConfig signingKeys', () => {
-    const appConfig = {
-      id: 'test',
-      name: 'test',
-      logo: 'https://example.com/',
-      primaryColor: 'FFF',
-      secondaryColor: 'FFF',
-      description: 'test',
-    };
-    const partnerConfig = {
-      id: 'test',
-      signingKeys: {
-        xpub: 'test',
-        xprv: 'test',
-      },
-    };
-    // eslint-disable-next-line no-unused-vars
-    const dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], {
-      eventsURL: 'https://example.com/', payloadURL: 'https://example.com/',
-    }, appConfig, partnerConfig);
-    expect(dsr.requesterInfo.requesterId).toBe(partnerConfig.id);
+    const dsr = new ScopeRequest(
+      'abcd',
+      ['credential-cvc:Identity-v1'],
+      validConfig.channels,
+      validConfig.app,
+      validConfig.partner
+    );
+    expect(dsr.requesterInfo.requesterId).toBe(validConfig.partner.id);
+  });
+
+  it('Should Construct DSR with authentication default to true when authentication value not specified', () => {
+    const dsr = new ScopeRequest(
+      'abcd',
+      ['credential-cvc:Identity-v1'],
+      validConfig.channels,
+      validConfig.app,
+      validConfig.partner
+    );
+    expect(dsr).toBeDefined();
+    expect(dsr.authentication).toBeDefined();
+    expect(dsr.authentication).toBeTruthy();
+  });
+
+  it('Should Construct DSR with authentication', () => {
+    const authentication = false;
+    const dsr = new ScopeRequest(
+      'abcd',
+      ['credential-cvc:Identity-v1'],
+      validConfig.channels,
+      validConfig.app,
+      validConfig.partner,
+      authentication,
+    );
+    expect(dsr).toBeDefined();
+    expect(dsr.authentication).toBeDefined();
+    expect(dsr.authentication).toEqual(authentication);
+
+    const requestBody = buildSignedRequestBody(dsr);
+    expect(requestBody.payload.authentication).toBeDefined();
+    expect(requestBody.payload.authentication).toEqual(authentication);
+  });
+
+  it('Should fail the creation of an dsr when a invalid value of authentication is provided', () => {
+    const invalidAuthentication = 'invalid';
+    expect(() => {
+      // eslint-disable-next-line no-unused-vars
+      const dsr = new ScopeRequest(
+        'abcd',
+        ['credential-cvc:Identity-v1'],
+        validConfig.channels,
+        validConfig.app,
+        validConfig.partner,
+        invalidAuthentication,
+      );
+    }).toThrow('Invalid value for authentication');
   });
 });
 

@@ -260,17 +260,28 @@ class ScopeRequest {
     return true;
   }
 
-  constructor(uniqueId, requestedItems, channelsConfig, appConfig, partnerConfig) {
+  static validateAuthentication(authentication) {
+    if (!_.isBoolean(authentication)) {
+      throw new Error('Invalid value for authentication');
+    }
+    return true;
+  }
+
+  constructor(uniqueId, requestedItems, channelsConfig, appConfig, partnerConfig, authentication = true) {
     this.version = SCHEMA_VERSION;
     if (!uniqueId) {
       throw Error('uniqueId is required');
     }
     this.id = uniqueId;
     this.requesterInfo = {};
+
+    if (ScopeRequest.validateAuthentication(authentication)) {
+      this.authentication = authentication;
+    }
+
     this.timestamp = (new Date()).toISOString();
 
     const credentialItems = [].concat(requestedItems);
-
     if (ScopeRequest.validateCredentialItems(credentialItems)) {
       this.credentialItems = _.cloneDeep(credentialItems);
     }
