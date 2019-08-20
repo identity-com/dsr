@@ -1,26 +1,28 @@
 {
   "version": "1",
+  "id": "AUniqId?",
   "requesterInfo": {
     "app": {
-      "description": "Case 13: To test resolveMissingCredentials()",
-      "id": "7107a5b4-8a1f-11e8-9a94-37352f73",
-      "name": "My Awesome Identity.com Integration",
-      "logo": "https://upload.wikimedia.org/wikipedia/commons/5/5f/Atletico_mineiro_galo.png",
-      "primaryColor": "ffffff",
-      "secondaryColor": "000000"
+      "description": "NA",
+      "id": "pNCIYblwy",
+      "name": "Thundercats",
+      "logo": "https://s3.amazonaws.com/dev-integration-portal-app-logos/kx3VTykbN/1548405721-thundercats.jpeg",
+      "primaryColor": "#A80B00",
+      "secondaryColor": "#000000"
     },
     "requesterId": "3735a5b4-8a1f-11e8-9a94-a6cf71072f73"
   },
-  "timestamp": "2018-11-20T11:51:59.188Z",
+  "timestamp": "2019-08-01T19:16:39.336Z",
+  "authentication": true,
   "credentialItems": [
     {
-      "identifier": "credential-cvc:Identity-v1",
+      "identifier": "credential-cvc:IdDocument-v2",
       "constraints": {
         "meta": {
-          "credential": "credential-cvc:Identity-v1",
+          "credential": "credential-cvc:IdDocument-v2",
           "issuer": {
             "is": {
-              "$eq": "did:ethr:0xaf9482c84De4e2a961B98176C9f295F9b6008BfD"
+              "$eq": "did:ethr:0x1a88a35421a4a0d3e13fe4e8ebcf18e9a249dc5a"
             }
           }
         }
@@ -28,6 +30,23 @@
     }
   ],
   "channels": {
+    "evidences": {
+      "idDocumentFront": {
+        "accepts": "application/json",
+        "method": "put",
+        "url": "https://put-url.com"
+      },
+      "idDocumentBack": {
+        "accepts": "application/json",
+        "method": "put",
+        "url": "https://put-url.com"
+      },
+      "selfie": {
+        "accepts": "application/json",
+        "method": "put",
+        "url": "https://put-url.com"
+      }
+    },
     "eventsURL": "https://awesome-idr.com/response/events",
     "payloadURL": "https://awesome-idr.com/response/payload"
   }
