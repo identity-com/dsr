@@ -1,6 +1,6 @@
 {
   "name": "@identity.com/dsr",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "The Dynamic Scope Request (DSR) javascript library provides capability around securely requesting credential information between an ID Requester and an ID Holder",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
@@ -28,7 +28,7 @@
     "ajv": "^6.5.2",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.24.1",
-    "babel-jest": "^23.4.0",
+    "babel-jest": "^25.1.0",
     "babel-minify": "^0.4.3",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.1",
@@ -48,8 +48,8 @@
     "rimraf": "^2.6.2"
   },
   "dependencies": {
-    "@identity.com/credential-commons": "^1.0.30",
-    "@identity.com/uca": "^1.0.14",
+    "@identity.com/credential-commons": "^1.0.32",
+    "@identity.com/uca": "^1.0.15",
     "bottlejs": "^1.7.1",
     "dotenv": "^6.0.0",
     "json-stable-stringify": "^1.0.1",
