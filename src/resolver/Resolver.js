@@ -44,7 +44,7 @@ function DsrResolver() {
       if (globalIdentifierType === 'credential') {
         const type = globalIdentifier.substring('credential-'.length, globalIdentifier.lastIndexOf('-'));
         // filter the VCs, do not confuse this $eq with the operator $eq on credentialItems array
-        const tempFiltered = sift({ identifier: { $regex: `${type}` } }, credentials);
+        const tempFiltered = credentials.filter(sift({ identifier: { $regex: `${type}` } }));
 
         // if there is an constraint on the credential
         if (credentialItem.identifier) {
@@ -95,7 +95,7 @@ function DsrResolver() {
           }
           // with all the filters, do one query
           const filterArg = { $and: filterArgArray };
-          filtered.push(...sift(filterArg, tempFiltered));
+          filtered.push(...tempFiltered.filter(sift(filterArg)));
         } else {
           filtered.push(...tempFiltered);
         }
@@ -114,7 +114,7 @@ function DsrResolver() {
             const claimFilter = {};
             // if it is a directly global identifier, return any VC that the claim path has this property
             claimFilter[`claim.${ucaType}.${propertyPath}`] = { $exists: true };
-            tempFiltered.push(...sift(claimFilter, credentials));
+            tempFiltered.push(...credentials.filter(sift(claimFilter)));
           });
         } else {
           const { identifier } = definition;
@@ -123,7 +123,7 @@ function DsrResolver() {
           const claimFilter = {};
           // if it is a directly global identifier, return any VC that the claim path has this property
           claimFilter[`claim.${ucaType}.${propertyPath}`] = { $exists: true };
-          tempFiltered.push(...sift(claimFilter, credentials));
+          tempFiltered.push(...credentials.filter(sift(claimFilter)));
         }
 
         // if we are not a simple string
@@ -142,7 +142,7 @@ function DsrResolver() {
             });
           }
           const filterArg = { $and: filterArgArray };
-          filtered.push(...sift(filterArg, tempFiltered));
+          filtered.push(...tempFiltered.filter(sift(filterArg)));
         } else {
           filtered.push(...tempFiltered);
         }
