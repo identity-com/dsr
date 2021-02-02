@@ -3,11 +3,11 @@ version: 2
 defaults: &defaults
   working_directory: ~/repo
   docker:
-    - image: circleci/node:8.11-stretch
+    - image: circleci/node:12.19-stretch
 
 workflows:
   version: 2
-  
+
   build-and-test:
     jobs:
       - build
@@ -81,7 +81,7 @@ workflows:
               only: /^v\d+\.\d+\.\d+.*/
             branches:
               ignore: /.*/
-      
+
 jobs:
   build:
     <<: *defaults
@@ -149,7 +149,7 @@ jobs:
           hub release delete $CIRCLE_TAG
 
   deploy:
-    <<: *defaults  
+    <<: *defaults
     steps:
       - attach_workspace:
           at: ~/repo
