@@ -395,7 +395,7 @@ describe('DSR Factory Tests', () => {
       ['credential-cvc:Identity-v1'],
       validConfig.channels,
       validConfig.app,
-      validConfig.partner
+      validConfig.partner,
     );
     expect(dsr.requesterInfo.requesterId).toBe(validConfig.partner.id);
   });
@@ -406,7 +406,7 @@ describe('DSR Factory Tests', () => {
       ['credential-cvc:Identity-v1'],
       validConfig.channels,
       validConfig.app,
-      validConfig.partner
+      validConfig.partner,
     );
     expect(dsr).toBeDefined();
     expect(dsr.authentication).toBeDefined();
@@ -891,6 +891,115 @@ describe('DSR Request Utils', () => {
         },
       },
     });
+    expect(dsr).toBeDefined();
+  });
+
+  it('Should throw an error when creating a DSR with wrong aggregate filters', () => {
+    const functionToThrow = () => {
+      // eslint-disable-next-line no-new
+      new ScopeRequest('abcd', [
+        {
+          identifier: 'claim-cvc:Phone.countryCode-v1',
+          aggregate: [
+            {
+              $somethingToError: [
+                {
+                  path: 'meta.issuer',
+                  is: {
+                    $eq: 'did:ethr:0x1a88a35421a4a0d3e13fe4e8ebcf18e9a249dc5a',
+                  },
+                },
+                {
+                  path: 'claims.contact.phoneNumber.countryCode',
+                  is: {
+                    $eq: '55',
+                  },
+                },
+              ],
+            },
+          ],
+        }]);
+    };
+    expect(functionToThrow).toThrow('Invalid Aggregate Object - $somethingToError is not a valid filter');
+  });
+
+  it('Should Construct DSR with aggregation first', () => {
+    const dsr = new ScopeRequest('abcd', [
+      {
+        identifier: 'credential-cvc:Covid19-v1',
+        aggregate: [
+          {
+            $first: 'true',
+          },
+        ],
+      }]);
+    expect(dsr).toBeDefined();
+  });
+
+  it('Should Construct DSR with aggregation last', () => {
+    const dsr = new ScopeRequest('abcd', [
+      {
+        identifier: 'credential-cvc:Covid19-v1',
+        aggregate: [
+          {
+            $last: 'true',
+          },
+        ],
+      }]);
+    expect(dsr).toBeDefined();
+  });
+
+  it('Should Construct DSR with aggregation limit', () => {
+    const dsr = new ScopeRequest('abcd', [
+      {
+        identifier: 'credential-cvc:Covid19-v1',
+        aggregate: [
+          {
+            $limit: 3,
+          },
+        ],
+      }]);
+    expect(dsr).toBeDefined();
+  });
+
+  it('Should Construct DSR with aggregation max', () => {
+    const dsr = new ScopeRequest('abcd', [
+      {
+        identifier: 'credential-cvc:Covid19-v1',
+        aggregate: [
+          {
+            $max: 'claims.medical.covid19.patient.dateOfBirth',
+          },
+        ],
+      }]);
+    expect(dsr).toBeDefined();
+  });
+
+  it('Should Construct DSR with aggregation min', () => {
+    const dsr = new ScopeRequest('abcd', [
+      {
+        identifier: 'credential-cvc:Covid19-v1',
+        aggregate: [
+          {
+            $min: 'claims.medical.covid19.patient.dateOfBirth',
+          },
+        ],
+      }]);
+    expect(dsr).toBeDefined();
+  });
+
+  it('Should Construct DSR with aggregation sort', () => {
+    const dsr = new ScopeRequest('abcd', [
+      {
+        identifier: 'claim-cvc:Phone.countryCode-v1',
+        aggregate: [
+          {
+            $sort: {
+              'meta.issuanceDate': 'ASC',
+            },
+          },
+        ],
+      }]);
     expect(dsr).toBeDefined();
   });
 });
