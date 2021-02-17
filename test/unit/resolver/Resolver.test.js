@@ -296,4 +296,41 @@ describe('DSR Filtering and Constraints Tests', () => {
     expect(filtered.length).toBe(0);
     done();
   });
+
+  it('Should not give any errors on filtering DSR with only aggregate tags', async (done) => {
+    const dsr = new ScopeRequest('abcd', [
+      {
+        identifier: 'credential-cvc:Covid19-v1',
+        aggregate: [
+          {
+            $limit: 3,
+          },
+        ],
+      }], config.channels, config.app, config.partner);
+    const resolver = new Resolver();
+    const filtered = await resolver.filterCredentials(dsr, []);
+    expect(filtered.length).toBe(0);
+    done();
+  });
+
+  it('Should filter only by constraints tag and ignore the aggregate tag', async (done) => {
+    const unresolvedFileContents = fs.readFileSync('test/fixtures/aggregation/dsrAggregationLimit.json', 'utf8');
+    const unresolvedRequest = JSON.parse(unresolvedFileContents);
+
+    const credential1FileContent = fs.readFileSync('test/fixtures/filtering/identity1.json', 'utf8');
+    const credential1 = JSON.parse(credential1FileContent);
+
+    const credential2FileContent = fs.readFileSync('test/fixtures/filtering/identity2.json', 'utf8');
+    const credential2 = JSON.parse(credential2FileContent);
+
+    const credential3FileContent = fs.readFileSync('test/fixtures/filtering/identity3.json', 'utf8');
+    const credential3 = JSON.parse(credential3FileContent);
+
+    const resolver = new Resolver();
+    const filtered = await resolver.filterCredentials(unresolvedRequest, [credential1, credential2, credential3]);
+    expect(filtered.length).toBe(1);
+    const vc = filtered[0];
+    expect(vc.issuer).toBe('jest:test:2d516330-d2cc-11e8-b214-99085237d65e');
+    done();
+  });
 });

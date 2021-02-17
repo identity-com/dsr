@@ -29,6 +29,15 @@ const VALID_OPERATORS = [
   '$exists',
 ];
 
+const VALID_AGGREGATORS = [
+  '$limit',
+  '$max',
+  '$min',
+  '$last',
+  '$first',
+  '$sort',
+];
+
 const isLocal = url => (url.match('(http://|https://)?(localhost|127.0.0.*)') !== null);
 
 const isValidEvidenceChannelDetails = (channelDetails) => {
@@ -96,6 +105,28 @@ class ScopeRequest {
     }
 
     if (_.isNil(constraint[operatorKeys[0]])) {
+      throw new Error('Invalid Constraint Object - a constraint value is required');
+    }
+
+    return true;
+  }
+
+  /**
+   * Validate the constraints of an Scope Request
+   * @param {Object} filter of an aggregation in the Scope Request
+   * @returns {boolean} true|false
+   */
+  static validateAggregationFilter(filter) {
+    const operatorKeys = _.keys(filter);
+
+    if (operatorKeys.length !== 1) {
+      throw new Error('Invalid Constraint Object - only one operator is allowed');
+    }
+    if (!_.includes(VALID_AGGREGATORS, operatorKeys[0])) {
+      throw new Error(`Invalid Aggregate Object - ${operatorKeys[0]} is not a valid filter`);
+    }
+
+    if (_.isNil(filter[operatorKeys[0]])) {
       throw new Error('Invalid Constraint Object - a constraint value is required');
     }
 
@@ -180,6 +211,12 @@ class ScopeRequest {
               ScopeRequest.validateConstraint(claim.is);
             });
           }
+        }
+
+        if (!_.isEmpty(item.aggregate)) {
+          _.forEach(item.aggregate, (aggregationFilter) => {
+            ScopeRequest.validateAggregationFilter(aggregationFilter);
+          });
         }
       }
     });
