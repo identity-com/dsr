@@ -1002,6 +1002,27 @@ describe('DSR Request Utils', () => {
       }]);
     expect(dsr).toBeDefined();
   });
+
+  it('Should Construct DSR with multiple aggregation filters', () => {
+    const dsr = new ScopeRequest('abcd', [
+      {
+        identifier: 'claim-cvc:Phone.countryCode-v1',
+        aggregate: [
+          {
+            $max: 'claims.medical.covid19.patient.dateOfBirth',
+          },
+          {
+            $sort: {
+              'meta.issuanceDate': 'ASC',
+            },
+          },
+          {
+            $limit: 3,
+          },
+        ],
+      }]);
+    expect(dsr).toBeDefined();
+  });
 });
 
 module.exports = ScopeRequest;

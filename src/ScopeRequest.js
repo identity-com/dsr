@@ -113,7 +113,7 @@ class ScopeRequest {
 
   /**
    * Validate the constraints of an Scope Request
-   * @param filter of an aggregation in the Scope Request
+   * @param {Object} filter of an aggregation in the Scope Request
    * @returns {boolean} true|false
    */
   static validateAggregationFilter(filter) {
