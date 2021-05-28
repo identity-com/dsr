@@ -724,11 +724,11 @@ describe('DSR Request Utils', () => {
     expect(match).toBeTruthy();
   });
 
-  it('Should check is partial credentials matches the request constraints ', () => {
+  it('Should check if partial credentials matches the request constraints ', () => {
     const credentialItems = [filteredIdDoc]; // This is should be the CI on the scopeRequest response
     const dsr = new ScopeRequest('abcd',
       [{
-        identifier: 'credential-cvc:IdDocument-v2',
+        identifier: 'claim-cvc:Document.dateOfBirth-v1',
         constraints: {
           meta: {
             issuer: { is: { $eq: 'did:ethr:0x1a88a35421a4a0d3e13fe4e8ebcf18e9a249dc5a' } },
