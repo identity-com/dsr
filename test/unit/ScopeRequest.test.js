@@ -710,6 +710,7 @@ describe('DSR Request Utils', () => {
     const dsr = new ScopeRequest('abcd',
       [{
         identifier: 'credential-cvc:IdDocument-v1',
+        credential: 'credential-cvc:IdDocument-v1',
         constraints: {
           meta: {
             issuer: { is: { $eq: 'did:ethr:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74' } },
