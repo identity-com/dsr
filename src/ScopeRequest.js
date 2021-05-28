@@ -70,7 +70,7 @@ class ScopeRequest {
     }
     // eslint-disable-next-line consistent-return
     _.forEach(requestedItems, (requestedItem) => {
-      const credentialItem = _.find(credentialItems, { identifier: requestedItem.identifier });
+      const credentialItem = _.find(credentialItems, { identifier: requestedItem.credential });
       if (!credentialItem) {
         // no need to continue breaking and returning false
         result = false;
