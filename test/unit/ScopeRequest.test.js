@@ -50,6 +50,7 @@ const { ScopeRequest, buildSignedRequestBody, verifySignedRequestBody } = requir
 
 // -----Fixtures
 const idDoc = require('../fixtures/idDocCred');
+const filteredIdDoc = require('../fixtures/idDocV2Filtered.json');
 
 describe('DSR Factory Tests', () => {
   beforeEach(() => {
@@ -704,7 +705,7 @@ describe('DSR Request Utils', () => {
     done();
   });
 
-  it('Should ckeck is credentials matches the request constraints', () => {
+  it('Should check is credentials matches the request constraints', () => {
     const credentialItems = [idDoc]; // This is should be the CI on the scopeRequest response
     const dsr = new ScopeRequest('abcd',
       [{
@@ -712,6 +713,25 @@ describe('DSR Request Utils', () => {
         constraints: {
           meta: {
             issuer: { is: { $eq: 'did:ethr:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74' } },
+          },
+          claims: [
+            { path: 'document.dateOfBirth', is: { $lte: '-21y' } },
+          ],
+        },
+      }]);
+    expect(dsr).toBeDefined();
+    const match = ScopeRequest.credentialsMatchesRequest(credentialItems, dsr);
+    expect(match).toBeTruthy();
+  });
+
+  it('Should check if partial credentials matches the request constraints ', () => {
+    const credentialItems = [filteredIdDoc]; // This is should be the CI on the scopeRequest response
+    const dsr = new ScopeRequest('abcd',
+      [{
+        identifier: 'credential-cvc:IdDocument-v2',
+        constraints: {
+          meta: {
+            issuer: { is: { $eq: 'did:ethr:0x1a88a35421a4a0d3e13fe4e8ebcf18e9a249dc5a' } },
           },
           claims: [
             { path: 'document.dateOfBirth', is: { $lte: '-21y' } },

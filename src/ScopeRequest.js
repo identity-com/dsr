@@ -76,7 +76,9 @@ class ScopeRequest {
         result = false;
         return false;
       }
-      const verifiableCredential = VC.fromJSON(credentialItem);
+
+      // If is a presentation `credentialItem.granted` nor empty accept partial
+      const verifiableCredential = VC.fromJSON(credentialItem, !!credentialItem.granted);
 
       const constraints = _.get(requestedItem, 'constraints');
       const match = verifiableCredential.isMatch(constraints);
