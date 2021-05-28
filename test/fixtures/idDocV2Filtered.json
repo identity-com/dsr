@@ -1,0 +1,84 @@
+{
+  "id": "51c7e224-5510-4f1f-8acf-53be0613f572",
+  "issuer": "did:ethr:0x1a88a35421a4a0d3e13fe4e8ebcf18e9a249dc5a",
+  "issuanceDate": "2021-05-27T18:14:53.695Z",
+  "identifier": "credential-cvc:IdDocument-v2",
+  "expirationDate": null,
+  "version": "1",
+  "type": [
+    "Credential",
+    "credential-cvc:IdDocument-v2"
+  ],
+  "transient": false,
+  "claim": {
+    "document": {
+      "dateOfBirth": {
+        "day": 1,
+        "month": 1,
+        "year": 1990
+      }
+    }
+  },
+  "proof": {
+    "type": "CvcMerkleProof2018",
+    "merkleRoot": "5767b673caad627b199c3548496ef9bfdf09b25092a01242a7b320ce712891be",
+    "anchor": {
+      "_id": "60afe1a28e089000612e6b53",
+      "subject": {
+        "pub": "xpub6ZoAE5Jmm2iTnV17taa98Z7rsbf72Vdmi7p1LsmvFwv3dwoBd9HXSpib2w8bEHjCEYmtiNC5ZeZSz4jPyHW1uwVw634CUtS7V5z1onrhh4H",
+        "label": "credential-cvc:IdDocument-v2",
+        "data": "5767b673caad627b199c3548496ef9bfdf09b25092a01242a7b320ce712891be",
+        "signature": "3044022043aaea7559b396e9c9103958d13689fe73b69a755c4049b5a1d58ab9e40f6a6a02200d064229f23d4c2052197c5d45681e9013fc0f6a6d6581fc55aac7664a0f69bd"
+      },
+      "cosigners": [
+        {
+          "pub": "xpub661MyMwAqRbcFML6P96tik5kQ2hZmL2p6yD72dTdh4gJafpwrWRgqEUhx1k9RjztGJ4LscYrcqYUiH6hKksbsUZrFCmpjqgZCa9sKtbyWvi"
+        },
+        {
+          "pub": "xpub661MyMwAqRbcGbaBD46EgrCGEymoERd2mvkso93aRtViMiraQGuZuqcKMUHTuWpDxgSqRD4RJ6MH2JyBsruMvQfvj6Pgnkgjvwdbk6hDQNX"
+        }
+      ],
+      "authority": {
+        "pub": "xpub661MyMwAqRbcFeLHVqQi8mo3Ck1yz7aDcWV6MTKpai7p8pw9fNstmqY3x4Te9hf3sKkD1mMqPiLjjiCvkaCLRm1zv2KBneudxJ4ZZZH4q92",
+        "path": "/1/0/0/0"
+      },
+      "tx": "01000000019892132216339fb4be8ab70744349b0c119a5acd3820fcb4566fbf9048b79b2f00000000fdfd000047304402200e2e39d531634537738327affd03f641f60023346ca23ae65fede26057fb155f02206f17068342030c410a58a6e4725cce5749f6c7619d361c78ab2daefdf72e6bb501483045022100d06fe58aeab76c63eeaed59e1e31546ad6a5a52983e544360c7f0b2e69d61410022022b436056b9641adb6a6316ae355a570a41fd9882227173b56fff317489dd47b014c69522102a3318eddcb8b8070798df9325208e3cb23a0a80779b9eea57dadbc07b097a5d82103b7d1dc0a18e0070bfa9fdd6ff4b24cadf2dfd74bc3b1677223da54c7664334fe21025a3543f1bde2147586b204149d82e2dc38319af40689445c816746ee1e1ee96453aeffffffff01551500000000000017a9141f5be078444a71afbed7cc0d8c945832a17b73508700000000",
+      "type": "temporary",
+      "network": "bitcoincashTestnet",
+      "schema": "tbch-20180201",
+      "requestId": "60afe1a18e089000612e6b52",
+      "deletedAt": -1
+    },
+    "leaves": [
+      {
+        "identifier": "claim-cvc:Document.dateOfBirth-v1",
+        "value": "urn:dateOfBirth.day:1ef6e4e11be505dcd51f746ac9292048441cab6ced5bb7785d7b15fac88f74b8:1|urn:dateOfBirth.month:51c46d655d590ef8347cde53c2de63a034dd6c5981422cc0a972fe65dd220d65:1|urn:dateOfBirth.year:2f2fd65ae6d4ea421d912975eea818a49c1fb8bc299172e96a0a2c76d221fac6:1990|",
+        "claimPath": "document.dateOfBirth",
+        "targetHash": "b742923ab0e7ea9e681a2adc73f9120639e9ff81178818d4043960cac84e13ef",
+        "node": [
+          {
+            "right": "4657cd1053de112fcc8db525fbba0ceb1a01fdad7b3459ce29f895b1d44be680"
+          },
+          {
+            "left": "5aad70c67ea5b44f3743e00b64b39dc22c0945c15f972ed0944332a8bf0f352f"
+          },
+          {
+            "left": "26018b954fc250d066f36fae1fa3c0ba2b14980a15f2817d224c05036fe64143"
+          },
+          {
+            "right": "62c26cc3d8383faa218e2be51cb295a5717a38f0fa4e6669ce202e53d5f29445"
+          },
+          {
+            "right": "014b7dd57ee3faa22d4fa8322cc3c044ed78d29d9a359ed3ec8ad65fe2d16a9b"
+          }
+        ]
+      }
+    ],
+    "merkleRootSignature": {
+      "algo": "ec256k1",
+      "pubBase58": "xpub661MyMwAqRbcFML6P96tik5kQ2hZmL2p6yD72dTdh4gJafpwrWRgqEUhx1k9RjztGJ4LscYrcqYUiH6hKksbsUZrFCmpjqgZCa9sKtbyWvi",
+      "signature": "3045022100af812854b7d55720cd898e8a39b4e2a67966cf253820ce86df3aa8aa03da3b0102200db426eea8297b0a86c9cbce6b51aed445097f91e7cb3c505d5222826e4cf476"
+    }
+  },
+  "granted": "3045022100b98837274e167b756d0829e9e5288ec226fc38b6b1afbb3079bd5b7e76f648c6022022c91b6b284630bc3ab34bf422b3e7d3d7f2c36ba2633401276f50d15c232417"
+}
