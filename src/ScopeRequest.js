@@ -53,12 +53,12 @@ const isValidEvidenceChannelDetails = (channelDetails) => {
  */
 class ScopeRequest {
   /**
-   *
-   * @param credentialItems - A list of credentialItems to check
-   * @param request - Original ScopeRequest
-   * @return {boolean}
-   */
-  static credentialsMatchesRequest(credentialItems, request) {
+     *
+     * @param credentialItems - A list of credentialItems to check
+     * @param request - Original ScopeRequest
+     * @return {boolean}
+     */
+  static async credentialsMatchesRequest(credentialItems, request) {
     let result = true;
     const requestedItems = _.get(request, 'credentialItems');
 
@@ -69,7 +69,8 @@ class ScopeRequest {
       throw new Error('empty credentialItems param');
     }
     // eslint-disable-next-line consistent-return
-    _.forEach(requestedItems, (requestedItem) => {
+    await _.reduce(requestedItems, async (promise, requestedItem) => {
+      await promise;
       const credentialItem = _.find(credentialItems, { identifier: requestedItem.credential });
       if (!credentialItem) {
         // no need to continue breaking and returning false
@@ -78,7 +79,7 @@ class ScopeRequest {
       }
 
       // If is a presentation `credentialItem.granted` nor empty accept partial
-      const verifiableCredential = VC.fromJSON(credentialItem, !!credentialItem.granted);
+      const verifiableCredential = await VC.fromJSON(credentialItem, !!credentialItem.granted);
 
       const constraints = _.get(requestedItem, 'constraints');
       const match = verifiableCredential.isMatch(constraints);
@@ -87,15 +88,15 @@ class ScopeRequest {
         result = false;
         return false;
       }
-    });
+    }, Promise.resolve());
     return result;
   }
 
   /**
-   * Validate the constraints of an Scope Request
-   * @param constraint of an Scope Request
-   * @returns {boolean} true|false
-   */
+     * Validate the constraints of an Scope Request
+     * @param constraint of an Scope Request
+     * @returns {boolean} true|false
+     */
   static validateConstraint(constraint) {
     const operatorKeys = _.keys(constraint);
 
@@ -114,10 +115,10 @@ class ScopeRequest {
   }
 
   /**
-   * Validate the constraints of an Scope Request
-   * @param {Object} filter of an aggregation in the Scope Request
-   * @returns {boolean} true|false
-   */
+     * Validate the constraints of an Scope Request
+     * @param {Object} filter of an aggregation in the Scope Request
+     * @returns {boolean} true|false
+     */
   static validateAggregationFilter(filter) {
     const operatorKeys = _.keys(filter);
 
@@ -136,37 +137,39 @@ class ScopeRequest {
   }
 
   /**
-   * Check o credential commons if it is an valid global identifier
-   * @param identifier
-   * @returns {*}
-   */
-  static isValidCredentialItemIdentifier(identifier) {
+     * Check o credential commons if it is an valid global identifier
+     * @param identifier
+     * @returns {*}
+     */
+  static async isValidCredentialItemIdentifier(identifier) {
     return isValidGlobalIdentifier(identifier);
   }
 
   /**
-   * DSR definition has to reference all IDVs by DIDs
-   *
-   * To encode a DID for an Ethereum address, simply prepend did:ethr:
-   * eg:
-   * did:ethr:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74
-   *
-   * @param issuer the content of the string in the meta of the scope request
-   * @returns {boolean} true for the pattern to be accepted, false otherwise
-   */
+     * DSR definition has to reference all IDVs by DIDs
+     *
+     * To encode a DID for an Ethereum address, simply prepend did:ethr:
+     * eg:
+     * did:ethr:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74
+     *
+     * @param issuer the content of the string in the meta of the scope request
+     * @returns {boolean} true for the pattern to be accepted, false otherwise
+     */
   static isValidCredentialIssuer(issuer) {
     return !(!issuer || !issuer.match(/^did:ethr:0x[a-fA-F0-9]{40}$/g));
   }
 
   /**
-   * Validate the credential items part of an scope request
-   * @param credentialItems the array of credential items needed for an dsr
-   * @returns {boolean} true|false sucess|failure
-   */
-  static validateCredentialItems(credentialItems) {
-    _.forEach(credentialItems, (item) => {
+     * Validate the credential items part of an scope request
+     * @param credentialItems the array of credential items needed for an dsr
+     * @returns {boolean} true|false sucess|failure
+     */
+  static async validateCredentialItems(credentialItems) {
+    await _.reduce(credentialItems, async (promise, item) => {
+      await promise;
+
       if (_.isString(item)) {
-        if (!ScopeRequest.isValidCredentialItemIdentifier(item)) {
+        if (!(await ScopeRequest.isValidCredentialItemIdentifier(item))) {
           throw new Error(`${item} is not valid CredentialItem identifier`);
         }
       } else {
@@ -174,7 +177,7 @@ class ScopeRequest {
           throw new Error('CredentialItem identifier is required');
         }
 
-        if (!ScopeRequest.isValidCredentialItemIdentifier(item.identifier)) {
+        if (!(await ScopeRequest.isValidCredentialItemIdentifier(item.identifier))) {
           throw new Error(`${item.identifier} is not valid CredentialItem identifier`);
         }
 
@@ -221,7 +224,8 @@ class ScopeRequest {
           });
         }
       }
-    });
+    }, Promise.resolve());
+
     return true;
   }
 
@@ -231,13 +235,13 @@ class ScopeRequest {
     }
 
     if (!isLocal(channelsConfig.eventsURL)
-        && !_.startsWith(channelsConfig.eventsURL, 'https')) {
+            && !_.startsWith(channelsConfig.eventsURL, 'https')) {
       throw new Error('only HTTPS is supported for eventsURL');
     }
 
     if (channelsConfig.payloadURL
-        && !isLocal(channelsConfig.payloadURL)
-        && !_.startsWith(channelsConfig.payloadURL, 'https')) {
+            && !isLocal(channelsConfig.payloadURL)
+            && !_.startsWith(channelsConfig.payloadURL, 'https')) {
       throw new Error('only HTTPS is supported for payloadURL');
     }
 
@@ -306,7 +310,18 @@ class ScopeRequest {
     return true;
   }
 
-  constructor(uniqueId, requestedItems, channelsConfig, appConfig, partnerConfig, authentication = true) {
+  static async create(uniqueId, requestedItems, channelsConfig, appConfig, partnerConfig, authentication = true) {
+    const credentialItems = [].concat(requestedItems);
+    let tmpCredentialItems;
+
+    if ((await ScopeRequest.validateCredentialItems(credentialItems))) {
+      tmpCredentialItems = _.cloneDeep(credentialItems);
+    }
+
+    return new ScopeRequest(uniqueId, requestedItems, tmpCredentialItems, channelsConfig, appConfig, partnerConfig, authentication);
+  }
+
+  constructor(uniqueId, requestedItems, credentialItems, channelsConfig, appConfig, partnerConfig, authentication = true) {
     this.version = SCHEMA_VERSION;
     if (!uniqueId) {
       throw Error('uniqueId is required');
@@ -320,10 +335,7 @@ class ScopeRequest {
 
     this.timestamp = (new Date()).toISOString();
 
-    const credentialItems = [].concat(requestedItems);
-    if (ScopeRequest.validateCredentialItems(credentialItems)) {
-      this.credentialItems = _.cloneDeep(credentialItems);
-    }
+    this.credentialItems = credentialItems;
 
     if (channelsConfig && ScopeRequest.validateChannelsConfig(channelsConfig)) {
       this.channels = channelsConfig;
@@ -352,6 +364,7 @@ class ScopeRequest {
       this.requesterInfo.requesterId = config.partner.id;
     }
   }
+
 
   toJSON() {
     return _.omit(this, ['partnerConfig']);
