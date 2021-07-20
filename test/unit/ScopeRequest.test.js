@@ -605,10 +605,10 @@ describe('DSR Request Utils', () => {
     expect(requestBody.xpub).toBeDefined();
   });
 
-  it('Should throw an error when trying to ask for an claim and while also having the noClaims flag', async () => {
-    const dsr = await ScopeRequest.create('abcd',
+  it('Should throw an error when trying to ask for an claim and while also having the noClaims flag',
+    async () => expect(ScopeRequest.create('abcd',
       [{
-        identifier: 'cvc:Random:node',
+        identifier: 'claim-cvc:Address.city-v1',
         constraints: {
           meta: {
             issuer: { is: { $eq: 'did:ethr:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74' } },
@@ -617,12 +617,7 @@ describe('DSR Request Utils', () => {
             noClaims: true,
           },
         },
-      }]);
-
-    expect(() => {
-      ScopeRequest.validateCredentialItems(dsr.credentialItems);
-    }).toThrow('Cannot ask for Claims and also have the flag noClaimss equals true');
-  });
+      }])).rejects.toThrow('Cannot ask for Claims and also have the flag noClaimss equals true'));
 
   it('Should accept one credentialItem as a simple string', async (done) => {
     const requestId = '123';
