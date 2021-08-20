@@ -5,3 +5,4 @@ demo
 build
 __integrations__
 __test__
+.tmp

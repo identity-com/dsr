@@ -58,7 +58,7 @@ class ScopeRequest {
    * @param request - Original ScopeRequest
    * @return {boolean}
    */
-  static credentialsMatchesRequest(credentialItems, request) {
+  static async credentialsMatchesRequest(credentialItems, request) {
     let result = true;
     const requestedItems = _.get(request, 'credentialItems');
 
@@ -69,7 +69,8 @@ class ScopeRequest {
       throw new Error('empty credentialItems param');
     }
     // eslint-disable-next-line consistent-return
-    _.forEach(requestedItems, (requestedItem) => {
+    await _.reduce(requestedItems, async (promise, requestedItem) => {
+      await promise;
       const credentialItem = _.find(credentialItems, { identifier: requestedItem.credential });
       if (!credentialItem) {
         // no need to continue breaking and returning false
@@ -78,7 +79,7 @@ class ScopeRequest {
       }
 
       // If is a presentation `credentialItem.granted` nor empty accept partial
-      const verifiableCredential = VC.fromJSON(credentialItem, !!credentialItem.granted);
+      const verifiableCredential = await VC.fromJSON(credentialItem, !!credentialItem.granted);
 
       const constraints = _.get(requestedItem, 'constraints');
       const match = verifiableCredential.isMatch(constraints);
@@ -87,7 +88,7 @@ class ScopeRequest {
         result = false;
         return false;
       }
-    });
+    }, Promise.resolve());
     return result;
   }
 
@@ -163,10 +164,13 @@ class ScopeRequest {
    * @param credentialItems the array of credential items needed for an dsr
    * @returns {boolean} true|false sucess|failure
    */
-  static validateCredentialItems(credentialItems) {
-    _.forEach(credentialItems, (item) => {
+  static async validateCredentialItems(credentialItems) {
+    await _.reduce(credentialItems, async (promise, item) => {
+      await promise;
+
       if (_.isString(item)) {
-        if (!ScopeRequest.isValidCredentialItemIdentifier(item)) {
+        const valid = await ScopeRequest.isValidCredentialItemIdentifier(item);
+        if (!valid) {
           throw new Error(`${item} is not valid CredentialItem identifier`);
         }
       } else {
@@ -174,7 +178,8 @@ class ScopeRequest {
           throw new Error('CredentialItem identifier is required');
         }
 
-        if (!ScopeRequest.isValidCredentialItemIdentifier(item.identifier)) {
+        const valid = await ScopeRequest.isValidCredentialItemIdentifier(item.identifier);
+        if (!valid) {
           throw new Error(`${item.identifier} is not valid CredentialItem identifier`);
         }
 
@@ -221,7 +226,8 @@ class ScopeRequest {
           });
         }
       }
-    });
+    }, Promise.resolve());
+
     return true;
   }
 
@@ -306,7 +312,18 @@ class ScopeRequest {
     return true;
   }
 
-  constructor(uniqueId, requestedItems, channelsConfig, appConfig, partnerConfig, authentication = true) {
+  static async create(uniqueId, requestedItems, channelsConfig, appConfig, partnerConfig, authentication = true) {
+    let credentialItems = [].concat(requestedItems);
+
+    const valid = await ScopeRequest.validateCredentialItems(credentialItems);
+    if (valid) {
+      credentialItems = _.cloneDeep(credentialItems);
+    }
+
+    return new ScopeRequest(uniqueId, requestedItems, credentialItems, channelsConfig, appConfig, partnerConfig, authentication);
+  }
+
+  constructor(uniqueId, requestedItems, credentialItems, channelsConfig, appConfig, partnerConfig, authentication = true) {
     this.version = SCHEMA_VERSION;
     if (!uniqueId) {
       throw Error('uniqueId is required');
@@ -320,10 +337,7 @@ class ScopeRequest {
 
     this.timestamp = (new Date()).toISOString();
 
-    const credentialItems = [].concat(requestedItems);
-    if (ScopeRequest.validateCredentialItems(credentialItems)) {
-      this.credentialItems = _.cloneDeep(credentialItems);
-    }
+    this.credentialItems = credentialItems;
 
     if (channelsConfig && ScopeRequest.validateChannelsConfig(channelsConfig)) {
       this.channels = channelsConfig;
