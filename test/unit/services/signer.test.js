@@ -40,11 +40,10 @@ describe('Signer Tests', () => {
     expect(result).toBeTruthy();
   });
 
-  it('Should filter out credentials that have the issued date greater than the DSR constraint', async (done) => {
+  it('Should filter out credentials that have the issued date greater than the DSR constraint', async () => {
     const unresolvedFileContents = fs.readFileSync('test/fixtures/signing/unresolvedDsrWithWrongClaims.json', 'utf8');
     const unresolvedRequest = JSON.parse(unresolvedFileContents);
     const signature = sign(unresolvedRequest.payload, hexprv);
     console.log(signature);
-    done();
   });
 });

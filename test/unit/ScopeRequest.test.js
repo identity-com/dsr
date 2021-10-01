@@ -619,7 +619,7 @@ describe('DSR Request Utils', () => {
         },
       }])).rejects.toThrow('Cannot ask for Claims and also have the flag noClaimss equals true'));
 
-  it('Should accept one credentialItem as a simple string', async (done) => {
+  it('Should accept one credentialItem as a simple string', async () => {
     const requestId = '123';
     const dsr = await ScopeRequest.create(
       requestId, 'credential-cvc:IDVaaS-v1',
@@ -644,7 +644,6 @@ describe('DSR Request Utils', () => {
       },
     );
     expect(dsr).toBeDefined();
-    done();
   });
 
   it('Should check is credentials matches the request constraints', async () => {
