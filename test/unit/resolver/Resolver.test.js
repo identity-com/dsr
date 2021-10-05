@@ -1,9 +1,6 @@
 const fs = require('fs');
-const { schemaLoader, CVCSchemaLoader } = require('@identity.com/credential-commons');
 const Resolver = require('../../../src/resolver/Resolver');
 const { ScopeRequest } = require('../../../src/ScopeRequest');
-
-jest.setTimeout(30000);
 
 const config = {
   partner: {
@@ -28,10 +25,6 @@ const config = {
 };
 
 describe('DSR Filtering and Constraints Tests', () => {
-  beforeAll(() => {
-    schemaLoader.addLoader(new CVCSchemaLoader());
-  });
-
   it('Shoud know how to convert', () => {
     const resolver = new Resolver();
     expect(resolver.convertMongoOperatorToJavascript('$gt')).toBe('>');
@@ -297,7 +290,7 @@ describe('DSR Filtering and Constraints Tests', () => {
   });
 
   it('Should not give any errors on filtering an empty array of credential items', async (done) => {
-    const dsr = await ScopeRequest.create('abcd', [], config.channels, config.app, config.partner);
+    const dsr = new ScopeRequest('abcd', [], config.channels, config.app, config.partner);
     const resolver = new Resolver();
     const filtered = await resolver.filterCredentials(dsr, []);
     expect(filtered.length).toBe(0);
@@ -305,7 +298,7 @@ describe('DSR Filtering and Constraints Tests', () => {
   });
 
   it('Should not give any errors on filtering DSR with only aggregate tags', async (done) => {
-    const dsr = await ScopeRequest.create('abcd', [
+    const dsr = new ScopeRequest('abcd', [
       {
         identifier: 'credential-cvc:Covid19-v1',
         aggregate: [
