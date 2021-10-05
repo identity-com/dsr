@@ -1,5 +1,6 @@
 const sift = require('sift').default;
 const { definitions: ucaDefinitions } = require('@identity.com/uca');
+const { ScopeRequest } = require('../ScopeRequest');
 
 /**
  * Dynamic Scope Request resolver. Do the filtering of credentials by passing unresolved scope requests
@@ -136,18 +137,37 @@ function DsrResolver() {
             const ucaType = credentialItem.identifier.substring(credentialItem.identifier.indexOf(':') + 1, credentialItem.identifier.lastIndexOf(':')).toLowerCase();
             // iterate all over our credentials
             if (credentialItem.constraints && credentialItem.constraints.claims) {
-              credentialItem.constraints.claims.forEach((claim) => {
-                const claimPath = `claim.${ucaType}.${claim.path}`;
-                // there is only one key
-                const operator = Object.keys(claim.is)[0];
-                const claimConstraint = claim.is[operator];
-                const constraintFilter = {};
-                constraintFilter[claimPath] = claimConstraint;
-                filterArgArray.push(constraintFilter);
-              });
+              if (!scope.mode || scope.mode === ScopeRequest.VALIDATION_MODULE.ADVANCED) {
+                credentialItem.constraints.claims.forEach((claim) => {
+                  const claimPath = `claim.${ucaType}.${claim.path}`;
+                  // there is only one key
+                  const operator = Object.keys(claim.is)[0];
+                  const claimConstraint = claim.is[operator];
+                  const constraintFilter = {};
+                  constraintFilter[claimPath] = claimConstraint;
+                  filterArgArray.push(constraintFilter);
+                });
+                const filterArg = { $and: filterArgArray };
+                filtered.credentials.push(...tempFiltered.filter(sift(filterArg)));
+              } else {
+                credentialItem.constraints.claims.forEach((claim) => {
+                  const claimPath = `claim.${ucaType}.${claim.path}`;
+                  // there is only one key
+                  const operator = Object.keys(claim.is)[0];
+                  const claimConstraint = claim.is[operator];
+                  const constraintFilter = {};
+                  constraintFilter[claimPath] = claimConstraint;
+
+                  const filterArgFailed = { $not: filterArgArray };
+                  filtered.failedConstraints.push(...tempFiltered.filter(sift(filterArgFailed)));
+
+                  const filterArgValid = { $and: filterArgArray };
+                  filtered.credentials.push(...tempFiltered.filter(sift(filterArgValid)));
+                });
+              }
+            } else {
+              filtered.credentials.push(...tempFiltered);
             }
-            const filterArg = { $and: filterArgArray };
-            filtered.credentials.push(...tempFiltered.filter(sift(filterArg)));
           } else {
             filtered.credentials.push(...tempFiltered);
           }

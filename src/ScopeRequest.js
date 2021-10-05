@@ -38,6 +38,11 @@ const VALID_AGGREGATORS = [
   '$sort',
 ];
 
+const VALIDATION_MODE = {
+  SIMPLE: 'SIMPLE',
+  ADVANCED: 'ADVANCED',
+};
+
 const isLocal = url => (url.match('(http://|https://)?(localhost|127.0.0.*)') !== null);
 
 const isValidEvidenceChannelDetails = (channelDetails) => {
@@ -306,7 +311,7 @@ class ScopeRequest {
     return true;
   }
 
-  constructor(uniqueId, requestedItems, channelsConfig, appConfig, partnerConfig, authentication = true) {
+  constructor(uniqueId, requestedItems, channelsConfig, appConfig, partnerConfig, authentication = true, mode = VALIDATION_MODE.ADVANCED) {
     this.version = SCHEMA_VERSION;
     if (!uniqueId) {
       throw Error('uniqueId is required');
@@ -351,6 +356,8 @@ class ScopeRequest {
     } else if (ScopeRequest.validatePartnerConfig(config.partner)) {
       this.requesterInfo.requesterId = config.partner.id;
     }
+
+    this.mode = mode;
   }
 
   toJSON() {
@@ -384,5 +391,7 @@ function verifySignedRequestBody(body, pinnedXpub) {
   }
   return signer.verify(body.payload, body.signature, body.xpub);
 }
+
+ScopeRequest.VALIDATION_MODULE = VALIDATION_MODE;
 
 module.exports = { ScopeRequest, buildSignedRequestBody, verifySignedRequestBody };
