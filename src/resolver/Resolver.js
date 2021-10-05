@@ -32,7 +32,10 @@ function DsrResolver() {
    * @param credentials a list of user credentials for filtering
    */
   this.filterCredentials = (scope, credentials) => {
-    const filtered = [];
+    const filtered = {
+      credentials: [],
+      failedConstraints: [],
+    };
     scope.credentialItems.forEach((credentialItem) => {
       // if the DSR only contains aggregate tag, ignore this part, if it contains both, first filter by constraints tag
       if (credentialItem.constraints || !credentialItem.aggregate) {
@@ -97,9 +100,9 @@ function DsrResolver() {
             }
             // with all the filters, do one query
             const filterArg = { $and: filterArgArray };
-            filtered.push(...tempFiltered.filter(sift(filterArg)));
+            filtered.credentials.push(...tempFiltered.filter(sift(filterArg)));
           } else {
-            filtered.push(...tempFiltered);
+            filtered.credentials.push(...tempFiltered);
           }
         } else if (globalIdentifierType === 'claim') {
           // for UCAs it can either be a type, or an alsoKnown as
@@ -144,15 +147,16 @@ function DsrResolver() {
               });
             }
             const filterArg = { $and: filterArgArray };
-            filtered.push(...tempFiltered.filter(sift(filterArg)));
+            filtered.credentials.push(...tempFiltered.filter(sift(filterArg)));
           } else {
-            filtered.push(...tempFiltered);
+            filtered.credentials.push(...tempFiltered);
           }
         }
       }
     });
     return filtered;
   };
+
   return this;
 }
 

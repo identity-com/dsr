@@ -49,7 +49,7 @@ describe('DSR Filtering and Constraints Tests', () => {
     const resolver = new Resolver();
     const filtered = await resolver.filterCredentials(unresolvedRequest, [credential1, credential2, credential3]);
 
-    expect(filtered.length).toBe(2);
+    expect(filtered.credentials.length).toBe(2);
     done();
   });
 
@@ -69,7 +69,7 @@ describe('DSR Filtering and Constraints Tests', () => {
     const resolver = new Resolver();
     const filtered = await resolver.filterCredentials(unresolvedRequest, [credential1, credential2, credential3]);
 
-    expect(filtered.length).toBe(1);
+    expect(filtered.credentials.length).toBe(1);
     done();
   });
 
@@ -89,7 +89,7 @@ describe('DSR Filtering and Constraints Tests', () => {
     const resolver = new Resolver();
     const filtered = await resolver.filterCredentials(unresolvedRequest, [credential1, credential2, credential3]);
 
-    expect(filtered.length).toBe(1);
+    expect(filtered.credentials.length).toBe(1);
     done();
   });
 
@@ -108,7 +108,7 @@ describe('DSR Filtering and Constraints Tests', () => {
 
     const resolver = new Resolver();
     const filtered = await resolver.filterCredentials(unresolvedRequest, [credential1, credential2, credential3]);
-    expect(filtered.length).toBe(1);
+    expect(filtered.credentials.length).toBe(1);
     done();
   });
 
@@ -127,7 +127,7 @@ describe('DSR Filtering and Constraints Tests', () => {
 
     const resolver = new Resolver();
     const filtered = await resolver.filterCredentials(unresolvedRequest, [credential1, credential2, credential3]);
-    expect(filtered.length).toBe(1);
+    expect(filtered.credentials.length).toBe(1);
     done();
   });
 
@@ -146,7 +146,7 @@ describe('DSR Filtering and Constraints Tests', () => {
 
     const resolver = new Resolver();
     const filtered = await resolver.filterCredentials(unresolvedRequest, [credential1, credential2, credential3]);
-    expect(filtered.length).toBe(3);
+    expect(filtered.credentials.length).toBe(3);
     done();
   });
 
@@ -165,7 +165,7 @@ describe('DSR Filtering and Constraints Tests', () => {
 
     const resolver = new Resolver();
     const filtered = await resolver.filterCredentials(unresolvedRequest, [credential1, credential2, credential3]);
-    expect(filtered.length).toBe(0);
+    expect(filtered.credentials.length).toBe(0);
     done();
   });
 
@@ -184,7 +184,7 @@ describe('DSR Filtering and Constraints Tests', () => {
 
     const resolver = new Resolver();
     const filtered = await resolver.filterCredentials(unresolvedRequest, [credential1, credential2, credential3]);
-    expect(filtered.length).toBe(1);
+    expect(filtered.credentials.length).toBe(1);
     done();
   });
 
@@ -203,8 +203,8 @@ describe('DSR Filtering and Constraints Tests', () => {
 
     const resolver = new Resolver();
     const filtered = await resolver.filterCredentials(unresolvedRequest, [credential1, credential2, credential3]);
-    expect(filtered.length).toBe(1);
-    const vc = filtered[0];
+    expect(filtered.credentials.length).toBe(1);
+    const vc = filtered.credentials[0];
     expect(vc.claim.document.name.givenNames).toBe('JRbSLu3809');
     done();
   });
@@ -224,8 +224,8 @@ describe('DSR Filtering and Constraints Tests', () => {
 
     const resolver = new Resolver();
     const filtered = await resolver.filterCredentials(unresolvedRequest, [credential1, credential2, credential3]);
-    expect(filtered.length).toBe(1);
-    const vc = filtered[0];
+    expect(filtered.credentials.length).toBe(1);
+    const vc = filtered.credentials[0];
     expect(vc.issuer).toBe('jest:test:2d516330-d2cc-11e8-b214-99085237d65e');
     done();
   });
@@ -245,7 +245,7 @@ describe('DSR Filtering and Constraints Tests', () => {
 
     const resolver = new Resolver();
     const filtered = await resolver.filterCredentials(unresolvedRequest, [credential1, credential2, credential3]);
-    expect(filtered.length).toBe(3);
+    expect(filtered.credentials.length).toBe(3);
     done();
   });
 
@@ -264,7 +264,7 @@ describe('DSR Filtering and Constraints Tests', () => {
 
     const resolver = new Resolver();
     const filtered = await resolver.filterCredentials(unresolvedRequest, [credential1, credential2, credential3]);
-    expect(filtered.length).toBe(3);
+    expect(filtered.credentials.length).toBe(3);
     done();
   });
 
@@ -283,8 +283,8 @@ describe('DSR Filtering and Constraints Tests', () => {
 
     const resolver = new Resolver();
     const filtered = await resolver.filterCredentials(unresolvedRequest, [credential1, credential2, credential3]);
-    expect(filtered.length).toBe(1);
-    const vc = filtered[0];
+    expect(filtered.credentials.length).toBe(1);
+    const vc = filtered.credentials[0];
     expect(vc.issuer).toBe('jest:test:2d516330-d2cc-11e8-b214-99085237d65e');
     done();
   });
@@ -293,7 +293,7 @@ describe('DSR Filtering and Constraints Tests', () => {
     const dsr = new ScopeRequest('abcd', [], config.channels, config.app, config.partner);
     const resolver = new Resolver();
     const filtered = await resolver.filterCredentials(dsr, []);
-    expect(filtered.length).toBe(0);
+    expect(filtered.credentials.length).toBe(0);
     done();
   });
 
@@ -309,7 +309,7 @@ describe('DSR Filtering and Constraints Tests', () => {
       }], config.channels, config.app, config.partner);
     const resolver = new Resolver();
     const filtered = await resolver.filterCredentials(dsr, []);
-    expect(filtered.length).toBe(0);
+    expect(filtered.credentials.length).toBe(0);
     done();
   });
 
@@ -328,8 +328,8 @@ describe('DSR Filtering and Constraints Tests', () => {
 
     const resolver = new Resolver();
     const filtered = await resolver.filterCredentials(unresolvedRequest, [credential1, credential2, credential3]);
-    expect(filtered.length).toBe(1);
-    const vc = filtered[0];
+    expect(filtered.credentials.length).toBe(1);
+    const vc = filtered.credentials[0];
     expect(vc.issuer).toBe('jest:test:2d516330-d2cc-11e8-b214-99085237d65e');
     done();
   });
