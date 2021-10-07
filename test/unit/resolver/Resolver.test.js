@@ -333,4 +333,23 @@ describe('DSR Filtering and Constraints Tests', () => {
     expect(vc.issuer).toBe('jest:test:2d516330-d2cc-11e8-b214-99085237d65e');
     done();
   });
+
+  it('Should filter out credentials that have the expiry date lesser than the DSR constraint by using simple mode', async (done) => {
+    const unresolvedFileContents = fs.readFileSync('test/fixtures/filtering/requestMetaIssuedSimpleMode.json', 'utf8');
+    const unresolvedRequest = JSON.parse(unresolvedFileContents);
+
+    const credential1FileContent = fs.readFileSync('test/fixtures/filtering/identity1.json', 'utf8');
+    const credential1 = JSON.parse(credential1FileContent);
+
+    const credential2FileContent = fs.readFileSync('test/fixtures/filtering/identity2.json', 'utf8');
+    const credential2 = JSON.parse(credential2FileContent);
+
+    const credential3FileContent = fs.readFileSync('test/fixtures/filtering/identity3.json', 'utf8');
+    const credential3 = JSON.parse(credential3FileContent);
+
+    const resolver = new Resolver();
+    const filtered = await resolver.filterCredentials(unresolvedRequest, [credential1, credential2, credential3]);
+    expect(filtered.credentials.length).toBe(3);
+    done();
+  });
 });
