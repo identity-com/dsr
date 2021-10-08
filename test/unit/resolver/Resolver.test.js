@@ -33,7 +33,7 @@ describe('DSR Filtering and Constraints Tests', () => {
     expect(resolver.convertMongoOperatorToJavascript('$lte')).toBe('<=');
   });
 
-  it('Should return two cities from an DSR requesting all VC that contains address.city', async (done) => {
+  it('Should return two cities from an DSR requesting all VC that contains address.city', async () => {
     const unresolvedFileContents = fs.readFileSync('test/fixtures/filtering/requestCitySimple.json', 'utf8');
     const unresolvedRequest = JSON.parse(unresolvedFileContents);
 
@@ -50,10 +50,9 @@ describe('DSR Filtering and Constraints Tests', () => {
     const filtered = await resolver.filterCredentials(unresolvedRequest, [credential1, credential2, credential3]);
 
     expect(filtered.credentials.length).toBe(2);
-    done();
   });
 
-  it('Should read an simple DSR that contains an constraint for VCs that contains city', async (done) => {
+  it('Should read an simple DSR that contains an constraint for VCs that contains city', async () => {
     const unresolvedFileContents = fs.readFileSync('test/fixtures/filtering/requestCityOneConstraint.json', 'utf8');
     const unresolvedRequest = JSON.parse(unresolvedFileContents);
 
@@ -70,10 +69,9 @@ describe('DSR Filtering and Constraints Tests', () => {
     const filtered = await resolver.filterCredentials(unresolvedRequest, [credential1, credential2, credential3]);
 
     expect(filtered.credentials.length).toBe(1);
-    done();
   });
 
-  it('Should read an simple DSR that contains multiple constraint for VCs that contains city', async (done) => {
+  it('Should read an simple DSR that contains multiple constraint for VCs that contains city', async () => {
     const unresolvedFileContents = fs.readFileSync('test/fixtures/filtering/requestCityMultipleConstraint.json', 'utf8');
     const unresolvedRequest = JSON.parse(unresolvedFileContents);
 
@@ -90,10 +88,9 @@ describe('DSR Filtering and Constraints Tests', () => {
     const filtered = await resolver.filterCredentials(unresolvedRequest, [credential1, credential2, credential3]);
 
     expect(filtered.credentials.length).toBe(1);
-    done();
   });
 
-  it('Should read an simple DSR that contains a global identifier for claim of an aka for firstName', async (done) => {
+  it('Should read an simple DSR that contains a global identifier for claim of an aka for firstName', async () => {
     const unresolvedFileContents = fs.readFileSync('test/fixtures/filtering/requestFirstNameAka.json', 'utf8');
     const unresolvedRequest = JSON.parse(unresolvedFileContents);
 
@@ -109,10 +106,9 @@ describe('DSR Filtering and Constraints Tests', () => {
     const resolver = new Resolver();
     const filtered = await resolver.filterCredentials(unresolvedRequest, [credential1, credential2, credential3]);
     expect(filtered.credentials.length).toBe(1);
-    done();
   });
 
-  it('Should read an simple DSR that contains a global identifier for claim of without aka', async (done) => {
+  it('Should read an simple DSR that contains a global identifier for claim of without aka', async () => {
     const unresolvedFileContents = fs.readFileSync('test/fixtures/filtering/requestFirstNameWithoutAka.json', 'utf8');
     const unresolvedRequest = JSON.parse(unresolvedFileContents);
 
@@ -128,10 +124,9 @@ describe('DSR Filtering and Constraints Tests', () => {
     const resolver = new Resolver();
     const filtered = await resolver.filterCredentials(unresolvedRequest, [credential1, credential2, credential3]);
     expect(filtered.credentials.length).toBe(1);
-    done();
   });
 
-  it('Should read an simple DSR that contains a global identifier for claim of without aka returning more than one', async (done) => {
+  it('Should read an simple DSR that contains a global identifier for claim of without aka returning more than one', async () => {
     const unresolvedFileContents = fs.readFileSync('test/fixtures/filtering/requestFirstNameInDocument.json', 'utf8');
     const unresolvedRequest = JSON.parse(unresolvedFileContents);
 
@@ -147,10 +142,9 @@ describe('DSR Filtering and Constraints Tests', () => {
     const resolver = new Resolver();
     const filtered = await resolver.filterCredentials(unresolvedRequest, [credential1, credential2, credential3]);
     expect(filtered.credentials.length).toBe(3);
-    done();
   });
 
-  it('Should read an simple DSR with a wrongly created global identifier and return nothing', async (done) => {
+  it('Should read an simple DSR with a wrongly created global identifier and return nothing', async () => {
     const unresolvedFileContents = fs.readFileSync('test/fixtures/filtering/requestWrongGlobalIdentifier.json', 'utf8');
     const unresolvedRequest = JSON.parse(unresolvedFileContents);
 
@@ -166,10 +160,9 @@ describe('DSR Filtering and Constraints Tests', () => {
     const resolver = new Resolver();
     const filtered = await resolver.filterCredentials(unresolvedRequest, [credential1, credential2, credential3]);
     expect(filtered.credentials.length).toBe(0);
-    done();
   });
 
-  it('Should read an simple DSR with a Identity:name request and return one credential', async (done) => {
+  it('Should read an simple DSR with a Identity:name request and return one credential', async () => {
     const unresolvedFileContents = fs.readFileSync('test/fixtures/filtering/requestIdentityName.json', 'utf8');
     const unresolvedRequest = JSON.parse(unresolvedFileContents);
 
@@ -185,10 +178,9 @@ describe('DSR Filtering and Constraints Tests', () => {
     const resolver = new Resolver();
     const filtered = await resolver.filterCredentials(unresolvedRequest, [credential1, credential2, credential3]);
     expect(filtered.credentials.length).toBe(1);
-    done();
   });
 
-  it('Should read an simple DSR with a Identity:name and a constraint request and return one credential', async (done) => {
+  it('Should read an simple DSR with a Identity:name and a constraint request and return one credential', async () => {
     const unresolvedFileContents = fs.readFileSync('test/fixtures/filtering/requestIdentityNameOneConstraint.json', 'utf8');
     const unresolvedRequest = JSON.parse(unresolvedFileContents);
 
@@ -206,10 +198,9 @@ describe('DSR Filtering and Constraints Tests', () => {
     expect(filtered.credentials.length).toBe(1);
     const vc = filtered.credentials[0];
     expect(vc.claim.document.name.givenNames).toBe('JRbSLu3809');
-    done();
   });
 
-  it('Should filter out credentials that have the same issuer as the DSR constraint', async (done) => {
+  it('Should filter out credentials that have the same issuer as the DSR constraint', async () => {
     const unresolvedFileContents = fs.readFileSync('test/fixtures/filtering/requestMetaIssuer.json', 'utf8');
     const unresolvedRequest = JSON.parse(unresolvedFileContents);
 
@@ -227,10 +218,9 @@ describe('DSR Filtering and Constraints Tests', () => {
     expect(filtered.credentials.length).toBe(1);
     const vc = filtered.credentials[0];
     expect(vc.issuer).toBe('jest:test:2d516330-d2cc-11e8-b214-99085237d65e');
-    done();
   });
 
-  it('Should filter out credentials that have the issued date greater than the DSR constraint', async (done) => {
+  it('Should filter out credentials that have the issued date greater than the DSR constraint', async () => {
     const unresolvedFileContents = fs.readFileSync('test/fixtures/filtering/requestMetaIssued.json', 'utf8');
     const unresolvedRequest = JSON.parse(unresolvedFileContents);
 
@@ -246,10 +236,9 @@ describe('DSR Filtering and Constraints Tests', () => {
     const resolver = new Resolver();
     const filtered = await resolver.filterCredentials(unresolvedRequest, [credential1, credential2, credential3]);
     expect(filtered.credentials.length).toBe(3);
-    done();
   });
 
-  it('Should filter out credentials that have the expiry date lesser than the DSR constraint', async (done) => {
+  it('Should filter out credentials that have the expiry date lesser than the DSR constraint', async () => {
     const unresolvedFileContents = fs.readFileSync('test/fixtures/filtering/requestMetaIssued.json', 'utf8');
     const unresolvedRequest = JSON.parse(unresolvedFileContents);
 
@@ -265,10 +254,9 @@ describe('DSR Filtering and Constraints Tests', () => {
     const resolver = new Resolver();
     const filtered = await resolver.filterCredentials(unresolvedRequest, [credential1, credential2, credential3]);
     expect(filtered.credentials.length).toBe(3);
-    done();
   });
 
-  it('Should filter out credentials with a complete meta constraint', async (done) => {
+  it('Should filter out credentials with a complete meta constraint', async () => {
     const unresolvedFileContents = fs.readFileSync('test/fixtures/filtering/requestMetaComplete.json', 'utf8');
     const unresolvedRequest = JSON.parse(unresolvedFileContents);
 
@@ -286,18 +274,16 @@ describe('DSR Filtering and Constraints Tests', () => {
     expect(filtered.credentials.length).toBe(1);
     const vc = filtered.credentials[0];
     expect(vc.issuer).toBe('jest:test:2d516330-d2cc-11e8-b214-99085237d65e');
-    done();
   });
 
-  it('Should not give any errors on filtering an empty array of credential items', async (done) => {
+  it('Should not give any errors on filtering an empty array of credential items', async () => {
     const dsr = new ScopeRequest('abcd', [], config.channels, config.app, config.partner);
     const resolver = new Resolver();
     const filtered = await resolver.filterCredentials(dsr, []);
     expect(filtered.credentials.length).toBe(0);
-    done();
   });
 
-  it('Should not give any errors on filtering DSR with only aggregate tags', async (done) => {
+  it('Should not give any errors on filtering DSR with only aggregate tags', async () => {
     const dsr = new ScopeRequest('abcd', [
       {
         identifier: 'credential-cvc:Covid19-v1',
@@ -310,10 +296,9 @@ describe('DSR Filtering and Constraints Tests', () => {
     const resolver = new Resolver();
     const filtered = await resolver.filterCredentials(dsr, []);
     expect(filtered.credentials.length).toBe(0);
-    done();
   });
 
-  it('Should filter only by constraints tag and ignore the aggregate tag', async (done) => {
+  it('Should filter only by constraints tag and ignore the aggregate tag', async () => {
     const unresolvedFileContents = fs.readFileSync('test/fixtures/aggregation/dsrAggregationLimit.json', 'utf8');
     const unresolvedRequest = JSON.parse(unresolvedFileContents);
 
@@ -331,10 +316,9 @@ describe('DSR Filtering and Constraints Tests', () => {
     expect(filtered.credentials.length).toBe(1);
     const vc = filtered.credentials[0];
     expect(vc.issuer).toBe('jest:test:2d516330-d2cc-11e8-b214-99085237d65e');
-    done();
   });
 
-  it('Should filter out credentials that have the expiry date lesser than the DSR constraint by using simple mode', async (done) => {
+  it('Should filter out credentials that have the expiry date lesser than the DSR constraint by using simple mode', async () => {
     const unresolvedFileContents = fs.readFileSync('test/fixtures/filtering/requestMetaIssuedSimpleMode.json', 'utf8');
     const unresolvedRequest = JSON.parse(unresolvedFileContents);
 
@@ -350,6 +334,5 @@ describe('DSR Filtering and Constraints Tests', () => {
     const resolver = new Resolver();
     const filtered = await resolver.filterCredentials(unresolvedRequest, [credential1, credential2, credential3]);
     expect(filtered.credentials.length).toBe(3);
-    done();
   });
 });

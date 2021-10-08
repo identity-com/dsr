@@ -25,7 +25,7 @@ function DsrResolver() {
     return null;
   });
 
-  this.filterCredentialsByIdentifier = (globalIdentifier, credentials, credentialItem, filtered) => {
+  this.filterCredentialsByIdentifier = (globalIdentifier, credentials, credentialItem, scope, filtered) => {
     const type = globalIdentifier.substring('credential-'.length, globalIdentifier.lastIndexOf('-'));
     // filter the VCs, do not confuse this $eq with the operator $eq on credentialItems array
     const tempFiltered = credentials.filter(sift({ identifier: { $regex: `${type}` } }));
@@ -64,9 +64,24 @@ function DsrResolver() {
         }
       }
 
-      // this is the structure on the dsr { "path": "claim.path", "is": {"operator": "valueToFilter"} },
-      // for each constraint, we have to filter out the credentials
-      if (credentialItem.constraints && credentialItem.constraints.claims) {
+      if (!scope.mode || scope.mode === ScopeRequest.VALIDATION_MODULE.ADVANCED) {
+        // this is the structure on the dsr { "path": "claim.path", "is": {"operator": "valueToFilter"} },
+        // for each constraint, we have to filter out the credentials
+        if (credentialItem.constraints && credentialItem.constraints.claims) {
+          credentialItem.constraints.claims.forEach((claim) => {
+            const claimPath = `claim.${claim.path}`;
+            // there is only one key
+            const operator = Object.keys(claim.is)[0];
+            const claimConstraint = claim.is[operator];
+            const claimFilter = {};
+            claimFilter[claimPath] = claimConstraint;
+            filterArgArray.push(claimFilter);
+          });
+        }
+        // with all the filters, do one query
+        const filterArg = { $and: filterArgArray };
+        filtered.credentials.push(...tempFiltered.filter(sift(filterArg)));
+      } else if (credentialItem.constraints && credentialItem.constraints.claims) {
         credentialItem.constraints.claims.forEach((claim) => {
           const claimPath = `claim.${claim.path}`;
           // there is only one key
@@ -75,11 +90,14 @@ function DsrResolver() {
           const claimFilter = {};
           claimFilter[claimPath] = claimConstraint;
           filterArgArray.push(claimFilter);
+
+          const filterArgFailed = { $not: filterArgArray };
+          filtered.failedConstraints.push(...tempFiltered.filter(sift(filterArgFailed)));
+
+          const filterArgValid = { $and: filterArgArray, $nin: filtered.failedConstraints };
+          filtered.credentials.push(...tempFiltered.filter(sift(filterArgValid)));
         });
       }
-      // with all the filters, do one query
-      const filterArg = { $and: filterArgArray };
-      filtered.credentials.push(...tempFiltered.filter(sift(filterArg)));
     } else {
       filtered.credentials.push(...tempFiltered);
     }
@@ -178,7 +196,7 @@ function DsrResolver() {
 
         // for credentials we filter out the credentials, the meta issuer than the claim path
         if (globalIdentifierType === 'credential') {
-          this.filterCredentialsByIdentifier(globalIdentifier, credentials, credentialItem, filtered);
+          this.filterCredentialsByIdentifier(globalIdentifier, credentials, credentialItem, scope, filtered);
         } else if (globalIdentifierType === 'claim') {
           this.filterCredentialsByClaim(globalIdentifier, credentials, credentialItem, scope, filtered);
         }
