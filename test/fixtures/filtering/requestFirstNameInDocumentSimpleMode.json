@@ -1,6 +1,5 @@
 {
   "version": "1",
-  "mode": "ADVANCED",
   "requesterInfo": {
     "app": {
       "id": "TestPartnerApp",
@@ -19,7 +18,10 @@
       "constraints": {
         "meta": {
           "credential": "credential-cvc:Identity-v1"
-        }
+        },
+        "claims": [
+          { "path": "name.givenNames", "is": {"$eq": "JRbSLu3809"} }
+        ]
       }
     }
   ],

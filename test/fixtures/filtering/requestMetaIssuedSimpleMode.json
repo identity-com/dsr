@@ -1,6 +1,6 @@
 {
   "version": "1",
-  "mode": "ADVANCED",
+  "mode": "SIMPLE",
   "requesterInfo": {
     "app": {
       "id": "TestPartnerApp",
@@ -12,13 +12,17 @@
     },
     "requesterId": "TestPartnerId"
   },
-  "timestamp": "2018-07-20T12:14:24.104Z",
+  "timestamp": "2018-07-22T14:06:35.879Z",
   "credentialItems": [
     {
-      "identifier": "claim-cvc:Document:name-1",
+      "identifier": "credential-cvc:Identity-v1",
       "constraints": {
         "meta": {
-          "credential": "credential-cvc:Identity-v1"
+          "issuanceDate": {
+            "is": {
+              "$gt": 1509999999999
+            }
+          }
         }
       }
     }

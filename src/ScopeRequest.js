@@ -38,6 +38,11 @@ const VALID_AGGREGATORS = [
   '$sort',
 ];
 
+const VALIDATION_MODE = {
+  ADVANCED: 'ADVANCED',
+  SIMPLE: 'SIMPLE',
+};
+
 const isLocal = url => (url.match('(http://|https://)?(localhost|127.0.0.*)') !== null);
 
 const isValidEvidenceChannelDetails = (channelDetails) => {
@@ -58,7 +63,7 @@ class ScopeRequest {
    * @param request - Original ScopeRequest
    * @return {boolean}
    */
-  static async credentialsMatchesRequest(credentialItems, request) {
+  static credentialsMatchesRequest(credentialItems, request) {
     let result = true;
     const requestedItems = _.get(request, 'credentialItems');
 
@@ -69,8 +74,7 @@ class ScopeRequest {
       throw new Error('empty credentialItems param');
     }
     // eslint-disable-next-line consistent-return
-    await _.reduce(requestedItems, async (promise, requestedItem) => {
-      await promise;
+    _.forEach(requestedItems, (requestedItem) => {
       const credentialItem = _.find(credentialItems, { identifier: requestedItem.credential });
       if (!credentialItem) {
         // no need to continue breaking and returning false
@@ -79,7 +83,7 @@ class ScopeRequest {
       }
 
       // If is a presentation `credentialItem.granted` nor empty accept partial
-      const verifiableCredential = await VC.fromJSON(credentialItem, !!credentialItem.granted);
+      const verifiableCredential = VC.fromJSON(credentialItem, !!credentialItem.granted);
 
       const constraints = _.get(requestedItem, 'constraints');
       const match = verifiableCredential.isMatch(constraints);
@@ -88,7 +92,7 @@ class ScopeRequest {
         result = false;
         return false;
       }
-    }, Promise.resolve());
+    });
     return result;
   }
 
@@ -164,13 +168,10 @@ class ScopeRequest {
    * @param credentialItems the array of credential items needed for an dsr
    * @returns {boolean} true|false sucess|failure
    */
-  static async validateCredentialItems(credentialItems) {
-    await _.reduce(credentialItems, async (promise, item) => {
-      await promise;
-
+  static validateCredentialItems(credentialItems) {
+    _.forEach(credentialItems, (item) => {
       if (_.isString(item)) {
-        const valid = await ScopeRequest.isValidCredentialItemIdentifier(item);
-        if (!valid) {
+        if (!ScopeRequest.isValidCredentialItemIdentifier(item)) {
           throw new Error(`${item} is not valid CredentialItem identifier`);
         }
       } else {
@@ -178,8 +179,7 @@ class ScopeRequest {
           throw new Error('CredentialItem identifier is required');
         }
 
-        const valid = await ScopeRequest.isValidCredentialItemIdentifier(item.identifier);
-        if (!valid) {
+        if (!ScopeRequest.isValidCredentialItemIdentifier(item.identifier)) {
           throw new Error(`${item.identifier} is not valid CredentialItem identifier`);
         }
 
@@ -226,8 +226,7 @@ class ScopeRequest {
           });
         }
       }
-    }, Promise.resolve());
-
+    });
     return true;
   }
 
@@ -237,13 +236,13 @@ class ScopeRequest {
     }
 
     if (!isLocal(channelsConfig.eventsURL)
-        && !_.startsWith(channelsConfig.eventsURL, 'https')) {
+      && !_.startsWith(channelsConfig.eventsURL, 'https')) {
       throw new Error('only HTTPS is supported for eventsURL');
     }
 
     if (channelsConfig.payloadURL
-        && !isLocal(channelsConfig.payloadURL)
-        && !_.startsWith(channelsConfig.payloadURL, 'https')) {
+      && !isLocal(channelsConfig.payloadURL)
+      && !_.startsWith(channelsConfig.payloadURL, 'https')) {
       throw new Error('only HTTPS is supported for payloadURL');
     }
 
@@ -312,18 +311,7 @@ class ScopeRequest {
     return true;
   }
 
-  static async create(uniqueId, requestedItems, channelsConfig, appConfig, partnerConfig, authentication = true) {
-    let credentialItems = [].concat(requestedItems);
-
-    const valid = await ScopeRequest.validateCredentialItems(credentialItems);
-    if (valid) {
-      credentialItems = _.cloneDeep(credentialItems);
-    }
-
-    return new ScopeRequest(uniqueId, requestedItems, credentialItems, channelsConfig, appConfig, partnerConfig, authentication);
-  }
-
-  constructor(uniqueId, requestedItems, credentialItems, channelsConfig, appConfig, partnerConfig, authentication = true) {
+  constructor(uniqueId, requestedItems, channelsConfig, appConfig, partnerConfig, authentication = true, mode = 'ADVANCED') {
     this.version = SCHEMA_VERSION;
     if (!uniqueId) {
       throw Error('uniqueId is required');
@@ -337,7 +325,10 @@ class ScopeRequest {
 
     this.timestamp = (new Date()).toISOString();
 
-    this.credentialItems = credentialItems;
+    const credentialItems = [].concat(requestedItems);
+    if (ScopeRequest.validateCredentialItems(credentialItems)) {
+      this.credentialItems = _.cloneDeep(credentialItems);
+    }
 
     if (channelsConfig && ScopeRequest.validateChannelsConfig(channelsConfig)) {
       this.channels = channelsConfig;
@@ -365,6 +356,8 @@ class ScopeRequest {
     } else if (ScopeRequest.validatePartnerConfig(config.partner)) {
       this.requesterInfo.requesterId = config.partner.id;
     }
+
+    this.mode = mode;
   }
 
   toJSON() {
@@ -399,4 +392,6 @@ function verifySignedRequestBody(body, pinnedXpub) {
   return signer.verify(body.payload, body.signature, body.xpub);
 }
 
-module.exports = { ScopeRequest, buildSignedRequestBody, verifySignedRequestBody };
+module.exports = {
+  ScopeRequest, buildSignedRequestBody, verifySignedRequestBody, VALIDATION_MODE,
+};
