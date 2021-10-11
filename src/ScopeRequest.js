@@ -39,8 +39,8 @@ const VALID_AGGREGATORS = [
 ];
 
 const VALIDATION_MODE = {
-  SIMPLE: 'SIMPLE',
   ADVANCED: 'ADVANCED',
+  SIMPLE: 'SIMPLE',
 };
 
 const isLocal = url => (url.match('(http://|https://)?(localhost|127.0.0.*)') !== null);
@@ -311,7 +311,7 @@ class ScopeRequest {
     return true;
   }
 
-  constructor(uniqueId, requestedItems, channelsConfig, appConfig, partnerConfig, authentication = true, mode = VALIDATION_MODE.ADVANCED) {
+  constructor(uniqueId, requestedItems, channelsConfig, appConfig, partnerConfig, authentication = true, mode = 'ADVANCED') {
     this.version = SCHEMA_VERSION;
     if (!uniqueId) {
       throw Error('uniqueId is required');
@@ -392,6 +392,6 @@ function verifySignedRequestBody(body, pinnedXpub) {
   return signer.verify(body.payload, body.signature, body.xpub);
 }
 
-ScopeRequest.VALIDATION_MODULE = VALIDATION_MODE;
-
-module.exports = { ScopeRequest, buildSignedRequestBody, verifySignedRequestBody };
+module.exports = {
+  ScopeRequest, buildSignedRequestBody, verifySignedRequestBody, VALIDATION_MODE,
+};

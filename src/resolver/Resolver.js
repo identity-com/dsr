@@ -1,6 +1,6 @@
 const sift = require('sift').default;
 const { definitions: ucaDefinitions } = require('@identity.com/uca');
-const { ScopeRequest } = require('../ScopeRequest');
+const { VALIDATION_MODE } = require('../ScopeRequest');
 
 /**
  * Dynamic Scope Request resolver. Do the filtering of credentials by passing unresolved scope requests
@@ -64,7 +64,7 @@ function DsrResolver() {
         }
       }
 
-      if (scope.mode && scope.mode === ScopeRequest.VALIDATION_MODULE.ADVANCED) {
+      if (scope.mode && scope.mode === VALIDATION_MODE.ADVANCED) {
         // this is the structure on the dsr { "path": "claim.path", "is": {"operator": "valueToFilter"} },
         // for each constraint, we have to filter out the credentials
         if (credentialItem.constraints && credentialItem.constraints.claims) {
@@ -137,7 +137,7 @@ function DsrResolver() {
       const ucaType = credentialItem.identifier.substring(credentialItem.identifier.indexOf(':') + 1, credentialItem.identifier.lastIndexOf(':')).toLowerCase();
       // iterate all over our credentials
       if (credentialItem.constraints && credentialItem.constraints.claims) {
-        if (scope.mode && scope.mode === ScopeRequest.VALIDATION_MODULE.ADVANCED) {
+        if (scope.mode && scope.mode === VALIDATION_MODE.ADVANCED) {
           credentialItem.constraints.claims.forEach((claim) => {
             const claimPath = `claim.${ucaType}.${claim.path}`;
             // there is only one key
