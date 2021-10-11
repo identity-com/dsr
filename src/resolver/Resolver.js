@@ -97,6 +97,8 @@ function DsrResolver() {
           const filterArgValid = { $and: filterArgArray, $nin: filtered.failedConstraints };
           filtered.credentials.push(...tempFiltered.filter(sift(filterArgValid)));
         });
+      } else {
+        filtered.credentials.push(...tempFiltered);
       }
     } else {
       filtered.credentials.push(...tempFiltered);
