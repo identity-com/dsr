@@ -335,4 +335,42 @@ describe('DSR Filtering and Constraints Tests', () => {
     const filtered = await resolver.filterCredentials(unresolvedRequest, [credential1, credential2, credential3]);
     expect(filtered.credentials.length).toBe(3);
   });
+
+  it('Should read an simple DSR with a Identity:name and a constraint request and return one credential with Simple Mode', async () => {
+    const unresolvedFileContents = fs.readFileSync('test/fixtures/filtering/requestIdentityNameOneConstraintSimpleMode.json', 'utf8');
+    const unresolvedRequest = JSON.parse(unresolvedFileContents);
+
+    const credential1FileContent = fs.readFileSync('test/fixtures/filtering/genericId1.json', 'utf8');
+    const credential1 = JSON.parse(credential1FileContent);
+
+    const credential2FileContent = fs.readFileSync('test/fixtures/filtering/genericId2.json', 'utf8');
+    const credential2 = JSON.parse(credential2FileContent);
+
+    const credential3FileContent = fs.readFileSync('test/fixtures/filtering/genericId3.json', 'utf8');
+    const credential3 = JSON.parse(credential3FileContent);
+
+    const resolver = new Resolver();
+    const filtered = await resolver.filterCredentials(unresolvedRequest, [credential1, credential2, credential3]);
+    expect(filtered.credentials.length).toBe(1);
+    const vc = filtered.credentials[0];
+    expect(vc.claim.document.name.givenNames).toBe('JRbSLu3809');
+  });
+
+  it('Should read an simple DSR that contains a global identifier for claim filtering by simple mode', async () => {
+    const unresolvedFileContents = fs.readFileSync('test/fixtures/filtering/requestFirstNameInDocumentSimpleMode.json', 'utf8');
+    const unresolvedRequest = JSON.parse(unresolvedFileContents);
+
+    const credential1FileContent = fs.readFileSync('test/fixtures/filtering/genericId1.json', 'utf8');
+    const credential1 = JSON.parse(credential1FileContent);
+
+    const credential2FileContent = fs.readFileSync('test/fixtures/filtering/genericId2.json', 'utf8');
+    const credential2 = JSON.parse(credential2FileContent);
+
+    const credential3FileContent = fs.readFileSync('test/fixtures/filtering/genericId3.json', 'utf8');
+    const credential3 = JSON.parse(credential3FileContent);
+
+    const resolver = new Resolver();
+    const filtered = await resolver.filterCredentials(unresolvedRequest, [credential1, credential2, credential3]);
+    expect(filtered.credentials.length).toBe(1);
+  });
 });

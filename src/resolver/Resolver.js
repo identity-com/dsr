@@ -64,7 +64,7 @@ function DsrResolver() {
         }
       }
 
-      if (!scope.mode || scope.mode === ScopeRequest.VALIDATION_MODULE.ADVANCED) {
+      if (scope.mode && scope.mode === ScopeRequest.VALIDATION_MODULE.ADVANCED) {
         // this is the structure on the dsr { "path": "claim.path", "is": {"operator": "valueToFilter"} },
         // for each constraint, we have to filter out the credentials
         if (credentialItem.constraints && credentialItem.constraints.claims) {
@@ -91,7 +91,7 @@ function DsrResolver() {
           claimFilter[claimPath] = claimConstraint;
           filterArgArray.push(claimFilter);
 
-          const filterArgFailed = { $not: filterArgArray };
+          const filterArgFailed = { $nor: filterArgArray };
           filtered.failedConstraints.push(...tempFiltered.filter(sift(filterArgFailed)));
 
           const filterArgValid = { $and: filterArgArray, $nin: filtered.failedConstraints };
@@ -137,7 +137,7 @@ function DsrResolver() {
       const ucaType = credentialItem.identifier.substring(credentialItem.identifier.indexOf(':') + 1, credentialItem.identifier.lastIndexOf(':')).toLowerCase();
       // iterate all over our credentials
       if (credentialItem.constraints && credentialItem.constraints.claims) {
-        if (!scope.mode || scope.mode === ScopeRequest.VALIDATION_MODULE.ADVANCED) {
+        if (scope.mode && scope.mode === ScopeRequest.VALIDATION_MODULE.ADVANCED) {
           credentialItem.constraints.claims.forEach((claim) => {
             const claimPath = `claim.${ucaType}.${claim.path}`;
             // there is only one key
@@ -158,7 +158,9 @@ function DsrResolver() {
             const constraintFilter = {};
             constraintFilter[claimPath] = claimConstraint;
 
-            const filterArgFailed = { $not: filterArgArray };
+            filterArgArray.push(constraintFilter);
+
+            const filterArgFailed = { $nor: filterArgArray };
             filtered.failedConstraints.push(...tempFiltered.filter(sift(filterArgFailed)));
 
             const filterArgValid = { $and: filterArgArray, $nin: filtered.failedConstraints };
