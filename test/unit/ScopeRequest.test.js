@@ -1,7 +1,4 @@
-const { schemaLoader, CVCSchemaLoader } = require('@identity.com/credential-commons');
 const { initServices } = require('../../src/services/index');
-
-jest.setTimeout(30000);
 
 const config = {
   partner: {
@@ -57,29 +54,36 @@ const filteredIdDoc = require('../fixtures/idDocV2Filtered.json');
 
 describe('DSR Factory Tests', () => {
   beforeEach(() => {
-    schemaLoader.addLoader(new CVCSchemaLoader());
-
     initServices(config);
   });
+  it('Should not Construct DSR with unknown claims', () => {
+    function createNewDSR() {
+      return new ScopeRequest('abcd',
+        ['claim-boggus:identifier-1']);
+    }
+    expect(createNewDSR).toThrow('claim-boggus:identifier-1 is not valid');
+  });
 
-  it('Should not Construct DSR with unknown claims', () => expect(ScopeRequest.create('abcd',
-    ['claim-boggus:identifier-1'])).rejects.toThrow('claim-boggus:identifier-1 is not valid'));
+  it('Should not Construct DSR with unknown credentials', () => {
+    function createNewDSR() {
+      return new ScopeRequest('abcd',
+        ['credential-boggus:identifier-1']);
+    }
+    expect(createNewDSR).toThrow('credential-boggus:identifier-1 is not valid');
+  });
 
-  it('Should not Construct DSR with unknown credentials', () => expect(ScopeRequest.create('abcd',
-    ['credential-boggus:identifier-1'])).rejects.toThrow('credential-boggus:identifier-1 is not valid'));
-
-  it('Should Construct DSR with known claims', async () => {
-    const dsr = await ScopeRequest.create('abcd', ['claim-cvc:Identity.name-v1']);
+  it('Should Construct DSR with known claims', () => {
+    const dsr = new ScopeRequest('abcd', ['claim-cvc:Identity:name-1']);
     expect(dsr).toBeDefined();
   });
 
-  it('Should Construct DSR with known credentials', async () => {
-    const dsr = await ScopeRequest.create('abcd', ['credential-cvc:Identity-v1']);
+  it('Should Construct DSR with known credentials', () => {
+    const dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1']);
     expect(dsr).toBeDefined();
   });
 
-  it('Should Construct DSR with valid constraints', async () => {
-    const dsr = await ScopeRequest.create('abcd',
+  it('Should Construct DSR with valid constraints', () => {
+    const dsr = new ScopeRequest('abcd',
       [{
         identifier: 'credential-cvc:Identity-v1',
         constraints: {
@@ -96,8 +100,8 @@ describe('DSR Factory Tests', () => {
     expect(dsr).toBeDefined();
   });
 
-  it('Should succeed validation of the credential items on a DSR', async () => {
-    const dsr = await ScopeRequest.create('abcd',
+  it('Should succeed validation of the credential items on a DSR', () => {
+    const dsr = new ScopeRequest('abcd',
       [{
         identifier: 'credential-cvc:Identity-v1',
         constraints: {
@@ -115,228 +119,279 @@ describe('DSR Factory Tests', () => {
     expect(isValid).toBeTruthy();
   });
 
-  it('Should succeed validation of an string identifier for credential items on a DSR', async () => {
-    const dsr = await ScopeRequest.create('abcd', ['credential-cvc:Identity-v1']);
+  it('Should succeed validation of an string identifier for credential items on a DSR', () => {
+    const dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1']);
     const isValid = ScopeRequest.validateCredentialItems(dsr.credentialItems);
     expect(isValid).toBeTruthy();
   });
 
-  // TODO
-  // it('Should skip https test for local url in payloadUrl or eventsUrl and succeed validation', () => {
-  //   let dsr;
-  //   expect(() => {
-  //     dsr = await ScopeRequest.create('abcd', ['credential-cvc:Identity-v1'], {
-  //       eventsURL: 'http://localhost/',
-  //       payloadURL: 'http://127.0.0.1/',
-  //     });
-  //   }).not.toThrow('only HTTPS is supported for payloadURL');
-  //   const isValid = ScopeRequest.validateCredentialItems(dsr.credentialItems);
-  //   expect(isValid).toBeTruthy();
-  // });
+  it('Should skip https test for local url in payloadUrl or eventsUrl and succeed validation', () => {
+    let dsr;
+    expect(() => {
+      dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], {
+        eventsURL: 'http://localhost/',
+        payloadURL: 'http://127.0.0.1/',
+      });
+    }).not.toThrow('only HTTPS is supported for payloadURL');
+    const isValid = ScopeRequest.validateCredentialItems(dsr.credentialItems);
+    expect(isValid).toBeTruthy();
+  });
 
-  it('Should fail validation of an string identifier for credential items on a DSR',
-    async () => expect(ScopeRequest.create('abcd', [{}])).rejects.toThrow());
+  it('Should fail validation of an string identifier for credential items on a DSR', () => {
+    expect(() => {
+      const dsr = new ScopeRequest('abcd', [{}]);
+      ScopeRequest.validateCredentialItems(dsr.credentialItems);
+    }).toThrow();
+  });
 
-  it('Should fail validation on the meta issuer', async () => expect(ScopeRequest.create('abcd',
-    [{
-      identifier: 'credential-cvc:Identity-v1',
-      constraints: {
-        meta: {
-          issued: { is: { $lt: 15999999 } },
-          expiry: { is: { $gt: 19999999 } },
-        },
-        claims: [
-          { path: 'email', is: { $eq: 'jpsantos@gmail.com' } },
-        ],
-      },
-    }])).rejects.toThrow());
+  it('Should fail validation on the meta issuer', () => {
+    expect(() => {
+      const dsr = new ScopeRequest('abcd',
+        [{
+          identifier: 'credential-cvc:Identity-v1',
+          constraints: {
+            meta: {
+              issued: { is: { $lt: 15999999 } },
+              expiry: { is: { $gt: 19999999 } },
+            },
+            claims: [
+              { path: 'email', is: { $eq: 'jpsantos@gmail.com' } },
+            ],
+          },
+        }]);
+      ScopeRequest.validateCredentialItems(dsr.credentialItems);
+    }).toThrow();
+  });
 
-  it('Should fail validation on the meta issuer operator', async () => expect(ScopeRequest.create('abcd',
-    [{
-      identifier: 'credential-cvc:Identity-v1',
-      constraints: {
-        meta: {
-          issuer: { is: { $lt: 'did:ethr:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74' } },
-          issued: { is: { $lt: 15999999 } },
-          expiry: { is: { $gt: 19999999 } },
-        },
-        claims: [
-          { path: 'email', is: { $eq: 'jpsantos@gmail.com' } },
-        ],
-      },
-    }])).rejects.toThrow('undefined is not a valid issuer'));
+  it('Should fail validation on the meta issuer operator', () => {
+    expect(() => {
+      const dsr = new ScopeRequest('abcd',
+        [{
+          identifier: 'credential-cvc:Identity-v1',
+          constraints: {
+            meta: {
+              issuer: { is: { $lt: 'did:ethr:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74' } },
+              issued: { is: { $lt: 15999999 } },
+              expiry: { is: { $gt: 19999999 } },
+            },
+            claims: [
+              { path: 'email', is: { $eq: 'jpsantos@gmail.com' } },
+            ],
+          },
+        }]);
+      ScopeRequest.validateCredentialItems(dsr.credentialItems);
+    }).toThrow('undefined is not a valid issuer');
+  });
 
-  it('Should fail validation on the claims path section', async () => expect(ScopeRequest.create('abcd',
-    [{
-      identifier: 'credential-cvc:Identity-v1',
-      constraints: {
-        meta: {
-          issuer: { is: { $eq: 'did:ethr:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74' } },
-          issued: { is: { $lt: 15999999 } },
-          expiry: { is: { $gt: 19999999 } },
-        },
-        claims: [
-          { path: '', is: { $eq: 'jpsantos@gmail.com' } },
-        ],
-      },
-    }])).rejects.toThrow('Claim path is required'));
+  it('Should fail validation on the claims path section', () => {
+    expect(() => {
+      const dsr = new ScopeRequest('abcd',
+        [{
+          identifier: 'credential-cvc:Identity-v1',
+          constraints: {
+            meta: {
+              issuer: { is: { $eq: 'did:ethr:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74' } },
+              issued: { is: { $lt: 15999999 } },
+              expiry: { is: { $gt: 19999999 } },
+            },
+            claims: [
+              { path: '', is: { $eq: 'jpsantos@gmail.com' } },
+            ],
+          },
+        }]);
+      ScopeRequest.validateCredentialItems(dsr.credentialItems);
+    }).toThrow('Claim path is required');
+  });
 
-  it('Should fail validation on the claims with null property value', async () => expect(ScopeRequest.create('abcd',
-    [{
-      identifier: 'credential-cvc:Identity-v1',
-      constraints: {
-        meta: {
-          issuer: { is: { $eq: 'did:ethr:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74' } },
-          issued: { is: { $lt: 15999999 } },
-          expiry: { is: { $gt: 19999999 } },
-        },
-        claims: [
-          { path: 'name' },
-        ],
-      },
-    }])).rejects.toThrow('Claim constraint is required'));
+  it('Should fail validation on the claims with null property value', () => {
+    expect(() => {
+      const dsr = new ScopeRequest('abcd',
+        [{
+          identifier: 'credential-cvc:Identity-v1',
+          constraints: {
+            meta: {
+              issuer: { is: { $eq: 'did:ethr:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74' } },
+              issued: { is: { $lt: 15999999 } },
+              expiry: { is: { $gt: 19999999 } },
+            },
+            claims: [
+              { path: 'name' },
+            ],
+          },
+        }]);
+      ScopeRequest.validateCredentialItems(dsr.credentialItems);
+    }).toThrow('Claim constraint is required');
+  });
 
-  it('Should fail validation on the operators constraint', async () => expect(ScopeRequest.create('abcd',
-    [{
-      identifier: 'credential-cvc:Identity-v1',
-      constraints: {
-        meta: {
-          issuer: { is: { $eq: 'did:ethr:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74' } },
-          issued: { is: { $lt: 15999999 } },
-          expiry: { is: { $gt: 19999999 } },
-        },
-        claims: [
-          { path: 'email', is: { $eq: 'jpsantos@gmail.com', $ne: 'jpsantos@gmail.com' } },
-        ],
-      },
-    }])).rejects.toThrow('Invalid Constraint Object - only one operator is allowed'));
+  it('Should fail validation on the operators constraint', () => {
+    expect(() => {
+      const dsr = new ScopeRequest('abcd',
+        [{
+          identifier: 'credential-cvc:Identity-v1',
+          constraints: {
+            meta: {
+              issuer: { is: { $eq: 'did:ethr:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74' } },
+              issued: { is: { $lt: 15999999 } },
+              expiry: { is: { $gt: 19999999 } },
+            },
+            claims: [
+              { path: 'email', is: { $eq: 'jpsantos@gmail.com', $ne: 'jpsantos@gmail.com' } },
+            ],
+          },
+        }]);
+      ScopeRequest.validateCredentialItems(dsr.credentialItems);
+    }).toThrow('Invalid Constraint Object - only one operator is allowed');
+  });
 
-  it('Should fail validation on the operators constraint with invalid operators', async () => expect(ScopeRequest.create('abcd',
-    [{
-      identifier: 'credential-cvc:Identity-v1',
-      constraints: {
-        meta: {
-          issuer: { is: { $eq: 'did:ethr:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74' } },
-          issued: { is: { $lt: 15999999 } },
-          expiry: { is: { $gt: 19999999 } },
-        },
-        claims: [
-          { path: 'email', is: { $super: 'jpsantos@gmail.com' } },
-        ],
-      },
-    }])).rejects.toThrow('Invalid Constraint Object - $super is not a valid operator'));
+  it('Should fail validation on the operators constraint with invalid operators', () => {
+    expect(() => {
+      const dsr = new ScopeRequest('abcd',
+        [{
+          identifier: 'credential-cvc:Identity-v1',
+          constraints: {
+            meta: {
+              issuer: { is: { $eq: 'did:ethr:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74' } },
+              issued: { is: { $lt: 15999999 } },
+              expiry: { is: { $gt: 19999999 } },
+            },
+            claims: [
+              { path: 'email', is: { $super: 'jpsantos@gmail.com' } },
+            ],
+          },
+        }]);
+      ScopeRequest.validateCredentialItems(dsr.credentialItems);
+    }).toThrow('Invalid Constraint Object - $super is not a valid operator');
+  });
 
-  it('Should fail validation while mocking the config file without eventsURL', () => expect(ScopeRequest.create('abcd', ['credential-cvc:Identity-v1'], {})).rejects.toThrow('eventsURL is required'));
+  it('Should fail validation while mocking the config file without eventsURL', () => {
+    expect(() => {
+      // eslint-disable-next-line no-unused-vars
+      const dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], {});
+    }).toThrow('eventsURL is required');
+  });
 
-  it('Should fail validation while mocking the config file with eventsURL without https', () => expect(
-    ScopeRequest.create('abcd', ['credential-cvc:Identity-v1'],
-      { eventsURL: 'http://example.com/' }),
-  ).rejects.toThrow('only HTTPS is supported for eventsURL'));
+  it('Should fail validation while mocking the config file with eventsURL without https', () => {
+    expect(() => {
+      // eslint-disable-next-line no-unused-vars
+      const dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], { eventsURL: 'http://example.com/' });
+    }).toThrow('only HTTPS is supported for eventsURL');
+  });
 
-  it('Should fail validation while mocking the config file with payloadURL without https', () => expect(ScopeRequest.create('abcd', ['credential-cvc:Identity-v1'], {
-    eventsURL: 'https://example.com/',
-    payloadURL: 'http://example.com/',
-  })).rejects.toThrow('only HTTPS is supported for payloadURL'));
+  it('Should fail validation while mocking the config file with payloadURL without https', () => {
+    expect(() => {
+      // eslint-disable-next-line no-unused-vars
+      const dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], { eventsURL: 'https://example.com/', payloadURL: 'http://example.com/' });
+    }).toThrow('only HTTPS is supported for payloadURL');
+  });
 
-  it('Should fail validation while mocking the appConfig without id', () => expect(ScopeRequest.create('abcd', ['credential-cvc:Identity-v1'], {
-    eventsURL: 'https://example.com/',
-    payloadURL: 'https://example.com/',
-  }, {})).rejects.toThrow('app.id is required'));
+  it('Should fail validation while mocking the appConfig without id', () => {
+    expect(() => {
+      // eslint-disable-next-line no-unused-vars
+      const dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], { eventsURL: 'https://example.com/', payloadURL: 'https://example.com/' }, {});
+    }).toThrow('app.id is required');
+  });
 
   it('Should fail validation while mocking the appConfig without name', () => {
-    const appConfig = { id: 'test' };
-
-    return expect(ScopeRequest.create('abcd', ['credential-cvc:Identity-v1'], {
-      eventsURL: 'https://example.com/', payloadURL: 'https://example.com/',
-    }, appConfig)).rejects.toThrow('app.name is required');
+    expect(() => {
+      const appConfig = { id: 'test' };
+      // eslint-disable-next-line no-unused-vars
+      const dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], {
+        eventsURL: 'https://example.com/', payloadURL: 'https://example.com/',
+      }, appConfig);
+    }).toThrow('app.name is required');
   });
 
   it('Should fail validation while mocking the appConfig without logo', () => {
-    const appConfig = { id: 'test', name: 'test' };
-
-    return expect(
-      ScopeRequest.create('abcd', ['credential-cvc:Identity-v1'], {
-        eventsURL: 'https://example.com/',
-        payloadURL: 'https://example.com/',
-      }, appConfig),
-    ).rejects.toThrow('app.logo is required');
+    expect(() => {
+      const appConfig = { id: 'test', name: 'test' };
+      // eslint-disable-next-line no-unused-vars
+      const dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], { eventsURL: 'https://example.com/', payloadURL: 'https://example.com/' }, appConfig);
+    }).toThrow('app.logo is required');
   });
 
   it('Should fail validation while mocking the appConfig without logo https', () => {
-    const appConfig = { id: 'test', name: 'test', logo: 'http://example.com/' };
-
-    return expect(ScopeRequest.create('abcd', ['credential-cvc:Identity-v1'], {
-      eventsURL: 'https://example.com/', payloadURL: 'https://example.com/',
-    }, appConfig)).rejects.toThrow('only HTTPS is supported for app.logo');
+    expect(() => {
+      const appConfig = { id: 'test', name: 'test', logo: 'http://example.com/' };
+      // eslint-disable-next-line no-unused-vars
+      const dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], {
+        eventsURL: 'https://example.com/', payloadURL: 'https://example.com/',
+      }, appConfig);
+    }).toThrow('only HTTPS is supported for app.logo');
   });
 
   it('Should fail validation while mocking the appConfig without description', () => {
-    const appConfig = {
-      id: 'test', name: 'test', logo: 'https://example.com/', primaryColor: 'FFF',
-    };
-    return expect(ScopeRequest.create('abcd', ['credential-cvc:Identity-v1'], {
-      eventsURL: 'https://example.com/', payloadURL: 'https://example.com/',
-    }, appConfig)).rejects.toThrow('app.description is required');
+    expect(() => {
+      const appConfig = {
+        id: 'test', name: 'test', logo: 'https://example.com/', primaryColor: 'FFF',
+      };
+      // eslint-disable-next-line no-unused-vars
+      const dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], {
+        eventsURL: 'https://example.com/', payloadURL: 'https://example.com/',
+      }, appConfig);
+    }).toThrow('app.description is required');
   });
 
   it('Should fail validation while mocking the appConfig without primaryColor', () => {
-    const appConfig = {
-      id: 'test', name: 'test', logo: 'https://example.com/', description: 'test',
-    };
-
-    return expect(ScopeRequest.create('abcd', ['credential-cvc:Identity-v1'], {
-      eventsURL: 'https://example.com/', payloadURL: 'https://example.com/',
-    }, appConfig)).rejects.toThrow('app.primaryColor is required');
+    expect(() => {
+      const appConfig = {
+        id: 'test', name: 'test', logo: 'https://example.com/', description: 'test',
+      };
+      // eslint-disable-next-line no-unused-vars
+      const dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], {
+        eventsURL: 'https://example.com/', payloadURL: 'https://example.com/',
+      }, appConfig);
+    }).toThrow('app.primaryColor is required');
   });
 
   it('Should fail validation while mocking the appConfig without secondaryColor', () => {
-    const appConfig = {
-      id: 'test', name: 'test', logo: 'https://example.com/', primaryColor: 'FFF', description: 'test',
-    };
-
-    return expect(ScopeRequest.create('abcd', ['credential-cvc:Identity-v1'], {
-      eventsURL: 'https://example.com/', payloadURL: 'https://example.com/',
-    }, appConfig)).rejects.toThrow('app.secondaryColor is required');
+    expect(() => {
+      const appConfig = {
+        id: 'test', name: 'test', logo: 'https://example.com/', primaryColor: 'FFF', description: 'test',
+      };
+      // eslint-disable-next-line no-unused-vars
+      const dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], {
+        eventsURL: 'https://example.com/', payloadURL: 'https://example.com/',
+      }, appConfig);
+    }).toThrow('app.secondaryColor is required');
   });
 
   it('Should fail validation while mocking the appConfig without partnerConfig id', () => {
-    const appConfig = {
-      id: 'test',
-      name: 'test',
-      logo: 'https://example.com/',
-      primaryColor: 'FFF',
-      secondaryColor: 'FFF',
-      description: 'test',
-    };
-    const partnerConfig = {};
-
-    return expect(ScopeRequest.create('abcd', ['credential-cvc:Identity-v1'], {
-      eventsURL: 'https://example.com/', payloadURL: 'https://example.com/',
-    }, appConfig, partnerConfig)).rejects.toThrow('partner.id is required');
+    expect(() => {
+      const appConfig = {
+        id: 'test', name: 'test', logo: 'https://example.com/', primaryColor: 'FFF', secondaryColor: 'FFF', description: 'test',
+      };
+      const partnerConfig = {};
+      // eslint-disable-next-line no-unused-vars
+      const dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], {
+        eventsURL: 'https://example.com/', payloadURL: 'https://example.com/',
+      }, appConfig, partnerConfig);
+    }).toThrow('partner.id is required');
   });
 
   it('Should fail validation while mocking the appConfig without partnerConfig signingKeys', () => {
-    const appConfig = {
-      id: 'test',
-      name: 'test',
-      logo: 'https://example.com/',
-      primaryColor: 'FFF',
-      secondaryColor: 'FFF',
-      description: 'test',
-    };
-    const partnerConfig = {
-      id: 'test',
-    };
-
-    return expect(ScopeRequest.create('abcd', ['credential-cvc:Identity-v1'], {
-      eventsURL: 'https://example.com/', payloadURL: 'https://example.com/',
-    }, appConfig, partnerConfig)).rejects.toThrow('Partner public and private signing keys are required');
+    expect(() => {
+      const appConfig = {
+        id: 'test', name: 'test', logo: 'https://example.com/', primaryColor: 'FFF', secondaryColor: 'FFF', description: 'test',
+      };
+      const partnerConfig = {
+        id: 'test',
+      };
+      // eslint-disable-next-line no-unused-vars
+      const dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], {
+        eventsURL: 'https://example.com/', payloadURL: 'https://example.com/',
+      }, appConfig, partnerConfig);
+    }).toThrow('Partner public and private signing keys are required');
   });
 
-  it('Should fail the creation of an dsr without an unique id', () => expect(ScopeRequest.create(null, ['credential-cvc:Identity-v1'])).rejects.toThrow('uniqueId is required'));
+  it('Should fail the creation of an dsr without an unique id', () => {
+    expect(() => {
+      // eslint-disable-next-line no-unused-vars
+      const dsr = new ScopeRequest(null, ['credential-cvc:Identity-v1']);
+    }).toThrow('uniqueId is required');
+  });
 
-  it('Should succeed validation while mocking the appConfig with partnerConfig signingKeys', async () => {
-    const dsr = await ScopeRequest.create(
+  it('Should succeed validation while mocking the appConfig with partnerConfig signingKeys', () => {
+    const dsr = new ScopeRequest(
       'abcd',
       ['credential-cvc:Identity-v1'],
       validConfig.channels,
@@ -346,8 +401,8 @@ describe('DSR Factory Tests', () => {
     expect(dsr.requesterInfo.requesterId).toBe(validConfig.partner.id);
   });
 
-  it('Should Construct DSR with authentication default to true when authentication value not specified', async () => {
-    const dsr = await ScopeRequest.create(
+  it('Should Construct DSR with authentication default to true when authentication value not specified', () => {
+    const dsr = new ScopeRequest(
       'abcd',
       ['credential-cvc:Identity-v1'],
       validConfig.channels,
@@ -359,9 +414,9 @@ describe('DSR Factory Tests', () => {
     expect(dsr.authentication).toBeTruthy();
   });
 
-  it('Should Construct DSR with authentication', async () => {
+  it('Should Construct DSR with authentication', () => {
     const authentication = false;
-    const dsr = await ScopeRequest.create(
+    const dsr = new ScopeRequest(
       'abcd',
       ['credential-cvc:Identity-v1'],
       validConfig.channels,
@@ -380,25 +435,26 @@ describe('DSR Factory Tests', () => {
 
   it('Should fail the creation of an dsr when a invalid value of authentication is provided', () => {
     const invalidAuthentication = 'invalid';
-    return expect(ScopeRequest.create(
-      'abcd',
-      ['credential-cvc:Identity-v1'],
-      validConfig.channels,
-      validConfig.app,
-      validConfig.partner,
-      invalidAuthentication,
-    )).rejects.toThrow('Invalid value for authentication');
+    expect(() => {
+      // eslint-disable-next-line no-unused-vars
+      const dsr = new ScopeRequest(
+        'abcd',
+        ['credential-cvc:Identity-v1'],
+        validConfig.channels,
+        validConfig.app,
+        validConfig.partner,
+        invalidAuthentication,
+      );
+    }).toThrow('Invalid value for authentication');
   });
 });
 
 describe('DSR Request Utils', () => {
   beforeEach(() => {
-    schemaLoader.addLoader(new CVCSchemaLoader());
-
     initServices(config);
   });
-  test('Build a signed request', async () => {
-    const dsr = await ScopeRequest.create('abcd',
+  test('Build a signed request', () => {
+    const dsr = new ScopeRequest('abcd',
       [{
         identifier: 'credential-cvc:Identity-v1',
         constraints: {
@@ -418,8 +474,8 @@ describe('DSR Request Utils', () => {
     expect(requestBody.xpub).toBeDefined();
   });
 
-  test('Verify a signed request without pinned xpub', async () => {
-    const dsr = await ScopeRequest.create('abcd',
+  test('Verify a signed request without pinned xpub', () => {
+    const dsr = new ScopeRequest('abcd',
       [{
         identifier: 'credential-cvc:Identity-v1',
         constraints: {
@@ -438,8 +494,8 @@ describe('DSR Request Utils', () => {
     expect(verifySignedRequestBody(requestBody)).toBeTruthy();
   });
 
-  test('Verify a signed request with pinned xpub', async () => {
-    const dsr = await ScopeRequest.create('abcd',
+  test('Verify a signed request with pinned xpub', () => {
+    const dsr = new ScopeRequest('abcd',
       [{
         identifier: 'credential-cvc:Identity-v1',
         constraints: {
@@ -459,8 +515,8 @@ describe('DSR Request Utils', () => {
     expect(verifySignedRequestBody(requestBody, xpub)).toBeTruthy();
   });
 
-  test('Verify a signed request with pinned xpub', async () => {
-    const dsr = await ScopeRequest.create('abcd',
+  test('Verify a signed request with pinned xpub', () => {
+    const dsr = new ScopeRequest('abcd',
       [{
         identifier: 'credential-cvc:Identity-v1',
         constraints: {
@@ -475,13 +531,11 @@ describe('DSR Request Utils', () => {
         },
       }]);
     const requestBody = buildSignedRequestBody(dsr);
-    expect(() => {
-      verifySignedRequestBody(requestBody, 'xpub');
-    }).toThrow();
+    expect(() => { verifySignedRequestBody(requestBody, 'xpub'); }).toThrow();
   });
 
-  test('Should Throw Request must have a payload object', async () => {
-    const dsr = await ScopeRequest.create('abcd',
+  test('Should Throw Request must have a payload object', () => {
+    const dsr = new ScopeRequest('abcd',
       [{
         identifier: 'credential-cvc:Identity-v1',
         constraints: {
@@ -497,13 +551,11 @@ describe('DSR Request Utils', () => {
       }]);
     const requestBody = buildSignedRequestBody(dsr);
     requestBody.payload = undefined;
-    expect(() => {
-      verifySignedRequestBody(requestBody);
-    }).toThrow();
+    expect(() => { verifySignedRequestBody(requestBody); }).toThrow();
   });
 
-  test('Should Throw Request must have a signature', async () => {
-    const dsr = await ScopeRequest.create('abcd',
+  test('Should Throw Request must have a signature', () => {
+    const dsr = new ScopeRequest('abcd',
       [{
         identifier: 'credential-cvc:Identity-v1',
         constraints: {
@@ -519,13 +571,11 @@ describe('DSR Request Utils', () => {
       }]);
     const requestBody = buildSignedRequestBody(dsr);
     requestBody.signature = undefined;
-    expect(() => {
-      verifySignedRequestBody(requestBody);
-    }).toThrow();
+    expect(() => { verifySignedRequestBody(requestBody); }).toThrow();
   });
 
-  test('Should Throw Request must have a public key', async () => {
-    const dsr = await ScopeRequest.create('abcd',
+  test('Should Throw Request must have a public key', () => {
+    const dsr = new ScopeRequest('abcd',
       [{
         identifier: 'credential-cvc:Identity-v1',
         constraints: {
@@ -542,27 +592,31 @@ describe('DSR Request Utils', () => {
     const requestBody = buildSignedRequestBody(dsr);
     requestBody.xpub = undefined;
 
+    expect(() => { verifySignedRequestBody(requestBody); }).toThrow();
+  });
+
+  it('Should throw invalid issuer DID', () => {
     expect(() => {
-      verifySignedRequestBody(requestBody);
+      const dsr = new ScopeRequest('abcd',
+        [{
+          identifier: 'credential-cvc:Identity-v1',
+          constraints: {
+            meta: {
+              issuer: { is: { $eq: 'did:ethr:0xf3bea' } },
+              issued: { is: { $lt: 15999999 } },
+              expiry: { is: { $gt: 19999999 } },
+            },
+            claims: [
+              { path: 'email', is: { $eq: 'jpsantos@gmail.com' } },
+            ],
+          },
+        }]);
+      // just bypassing lint no unused
+      dsr.toString();
     }).toThrow();
   });
 
-  it('Should throw invalid issuer DID', () => expect(ScopeRequest.create('abcd',
-    [{
-      identifier: 'credential-cvc:Identity-v1',
-      constraints: {
-        meta: {
-          issuer: { is: { $eq: 'did:ethr:0xf3bea' } },
-          issued: { is: { $lt: 15999999 } },
-          expiry: { is: { $gt: 19999999 } },
-        },
-        claims: [
-          { path: 'email', is: { $eq: 'jpsantos@gmail.com' } },
-        ],
-      },
-    }])).rejects.toThrow());
-
-  it('Should change config settings when partnerConfig object is passed', async () => {
+  it('Should change config settings when partnerConfig object is passed', () => {
     const partnerConfig = {
       id: 'New Partner',
       signingKeys: {
@@ -570,7 +624,7 @@ describe('DSR Request Utils', () => {
         xprv: 'f728fed0153f3b46a0fccdd9ed9954ad56fd4e8af016fe59075655aa9feb9a59',
       },
     };
-    const dsr = await ScopeRequest.create('abcd',
+    const dsr = new ScopeRequest('abcd',
       [{
         identifier: 'credential-cvc:Identity-v1',
         constraints: {
@@ -590,7 +644,7 @@ describe('DSR Request Utils', () => {
     expect(dsr.requesterInfo.requesterId).toBe(partnerConfig.id);
   });
 
-  it('Should build an empty credential item array', async () => {
+  it('Should build an empty credential item array', () => {
     const partnerConfig = {
       id: 'New Partner',
       signingKeys: {
@@ -598,30 +652,34 @@ describe('DSR Request Utils', () => {
         xprv: 'f728fed0153f3b46a0fccdd9ed9954ad56fd4e8af016fe59075655aa9feb9a59',
       },
     };
-    const dsr = await ScopeRequest.create('abcd', [], null, null, partnerConfig);
+    const dsr = new ScopeRequest('abcd', [], null, null, partnerConfig);
     const requestBody = buildSignedRequestBody(dsr);
     expect(requestBody.payload).toBeDefined();
     expect(requestBody.signature).toBeDefined();
     expect(requestBody.xpub).toBeDefined();
   });
 
-  it('Should throw an error when trying to ask for an claim and while also having the noClaims flag',
-    async () => expect(ScopeRequest.create('abcd',
-      [{
-        identifier: 'claim-cvc:Address.city-v1',
-        constraints: {
-          meta: {
-            issuer: { is: { $eq: 'did:ethr:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74' } },
-            issued: { is: { $eq: 15999999 } },
-            expiry: { is: { $eq: 19999999 } },
-            noClaims: true,
+  it('Should throw an error when trying to ask for an claim and while also having the noClaims flag', () => {
+    expect(() => {
+      const dsr = new ScopeRequest('abcd',
+        [{
+          identifier: 'claim-cvc:Random:node-1',
+          constraints: {
+            meta: {
+              issuer: { is: { $eq: 'did:ethr:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74' } },
+              issued: { is: { $eq: 15999999 } },
+              expiry: { is: { $eq: 19999999 } },
+              noClaims: true,
+            },
           },
-        },
-      }])).rejects.toThrow('Cannot ask for Claims and also have the flag noClaimss equals true'));
+        }]);
+      ScopeRequest.validateCredentialItems(dsr.credentialItems);
+    }).toThrow('Cannot ask for Claims and also have the flag noClaimss equals true');
+  });
 
-  it('Should accept one credentialItem as a simple string', async (done) => {
+  it('Should accept one credentialItem as a simple string', async () => {
     const requestId = '123';
-    const dsr = await ScopeRequest.create(
+    const dsr = new ScopeRequest(
       requestId, 'credential-cvc:IDVaaS-v1',
       {
         eventsURL: `https://example.com/event/${requestId}`,
@@ -644,12 +702,12 @@ describe('DSR Request Utils', () => {
       },
     );
     expect(dsr).toBeDefined();
-    done();
+
   });
 
-  it('Should check is credentials matches the request constraints', async () => {
+  it('Should check is credentials matches the request constraints', () => {
     const credentialItems = [idDoc]; // This is should be the CI on the scopeRequest response
-    const dsr = await ScopeRequest.create('abcd',
+    const dsr = new ScopeRequest('abcd',
       [{
         identifier: 'credential-cvc:IdDocument-v1',
         credential: 'credential-cvc:IdDocument-v1',
@@ -663,13 +721,13 @@ describe('DSR Request Utils', () => {
         },
       }]);
     expect(dsr).toBeDefined();
-    const match = await ScopeRequest.credentialsMatchesRequest(credentialItems, dsr);
+    const match = ScopeRequest.credentialsMatchesRequest(credentialItems, dsr);
     expect(match).toBeTruthy();
   });
 
-  it('Should check if partial credentials matches the request constraints ', async () => {
+  it('Should check if partial credentials matches the request constraints ', () => {
     const credentialItems = [filteredIdDoc]; // This is should be the CI on the scopeRequest response
-    const dsr = await ScopeRequest.create('abcd',
+    const dsr = new ScopeRequest('abcd',
       [{
         identifier: 'claim-cvc:Document.dateOfBirth-v1',
         credential: 'credential-cvc:IdDocument-v2',
@@ -683,13 +741,13 @@ describe('DSR Request Utils', () => {
         },
       }]);
     expect(dsr).toBeDefined();
-    const match = await ScopeRequest.credentialsMatchesRequest(credentialItems, dsr);
+    const match = ScopeRequest.credentialsMatchesRequest(credentialItems, dsr);
     expect(match).toBeTruthy();
   });
 
-  it('Should fail ckeck is credentials matches the request constraints', async () => {
+  it('Should fail ckeck is credentials matches the request constraints', () => {
     const credentialItems = [idDoc]; // This is should be the CI on the scopeRequest response
-    const dsr = await ScopeRequest.create('abcd',
+    const dsr = new ScopeRequest('abcd',
       [{
         identifier: 'credential-cvc:IdDocument-v1',
         constraints: {
@@ -702,13 +760,13 @@ describe('DSR Request Utils', () => {
         },
       }]);
     expect(dsr).toBeDefined();
-    const match = await ScopeRequest.credentialsMatchesRequest(credentialItems, dsr);
+    const match = ScopeRequest.credentialsMatchesRequest(credentialItems, dsr);
     expect(match).toBeFalsy();
   });
 
-  it('Should throw with empty credentialItems', async () => {
+  it('Should throw with empty credentialItems', () => {
     const credentialItems = []; // This is should be the CI on the scopeRequest response
-    const dsr = await ScopeRequest.create('abcd',
+    const dsr = new ScopeRequest('abcd',
       [{
         identifier: 'credential-cvc:IdDocument-v1',
         constraints: {
@@ -721,7 +779,7 @@ describe('DSR Request Utils', () => {
         },
       }]);
     expect(dsr).toBeDefined();
-    return expect(ScopeRequest.credentialsMatchesRequest(credentialItems, dsr)).rejects.toThrow('empty credentialItems param');
+    expect(() => ScopeRequest.credentialsMatchesRequest(credentialItems, dsr)).toThrow('empty credentialItems param');
   });
 
   it('Should throw with invaid scopeRequest', () => {
@@ -738,11 +796,11 @@ describe('DSR Request Utils', () => {
       },
     }];
     expect(dsr).toBeDefined();
-    return expect(ScopeRequest.credentialsMatchesRequest(credentialItems, dsr)).rejects.toThrow('invalid scopeRequest object');
+    expect(() => ScopeRequest.credentialsMatchesRequest(credentialItems, dsr)).toThrow('invalid scopeRequest object');
   });
 
-  it('Should Construct DSR with evidence idDocumentFront requested with auth', async () => {
-    const dsr = await ScopeRequest.create('abcd', ['credential-cvc:Identity-v1'], {
+  it('Should Construct DSR with evidence idDocumentFront requested with auth', () => {
+    const dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], {
       payloadURL: 'http://localhost/abc',
       eventsURL: 'http://localhost/abc',
       evidences: {
@@ -757,8 +815,8 @@ describe('DSR Request Utils', () => {
     expect(dsr).toBeDefined();
   });
 
-  it('Should Construct DSR with evidence idDocumentFront requested without auth', async () => {
-    const dsr = await ScopeRequest.create('abcd', ['credential-cvc:Identity-v1'], {
+  it('Should Construct DSR with evidence idDocumentFront requested without auth', () => {
+    const dsr = new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], {
       payloadURL: 'http://localhost/abc',
       eventsURL: 'http://localhost/abc',
       evidences: {
@@ -772,31 +830,43 @@ describe('DSR Request Utils', () => {
     expect(dsr).toBeDefined();
   });
 
-  it('Should fail Construct DSR with evidence idDocumentFront requested - invalid method', () => expect(ScopeRequest.create('abcd', ['credential-cvc:Identity-v1'], {
-    payloadURL: 'http://localhost/abc',
-    eventsURL: 'http://localhost/abc',
-    evidences: {
-      idDocumentFront: {
-        accepts: 'application/json',
-        method: 'get',
-        url: 'http://localhost/idDocumentFront',
-      },
-    },
-  })).rejects.toThrow());
+  it('Should fail Construct DSR with evidence idDocumentFront requested - invalid method', () => {
+    function execute() {
+      // eslint-disable-next-line no-new
+      new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], {
+        payloadURL: 'http://localhost/abc',
+        eventsURL: 'http://localhost/abc',
+        evidences: {
+          idDocumentFront: {
+            accepts: 'application/json',
+            method: 'get',
+            url: 'http://localhost/idDocumentFront',
+          },
+        },
+      });
+    }
+    expect(execute).toThrow();
+  });
 
-  it('Should fail Construct DSR with evidence idDocumentFront requested - missing url', () => expect(ScopeRequest.create('abcd', ['credential-cvc:Identity-v1'], {
-    payloadURL: 'http://localhost/abc',
-    eventsURL: 'http://localhost/abc',
-    evidences: {
-      idDocumentFront: {
-        accepts: 'application/json',
-        method: 'post',
-      },
-    },
-  })).rejects.toThrow());
+  it('Should fail Construct DSR with evidence idDocumentFront requested - missing url', () => {
+    function execute() {
+      // eslint-disable-next-line no-new
+      new ScopeRequest('abcd', ['credential-cvc:Identity-v1'], {
+        payloadURL: 'http://localhost/abc',
+        eventsURL: 'http://localhost/abc',
+        evidences: {
+          idDocumentFront: {
+            accepts: 'application/json',
+            method: 'post',
+          },
+        },
+      });
+    }
+    expect(execute).toThrow();
+  });
 
-  it('Should Construct DSR with all evidence requested', async () => {
-    const dsr = await ScopeRequest.create('abcd', [
+  it('Should Construct DSR with all evidence requested', () => {
+    const dsr = new ScopeRequest('abcd', [
       {
         identifier: 'claim-cvc:Document.dateOfBirth-v1',
         constraints: {
@@ -846,31 +916,37 @@ describe('DSR Request Utils', () => {
     expect(dsr).toBeDefined();
   });
 
-  it('Should throw an error when creating a DSR with wrong aggregate filters', () => expect(ScopeRequest.create('abcd', [
-    {
-      identifier: 'claim-cvc:Phone.countryCode-v1',
-      aggregate: [
+  it('Should throw an error when creating a DSR with wrong aggregate filters', () => {
+    const functionToThrow = () => {
+      // eslint-disable-next-line no-new
+      new ScopeRequest('abcd', [
         {
-          $somethingToError: [
+          identifier: 'claim-cvc:Phone.countryCode-v1',
+          aggregate: [
             {
-              path: 'meta.issuer',
-              is: {
-                $eq: 'did:ethr:0x1a88a35421a4a0d3e13fe4e8ebcf18e9a249dc5a',
-              },
-            },
-            {
-              path: 'claims.contact.phoneNumber.countryCode',
-              is: {
-                $eq: '55',
-              },
+              $somethingToError: [
+                {
+                  path: 'meta.issuer',
+                  is: {
+                    $eq: 'did:ethr:0x1a88a35421a4a0d3e13fe4e8ebcf18e9a249dc5a',
+                  },
+                },
+                {
+                  path: 'claims.contact.phoneNumber.countryCode',
+                  is: {
+                    $eq: '55',
+                  },
+                },
+              ],
             },
           ],
-        },
-      ],
-    }])).rejects.toThrow('Invalid Aggregate Object - $somethingToError is not a valid filter'));
+        }]);
+    };
+    expect(functionToThrow).toThrow('Invalid Aggregate Object - $somethingToError is not a valid filter');
+  });
 
-  it('Should Construct DSR with aggregation first', async () => {
-    const dsr = await ScopeRequest.create('abcd', [
+  it('Should Construct DSR with aggregation first', () => {
+    const dsr = new ScopeRequest('abcd', [
       {
         identifier: 'credential-cvc:Covid19-v1',
         aggregate: [
@@ -882,8 +958,8 @@ describe('DSR Request Utils', () => {
     expect(dsr).toBeDefined();
   });
 
-  it('Should Construct DSR with aggregation last', async () => {
-    const dsr = await ScopeRequest.create('abcd', [
+  it('Should Construct DSR with aggregation last', () => {
+    const dsr = new ScopeRequest('abcd', [
       {
         identifier: 'credential-cvc:Covid19-v1',
         aggregate: [
@@ -895,8 +971,8 @@ describe('DSR Request Utils', () => {
     expect(dsr).toBeDefined();
   });
 
-  it('Should Construct DSR with aggregation limit', async () => {
-    const dsr = await ScopeRequest.create('abcd', [
+  it('Should Construct DSR with aggregation limit', () => {
+    const dsr = new ScopeRequest('abcd', [
       {
         identifier: 'credential-cvc:Covid19-v1',
         aggregate: [
@@ -908,8 +984,8 @@ describe('DSR Request Utils', () => {
     expect(dsr).toBeDefined();
   });
 
-  it('Should Construct DSR with aggregation max', async () => {
-    const dsr = await ScopeRequest.create('abcd', [
+  it('Should Construct DSR with aggregation max', () => {
+    const dsr = new ScopeRequest('abcd', [
       {
         identifier: 'credential-cvc:Covid19-v1',
         aggregate: [
@@ -921,8 +997,8 @@ describe('DSR Request Utils', () => {
     expect(dsr).toBeDefined();
   });
 
-  it('Should Construct DSR with aggregation min', async () => {
-    const dsr = await ScopeRequest.create('abcd', [
+  it('Should Construct DSR with aggregation min', () => {
+    const dsr = new ScopeRequest('abcd', [
       {
         identifier: 'credential-cvc:Covid19-v1',
         aggregate: [
@@ -934,8 +1010,8 @@ describe('DSR Request Utils', () => {
     expect(dsr).toBeDefined();
   });
 
-  it('Should Construct DSR with aggregation sort', async () => {
-    const dsr = await ScopeRequest.create('abcd', [
+  it('Should Construct DSR with aggregation sort', () => {
+    const dsr = new ScopeRequest('abcd', [
       {
         identifier: 'claim-cvc:Phone.countryCode-v1',
         aggregate: [
@@ -949,8 +1025,8 @@ describe('DSR Request Utils', () => {
     expect(dsr).toBeDefined();
   });
 
-  it('Should Construct DSR with multiple aggregation filters', async () => {
-    const dsr = await ScopeRequest.create('abcd', [
+  it('Should Construct DSR with multiple aggregation filters', () => {
+    const dsr = new ScopeRequest('abcd', [
       {
         identifier: 'claim-cvc:Phone.countryCode-v1',
         aggregate: [

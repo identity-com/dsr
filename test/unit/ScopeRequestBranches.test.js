@@ -27,8 +27,14 @@ initServices(config);
 const { ScopeRequest } = require('../../src/ScopeRequest');
 
 describe('Coverage Branching Tests for DSR Factory', () => {
-  it('Should not Construct DSR with unknown claims', () => expect(ScopeRequest.create('abcd',
-    ['claim-boggus:identifier-1'])).rejects.toThrow('claim-boggus:identifier-1 is not valid'));
+  it('Should not Construct DSR with unknown claims', () => {
+    function createNewDSR() {
+      return new ScopeRequest('abcd',
+        ['claim-boggus:identifier-1']);
+    }
+
+    expect(createNewDSR).toThrow('claim-boggus:identifier-1 is not valid');
+  });
 });
 
 module.exports = ScopeRequest;

@@ -1,6 +1,5 @@
 {
   "version": "1",
-  "mode": "ADVANCED",
   "timestamp": "2018-07-04T00:11:55.698Z",
   "requesterInfo": {
     "requesterId": "3735a5b4-8a1f-11e8-9a94-a6cf71072f73",
@@ -19,14 +18,13 @@
   },
   "credentialItems": [
     {
-      "identifier": "claim-cvc:Identity:address-1",
+      "identifier": "claim-cvc:Document:name-1",
       "constraints": {
         "meta": {
-          "credential": "credential-cvc:Address-v1"
+          "credential": "credential-cvc:GenericDocumentId-v1"
         },
         "claims": [
-          { "path": "address.city", "is": { "$eq": "zODi1ARCK1"} },
-          { "path": "address.country", "is": {"$eq": "zQ7kz4CU9g"} }
+          { "path": "name.givenNames", "is": {"$eq": "JRbSLu3809"} }
         ]
       }
     }
