@@ -277,14 +277,14 @@ describe('DSR Filtering and Constraints Tests', () => {
   });
 
   it('Should not give any errors on filtering an empty array of credential items', async () => {
-    const dsr = new ScopeRequest('abcd', [], config.channels, config.app, config.partner);
+    const dsr = await ScopeRequest.create('abcd', [], config.channels, config.app, config.partner);
     const resolver = new Resolver();
     const filtered = await resolver.filterCredentials(dsr, []);
     expect(filtered.credentials.length).toBe(0);
   });
 
   it('Should not give any errors on filtering DSR with only aggregate tags', async () => {
-    const dsr = new ScopeRequest('abcd', [
+    const dsr = await ScopeRequest.create('abcd', [
       {
         identifier: 'credential-cvc:Covid19-v1',
         aggregate: [
