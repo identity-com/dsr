@@ -1,5 +1,5 @@
 const sift = require('sift').default;
-const { definitions: ucaDefinitions } = require('@identity.com/uca');
+const { schemaLoader } = require('@identity.com/credential-commons');
 const { VALIDATION_MODE } = require('../ScopeRequest');
 
 /**
@@ -108,7 +108,7 @@ function DsrResolver() {
   this.filterCredentialsByClaim = (globalIdentifier, credentials, credentialItem, scope, filtered) => {
     // for UCAs it can either be a type, or an alsoKnown as
     const type = globalIdentifier.substring('claim-'.length, globalIdentifier.lastIndexOf('-'));
-    const definition = ucaDefinitions.find(def => def.identifier === type);
+    const definition = schemaLoader.ucaDefinitions.find(def => def.identifier === type);
     const tempFiltered = [];
     const filterArgArray = [];
 

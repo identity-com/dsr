@@ -547,21 +547,6 @@ describe('DSR Request Utils', () => {
     }).toThrow();
   });
 
-  it('Should throw invalid issuer DID', () => expect(ScopeRequest.create('abcd',
-    [{
-      identifier: 'credential-cvc:Identity-v1',
-      constraints: {
-        meta: {
-          issuer: { is: { $eq: 'did:ethr:0xf3bea' } },
-          issued: { is: { $lt: 15999999 } },
-          expiry: { is: { $gt: 19999999 } },
-        },
-        claims: [
-          { path: 'email', is: { $eq: 'jpsantos@gmail.com' } },
-        ],
-      },
-    }])).rejects.toThrow());
-
   it('Should change config settings when partnerConfig object is passed', async () => {
     const partnerConfig = {
       id: 'New Partner',

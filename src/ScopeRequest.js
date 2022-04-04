@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const { isValidGlobalIdentifier, VC } = require('@identity.com/credential-commons');
+const { isValidGlobalIdentifier, VCCompat: VC } = require('@identity.com/credential-commons');
 
 const { services, initServices } = require('./services');
 
@@ -146,7 +146,7 @@ class ScopeRequest {
    * @param identifier
    * @returns {*}
    */
-  static isValidCredentialItemIdentifier(identifier) {
+  static async isValidCredentialItemIdentifier(identifier) {
     return isValidGlobalIdentifier(identifier);
   }
 
@@ -161,7 +161,7 @@ class ScopeRequest {
    * @returns {boolean} true for the pattern to be accepted, false otherwise
    */
   static isValidCredentialIssuer(issuer) {
-    return !(!issuer || !issuer.match(/^did:ethr:0x[a-fA-F0-9]{40}$/g));
+    return !!issuer;
   }
 
   /**
