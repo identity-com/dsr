@@ -1,13 +1,13 @@
 {
   "name": "@identity.com/dsr",
-  "version": "1.0.23",
+  "version": "3.0.0",
   "description": "The Dynamic Scope Request (DSR) javascript library provides capability around securely requesting credential information between an ID Requester and an ID Holder",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
   "browser": "dist/browser/index.js",
   "scripts": {
     "lint": "eslint ./src/**.js",
-    "test": "cross-env NODE_ENV=false jest",
+    "test": "cross-env NODE_ENV=test jest",
     "test:watch": "jest --watch",
     "check-schemas": "cross-env NODE_ENV=false jest --no-coverage test/integration/schemas/",
     "publish-schemas": "node scripts/publishSchemas.js && aws s3 cp ./schemas/public/ $S3_BUCKET_SCHEMA_URL --recursive --acl public-read",
@@ -25,6 +25,7 @@
     "check": "npm run lint && npm run test"
   },
   "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.17.7",
     "ajv": "^6.5.2",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
@@ -48,8 +49,7 @@
     "rimraf": "^2.6.2"
   },
   "dependencies": {
-    "@identity.com/credential-commons": "^1.2.7",
-    "@identity.com/uca": "^1.0.24",
+    "@identity.com/credential-commons": "^3.0.0",
     "bottlejs": "^1.7.1",
     "dotenv": "^8.2.0",
     "json-stable-stringify": "^1.0.1",
@@ -82,7 +82,21 @@
     "coverageDirectory": "reports/coverage",
     "collectCoverage": true,
     "testResultsProcessor": "./node_modules/jest-stare",
-    "verbose": true
+    "verbose": true,
+    "transformIgnorePatterns": [
+      "/node_modules/(?!(@digitalbazaar/did-io|@digitalbazaar/lru-memoize|@digitalbazaar/ed25519-verification-key-2018|@digitalbazaar/did-io|base58-universal))",
+      "node_modules/(?!(@digitalbazaar/did-io|@digitalbazaar/lru-memoize|@digitalbazaar/ed25519-verification-key-2018|@digitalbazaar/did-io|base58-universal))",
+      "<rootDir>/node_modules/(?!(@digitalbazaar/did-io|@digitalbazaar/lru-memoize|@digitalbazaar/ed25519-verification-key-2018|@digitalbazaar/did-io|base58-universal))"
+    ],
+    "moduleNameMapper": {
+      "@digitalbazaar/did-io": "@digitalbazaar/did-io/lib/main.js",
+      "@digitalbazaar/lru-memoize": "@digitalbazaar/lru-memoize/lib/main.js",
+      "@digitalbazaar/ed25519-verification-key-2018": "@digitalbazaar/ed25519-verification-key-2018/src/main.js",
+      "base58-universal": "base58-universal/main.js"
+    },
+    "transform": {
+      "^.+\\.(js|jsx)$": "babel-jest"
+    }
   },
   "jest-stare": {
     "resultDir": "reports",

@@ -1,6 +1,7 @@
+
+const originalPlatform = process.platform;
 describe('Test process platform', () => {
   beforeEach(() => {
-    this.originalPlatform = process.platform;
     Object.defineProperty(process, 'platform', {
       value: 'win32',
     });
@@ -18,7 +19,7 @@ describe('Test process platform', () => {
 
   afterEach(() => {
     Object.defineProperty(process, 'platform', {
-      value: this.originalPlatform,
+      value: originalPlatform,
     });
   });
 });

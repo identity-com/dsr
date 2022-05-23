@@ -164,10 +164,10 @@ Some helper functions to easy the DSR and verifiable credentials usage
    * @param request - Original ScopeRequest
    * @return {boolean}
    */
-  static credentialsMatchesRequest(credentialItems, request)
+  static async credentialsMatchesRequest(credentialItems, request)
   
   //Example
-  ScopeRequest.credentialsMatchesRequest(credentialItems, dsr);  
+  await ScopeRequest.credentialsMatchesRequest(credentialItems, dsr);  
 ```
 
 
