@@ -66,6 +66,7 @@ class ScopeRequest {
    *
    * @param credentialItems - A list of credentialItems to check
    * @param request - Original ScopeRequest
+   * @param checkCredentialMeta - If true, check credential meta
    * @return {boolean}
    */
   static async credentialsMatchesRequest(credentialItems, request, checkCredentialMeta = false) {
