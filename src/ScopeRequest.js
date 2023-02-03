@@ -53,6 +53,11 @@ const isValidEvidenceChannelDetails = (channelDetails) => {
   return result;
 };
 
+const isValidCredentialMeta = (credentialItem, constraints) => {
+  const credentialMeta = VC.getCredentialMeta(credentialItem);
+  return VC.isMatchCredentialMeta(credentialMeta, constraints);
+};
+
 /**
  * Class for generating Scope Requests
  */
@@ -63,7 +68,7 @@ class ScopeRequest {
    * @param request - Original ScopeRequest
    * @return {boolean}
    */
-  static async credentialsMatchesRequest(credentialItems, request) {
+  static async credentialsMatchesRequest(credentialItems, request, checkCredentialMeta = false) {
     let result = true;
     const requestedItems = _.get(request, 'credentialItems');
 
@@ -88,7 +93,8 @@ class ScopeRequest {
 
       const constraints = _.get(requestedItem, 'constraints');
       const match = verifiableCredential.isMatch(constraints);
-      if (!match) {
+      const matchCredentialMeta = (!checkCredentialMeta) || isValidCredentialMeta(credentialItem, constraints);
+      if (!match || !matchCredentialMeta) {
         // no need to continue breaking and returning false
         result = false;
         return false;
