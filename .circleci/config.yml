@@ -176,7 +176,7 @@ jobs:
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}-{{checksum "package-lock.json"}}
-      - run: sudo npm install -g npm6.14.16
+      - run: sudo npm install -g npm@6.14.16
       - run: npm install
       - save_cache:
           paths:
@@ -198,7 +198,7 @@ jobs:
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}-{{checksum "package-lock.json"}}
-      - run: sudo npm install -g npm6.14.16
+      - run: sudo npm install -g npm@6.14.16
       - run: npm install
       - save_cache:
           paths:
