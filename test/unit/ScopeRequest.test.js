@@ -760,7 +760,7 @@ describe('DSR Request Utils', () => {
         credential: 'credential-cvc:IdDocument-v1',
         constraints: {
           meta: {
-            issuer: { is: { $eq: 'did:ethr:0xf3beac30c498d9e26865f34fcaa57dbb935b0d74' } },
+            issuer: { is: { $eq: 'did:ethr:different-issuer' } },
           },
           claims: [
             { path: 'document.dateOfBirth', is: { $lte: '-21y' } },
