@@ -3,7 +3,7 @@ version: 2
 defaults: &defaults
   working_directory: ~/repo
   docker:
-    - image: circleci/node:12.19-stretch
+    - image: circleci/node:14.17.0
 
 workflows:
   version: 2
@@ -91,7 +91,7 @@ jobs:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}-{{checksum "package-lock.json"}}
       - run: sudo apt-get update
-      - run: sudo npm install -g npm@6.14.16
+      - run: sudo npm install -g npm
       - run: npm ci
       - save_cache:
           paths:
@@ -118,7 +118,7 @@ jobs:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}-{{checksum "package-lock.json"}}
       - run: sudo apt-get update && sudo apt-get install default-jre
-      - run: sudo npm install -g npm@6.14.16
+      - run: sudo npm install -g npm
       - run: |
           sh ./.circleci/install_hub.sh
           mkdir -p ~/.config/ && echo -e "github.com:\n- user: civictechuser\n  oauth_token: $GITHUB_API_KEY\n  protocol: https\n" > ~/.config/hub
@@ -176,7 +176,7 @@ jobs:
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}-{{checksum "package-lock.json"}}
-      - run: sudo npm install -g npm@6.14.16
+      - run: sudo npm install -g npm
       - run: npm install
       - save_cache:
           paths:
@@ -198,7 +198,7 @@ jobs:
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}-{{checksum "package-lock.json"}}
-      - run: sudo npm install -g npm@6.14.16
+      - run: sudo npm install -g npm
       - run: npm install
       - save_cache:
           paths:
